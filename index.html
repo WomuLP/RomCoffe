@@ -1,10 +1,9 @@
 <!doctype html>
 <html lang="es">
   <head>
-    <meta charset="utf-8" /> 
+    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Cafetería • Menú</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
@@ -20,123 +19,38 @@
     </header>
 
     <nav class="category-menu">
-      <button class="chip">café</button>
-      <button class="chip">tés</button>
-      <button class="chip">bebidas frías</button>
-      <button class="chip">desayuno</button>
-      <button class="chip">almuerzo</button>
-      <button class="chip">postres</button>
+      <button class="chip active" data-category="all">todos</button>
+      <button class="chip" data-category="cafe">café</button>
+      <button class="chip" data-category="tes">tés</button>
+      <button class="chip" data-category="bebidas-frias">bebidas frías</button>
+      <button class="chip" data-category="desayuno">desayuno</button>
+      <button class="chip" data-category="almuerzo">almuerzo</button>
+      <button class="chip" data-category="postres">postres</button>
     </nav>
 
     <main>
       <section class="products" id="productos">
         <h2 class="section-title">Productos</h2>
-        <div class="product-grid">
-          <article class="card">
-            <div class="card-media">
-              <img src="https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?w=1200&q=80&auto=format&fit=crop" alt="Café Latte" />
-            </div>
-            <div class="card-body">
-              <div class="card-head">
-                <h3 class="card-title">Café Latte</h3>
-                <span class="price">$3.90</span>
-              </div>
-              <p class="card-desc">Espresso suave con leche vaporizada y una capa de espuma.</p>
-              <ul class="ingredients">
-                <li>Espresso</li>
-                <li>Leche</li>
-                <li>Espuma de leche</li>
-              </ul>
-              <button class="btn primary">Agregar</button>
-            </div>
-          </article>
-
-          <article class="card">
-            <div class="card-media">
-              <img src="https://images.unsplash.com/photo-1498804103079-a6351b050096?w=1200&q=80&auto=format&fit=crop" alt="Cold Brew" />
-            </div>
-            <div class="card-body">
-              <div class="card-head">
-                <h3 class="card-title">Cold Brew</h3>
-                <span class="price">$4.50</span>
-              </div>
-              <p class="card-desc">Café infusionado en frío durante 16 horas. Refrescante y suave.</p>
-              <ul class="ingredients">
-                <li>Café molido</li>
-                <li>Agua filtrada</li>
-                <li>Hielo</li>
-              </ul>
-              <button class="btn primary">Agregar</button>
-            </div>
-          </article>
-
-          <article class="card">
-            <div class="card-media">
-              <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=1200&q=80&auto=format&fit=crop" alt="Sandwich Club" />
-            </div>
-            <div class="card-body">
-              <div class="card-head">
-                <h3 class="card-title">Sandwich Club</h3>
-                <span class="price">$6.90</span>
-              </div>
-              <p class="card-desc">Pan tostado con pollo, tocino, vegetales y salsa especial.</p>
-              <ul class="ingredients">
-                <li>Pan</li>
-                <li>Pollo</li>
-                <li>Tocino</li>
-                <li>Lechuga</li>
-                <li>Tomate</li>
-                <li>Salsa</li>
-              </ul>
-              <button class="btn primary">Agregar</button>
-            </div>
-          </article>
-
-          <article class="card">
-            <div class="card-media">
-              <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200&q=80&auto=format&fit=crop" alt="Ensalada César" />
-            </div>
-            <div class="card-body">
-              <div class="card-head">
-                <h3 class="card-title">Ensalada César</h3>
-                <span class="price">$5.50</span>
-              </div>
-              <p class="card-desc">Clásica ensalada con aderezo césar y crutones.</p>
-              <ul class="ingredients">
-                <li>Lechuga</li>
-                <li>Pollo</li>
-                <li>Parmesano</li>
-                <li>Crutones</li>
-                <li>Aderezo césar</li>
-              </ul>
-              <button class="btn primary">Agregar</button>
-            </div>
-          </article>
+        <div class="product-grid" id="productGrid">
+          <!-- Los productos se generarán dinámicamente con JavaScript -->
         </div>
       </section>
 
-      <div id="carouselExampleFade" class="carousel slide carousel-fade">
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <img src="..." class="d-block w-100" alt="...">
+      <section class="carousel-section" aria-label="Destacados">
+        <h2 class="section-title">Destacados</h2>
+        <div class="carousel">
+          <button class="carousel-btn prev" aria-label="Anterior">❮</button>
+          <div class="carousel-track" id="carouselTrack">
+            <div class="carousel-item">1</div>
+            <div class="carousel-item">2</div>
+            <div class="carousel-item">3</div>
+            <div class="carousel-item">4</div>
+            <div class="carousel-item">5</div>
+            <div class="carousel-item">6</div>
           </div>
-          <div class="carousel-item">
-            <img src="..." class="d-block w-100" alt="...">
-          </div>
-          <div class="carousel-item">
-            <img src="..." class="d-block w-100" alt="...">
-          </div>
+          <button class="carousel-btn next" aria-label="Siguiente">❯</button>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
-      </div>
-      
+      </section>
     </main>
 
     <footer class="site-footer">
@@ -165,11 +79,92 @@
           <a class="btn contact" href="#">Contactar</a>
         </div>
       </div>
-      <div class="footer-bottom">© 2024 Cafetería. Todos los derechos reservados.</div>
+      <div class="footer-bottom">© <span id="currentYear"></span> Cafetería. Todos los derechos reservados.</div>
     </footer>
 
     <script>
-      (function () {
+      // Datos de productos (convertidos desde PHP)
+      const products = [
+        {
+          image: 'https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?w=1200&q=80&auto=format&fit=crop',
+          name: 'Café Latte',
+          price: 3.9,
+          description: 'Espresso suave con leche vaporizada y una capa de espuma.',
+          ingredients: ['Espresso', 'Leche', 'Espuma de leche'],
+          category: 'cafe'
+        },
+        {
+          image: 'https://images.unsplash.com/photo-1498804103079-a6351b050096?w=1200&q=80&auto=format&fit=crop',
+          name: 'Cold Brew',
+          price: 4.5,
+          description: 'Café infusionado en frío durante 16 horas. Refrescante y suave.',
+          ingredients: ['Café molido', 'Agua filtrada', 'Hielo'],
+          category: 'bebidas-frias'
+        },
+        {
+          image: 'https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=1200&q=80&auto=format&fit=crop',
+          name: 'Sandwich Club',
+          price: 6.9,
+          description: 'Pan tostado con pollo, tocino, vegetales y salsa especial.',
+          ingredients: ['Pan', 'Pollo', 'Tocino', 'Lechuga', 'Tomate', 'Salsa'],
+          category: 'almuerzo'
+        },
+        {
+          image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200&q=80&auto=format&fit=crop',
+          name: 'Ensalada César',
+          price: 5.5,
+          description: 'Clásica ensalada con aderezo césar y crutones.',
+          ingredients: ['Lechuga', 'Pollo', 'Parmesano', 'Crutones', 'Aderezo césar'],
+          category: 'almuerzo'
+        }
+      ];
+
+      // Función para generar las tarjetas de productos
+      function generateProductCards(productsToShow = products) {
+        const productGrid = document.getElementById('productGrid');
+        productGrid.innerHTML = '';
+
+        productsToShow.forEach(product => {
+          const productCard = document.createElement('article');
+          productCard.className = 'card';
+          productCard.innerHTML = `
+            <div class="card-media">
+              <img src="${product.image}" alt="${product.name}" />
+            </div>
+            <div class="card-body">
+              <div class="card-head">
+                <h3 class="card-title">${product.name}</h3>
+                <span class="price">$${product.price.toFixed(2)}</span>
+              </div>
+              <p class="card-desc">${product.description}</p>
+              <ul class="ingredients">
+                ${product.ingredients.map(ingredient => `<li>${ingredient}</li>`).join('')}
+              </ul>
+              <button class="btn primary" onclick="addToCart('${product.name}', ${product.price})">Agregar</button>
+            </div>
+          `;
+          productGrid.appendChild(productCard);
+        });
+      }
+
+      // Función para filtrar productos por categoría
+      function filterProducts(category) {
+        if (category === 'all') {
+          generateProductCards();
+        } else {
+          const filteredProducts = products.filter(product => product.category === category);
+          generateProductCards(filteredProducts);
+        }
+      }
+
+      // Función para agregar al carrito (simulada)
+      function addToCart(productName, price) {
+        alert(`¡${productName} agregado al carrito! Precio: $${price.toFixed(2)}`);
+        // Aquí podrías implementar la lógica real del carrito
+      }
+
+      // Función para el carrusel
+      function initCarousel() {
         const track = document.getElementById('carouselTrack');
         const prev = document.querySelector('.carousel-btn.prev');
         const next = document.querySelector('.carousel-btn.next');
@@ -182,9 +177,39 @@
         next.addEventListener('click', function () {
           track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
         });
-      })();
+      }
+
+      // Función para manejar los filtros de categoría
+      function initCategoryFilters() {
+        const categoryButtons = document.querySelectorAll('.category-menu .chip');
+        
+        categoryButtons.forEach(button => {
+          button.addEventListener('click', function() {
+            // Remover clase active de todos los botones
+            categoryButtons.forEach(btn => btn.classList.remove('active'));
+            // Agregar clase active al botón clickeado
+            this.classList.add('active');
+            
+            // Filtrar productos
+            const category = this.getAttribute('data-category');
+            filterProducts(category);
+          });
+        });
+      }
+
+      // Función para actualizar el año en el footer
+      function updateFooterYear() {
+        const currentYear = new Date().getFullYear();
+        document.getElementById('currentYear').textContent = currentYear;
+      }
+
+      // Inicialización cuando el DOM esté listo
+      document.addEventListener('DOMContentLoaded', function() {
+        generateProductCards();
+        initCarousel();
+        initCategoryFilters();
+        updateFooterYear();
+      });
     </script>
   </body>
 </html>
-
-
