@@ -79,28 +79,14 @@ $products = [
                     <li><?php echo htmlspecialchars($ingredient); ?></li>
                   <?php endforeach; ?>
                 </ul>
-                <button class="btn primary">Agregar</button>
+                <button class="btn primary" data-add-name="<?php echo htmlspecialchars($product['name']); ?>" data-add-price="<?php echo number_format($product['price'], 2, '.', ''); ?>" data-add-image="<?php echo htmlspecialchars($product['image']); ?>">Agregar</button>
               </div>
             </article>
           <?php endforeach; ?>
         </div>
       </section>
 
-      <section class="carousel-section" aria-label="Destacados">
-        <h2 class="section-title">Destacados</h2>
-        <div class="carousel">
-          <button class="carousel-btn prev" aria-label="Anterior">❮</button>
-          <div class="carousel-track" id="carouselTrack">
-            <div class="carousel-item">1</div>
-            <div class="carousel-item">2</div>
-            <div class="carousel-item">3</div>
-            <div class="carousel-item">4</div>
-            <div class="carousel-item">5</div>
-            <div class="carousel-item">6</div>
-          </div>
-          <button class="carousel-btn next" aria-label="Siguiente">❯</button>
-        </div>
-      </section>
+      
     </main>
 
     <footer class="site-footer">
@@ -133,20 +119,165 @@ $products = [
     </footer>
 
     <script>
-      (function () {
-        const track = document.getElementById('carouselTrack');
-        const prev = document.querySelector('.carousel-btn.prev');
-        const next = document.querySelector('.carousel-btn.next');
-        const scrollAmount = 260;
+      // Carrito de compras (PHP page)
+      let cart = [];
+      const cartPanel = document.createElement('div');
+      cartPanel.className = 'cart-panel';
+      cartPanel.innerHTML = `
+        <div class="cart-header">
+          <h4 class="cart-title">Tu pedido</h4>
+          <button class="cart-remove" id="cartClear">Vaciar</button>
+        </div>
+        <ul class="cart-items" id="cartItems"></ul>
+        <div class="cart-footer">
+          <span class="cart-total" id="cartTotal">$0.00</span>
+          <button class="btn primary" id="cartCheckout">Finalizar</button>
+        </div>
+      `;
+      document.body.appendChild(cartPanel);
 
-        prev.addEventListener('click', function () {
-          track.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-        });
+      const cartFab = document.createElement('button');
+      cartFab.className = 'cart-fab';
+      cartFab.setAttribute('aria-label', 'Abrir carrito');
+      cartFab.innerHTML = `
+        <span class="fab-thumb" id="fabThumb"><img src="" alt="Último producto" style="display:none"></span>
+        <span class="fab-info">
+          <span class="fab-name" id="fabName">Carrito</span>
+          <span class="fab-meta" id="fabMeta">x0 • $0.00</span>
+        </span>
+        <span class="badge" id="cartCount">0</span>`;
+      document.body.appendChild(cartFab);
 
-        next.addEventListener('click', function () {
-          track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+      function saveCart() { localStorage.setItem('cart', JSON.stringify(cart)); }
+      function loadCart() {
+        try { cart = JSON.parse(localStorage.getItem('cart')) || []; }
+        catch(e) { cart = []; }
+      }
+
+      function updateCartUI() {
+        const itemsEl = document.getElementById('cartItems');
+        const totalEl = document.getElementById('cartTotal');
+        const countEl = document.getElementById('cartCount');
+        const fabName = document.getElementById('fabName');
+        const fabMeta = document.getElementById('fabMeta');
+        const fabThumbImg = document.querySelector('#fabThumb img');
+        itemsEl.innerHTML = '';
+        let total = 0;
+        cart.forEach((item, index) => {
+          total += item.price * item.qty;
+          const li = document.createElement('li');
+          li.className = 'cart-item';
+          li.innerHTML = `
+            <span class="name">${item.name} × ${item.qty}</span>
+            <span class="price">$${(item.price * item.qty).toFixed(2)}</span>
+            <span class="qty-controls" data-index="${index}">
+              <button class="qty-btn" data-action="dec">−</button>
+              <span class="qty-value">${item.qty}</span>
+              <button class="qty-btn" data-action="inc">+</button>
+            </span>
+            <button class="cart-remove" data-index="${index}">Quitar</button>
+          `;
+          itemsEl.appendChild(li);
         });
-      })();
+        totalEl.textContent = `$${total.toFixed(2)}`;
+        const totalQty = cart.reduce((a, b) => a + b.qty, 0);
+        countEl.textContent = totalQty;
+        if (cart.length > 0) {
+          const last = cart[cart.length - 1];
+          fabName.textContent = last.name;
+          fabMeta.textContent = `${totalQty} items • $${total.toFixed(2)}`;
+          if (last.image) { fabThumbImg.src = last.image; fabThumbImg.style.display = 'block'; } else { fabThumbImg.style.display = 'none'; }
+        } else {
+          fabName.textContent = 'Carrito';
+          fabMeta.textContent = '0 items • $0.00';
+          fabThumbImg.style.display = 'none';
+        }
+        saveCart();
+      }
+
+      function addToCart(productName, price) {
+        const existing = cart.find(p => p.name === productName);
+        if (existing) {
+          existing.qty += 1;
+        } else {
+          const btn = document.querySelector(`button[data-add-name="${CSS.escape(productName)}"]`);
+          const image = btn ? btn.getAttribute('data-add-image') : '';
+          cart.push({ name: productName, price: price, qty: 1, image: image });
+        }
+        updateCartUI();
+      }
+
+      document.addEventListener('click', function(e){
+        if (e.target && e.target.matches('.cart-remove[data-index]')) {
+          const idx = parseInt(e.target.getAttribute('data-index'), 10);
+          cart.splice(idx, 1);
+          updateCartUI();
+        }
+        if (e.target && e.target.matches('button[data-add-name]')) {
+          const name = e.target.getAttribute('data-add-name');
+          const price = parseFloat(e.target.getAttribute('data-add-price'));
+          addToCart(name, price);
+        }
+        if (e.target && e.target.closest('.qty-controls')) {
+          const group = e.target.closest('.qty-controls');
+          const idx = parseInt(group.getAttribute('data-index'), 10);
+          const action = e.target.getAttribute('data-action');
+          if (action === 'inc') { cart[idx].qty += 1; }
+          if (action === 'dec') { cart[idx].qty = Math.max(1, cart[idx].qty - 1); }
+          updateCartUI();
+        }
+      });
+
+      cartFab.addEventListener('click', function(){
+        cartPanel.classList.toggle('open');
+      });
+
+      cartPanel.addEventListener('click', function(e){
+        if (e.target && e.target.id === 'cartClear') {
+          cart.length = 0;
+          updateCartUI();
+        }
+        if (e.target && e.target.id === 'cartCheckout') {
+          alert('Gracias por tu pedido!');
+          cart.length = 0;
+          updateCartUI();
+          cartPanel.classList.remove('open');
+        }
+      });
+
+      document.addEventListener('DOMContentLoaded', function(){
+        loadCart();
+        updateCartUI();
+        // Nuevo carrusel (igual que index)
+        const main = document.querySelector('main');
+        const section = document.createElement('section');
+        section.className = 'nc-section';
+        section.innerHTML = `
+          <div class="nc-container">
+            <input type="radio" name="nc-slider" id="item-1" checked>
+            <input type="radio" name="nc-slider" id="item-2">
+            <input type="radio" name="nc-slider" id="item-3">
+            <div class="nc-cards">
+              <label class="nc-card" for="item-1" id="nc-card-1">
+                <img src="https://images.unsplash.com/photo-1530651788726-1dbf58eeef1f?w=1200&q=80&auto=format&fit=crop" alt="Slide 1">
+              </label>
+              <label class="nc-card" for="item-2" id="nc-card-2">
+                <img src="https://images.unsplash.com/photo-1559386484-97dfc0e15539?w=1200&q=80&auto=format&fit=crop" alt="Slide 2">
+              </label>
+              <label class="nc-card" for="item-3" id="nc-card-3">
+                <img src="https://images.unsplash.com/photo-1533461502717-83546f485d24?w=1200&q=80&auto=format&fit=crop" alt="Slide 3">
+              </label>
+            </div>
+            <div class="nc-player">
+              <div class="nc-info-area">
+                <strong class="nc-title">Destacados</strong>
+                <span class="nc-subtitle">Disfruta nuestras especialidades</span>
+                <span class="nc-time">Hoy</span>
+              </div>
+            </div>
+          </div>`;
+        main.appendChild(section);
+      });
     </script>
   </body>
 </html>
