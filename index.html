@@ -35,7 +35,6 @@
           <!-- Los productos se generarán dinámicamente con JavaScript -->
         </div>
       </section>
-
     </main>
 
     <footer class="site-footer">
@@ -68,7 +67,11 @@
     </footer>
 
     <script>
-      // Datos de productos (convertidos desde PHP)
+      /* ========================================
+         DATOS Y CONFIGURACIÓN
+      ======================================== */
+      
+      // Base de datos de productos
       const products = [
         {
           image: 'https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?w=1200&q=80&auto=format&fit=crop',
@@ -104,7 +107,11 @@
         }
       ];
 
-      // Función para generar las tarjetas de productos
+      /* ========================================
+         GESTIÓN DE PRODUCTOS
+      ======================================== */
+      
+      // Generar tarjetas de productos
       function generateProductCards(productsToShow = products) {
         const productGrid = document.getElementById('productGrid');
         productGrid.innerHTML = '';
@@ -132,7 +139,7 @@
         });
       }
 
-      // Función para filtrar productos por categoría
+      // Filtrar productos por categoría
       function filterProducts(category) {
         if (category === 'all') {
           generateProductCards();
@@ -142,8 +149,32 @@
         }
       }
 
-      // Carrito de compras
+      // Inicializar filtros de categoría
+      function initCategoryFilters() {
+        const categoryButtons = document.querySelectorAll('.category-menu .chip');
+        
+        categoryButtons.forEach(button => {
+          button.addEventListener('click', function() {
+            // Remover clase active de todos los botones
+            categoryButtons.forEach(btn => btn.classList.remove('active'));
+            // Agregar clase active al botón clickeado
+            this.classList.add('active');
+            
+            // Filtrar productos
+            const category = this.getAttribute('data-category');
+            filterProducts(category);
+          });
+        });
+      }
+
+      /* ========================================
+         CARRITO DE COMPRAS
+      ======================================== */
+      
+      // Estado del carrito
       let cart = [];
+
+      // Crear elementos del carrito
       const cartPanel = document.createElement('div');
       cartPanel.className = 'cart-panel';
       cartPanel.innerHTML = `
@@ -167,18 +198,28 @@
         <span class="badge" id="cartCount">0</span>`;
       document.body.appendChild(cartFab);
 
-      function saveCart() { localStorage.setItem('cart', JSON.stringify(cart)); }
+      // Persistencia del carrito
+      function saveCart() { 
+        localStorage.setItem('cart', JSON.stringify(cart)); 
+      }
+      
       function loadCart() {
-        try { cart = JSON.parse(localStorage.getItem('cart')) || []; }
-        catch(e) { cart = []; }
+        try { 
+          cart = JSON.parse(localStorage.getItem('cart')) || []; 
+        }
+        catch(e) { 
+          cart = []; 
+        }
       }
 
+      // Actualizar interfaz del carrito
       function updateCartUI() {
         const itemsEl = document.getElementById('cartItems');
         const totalEl = document.getElementById('cartTotal');
         const countEl = document.getElementById('cartCount');
         itemsEl.innerHTML = '';
         let total = 0;
+        
         cart.forEach((item, index) => {
           total += item.price * item.qty;
           const li = document.createElement('li');
@@ -195,12 +236,14 @@
           `;
           itemsEl.appendChild(li);
         });
+        
         totalEl.textContent = `$${total.toLocaleString('es-AR')}`;
         const totalQty = cart.reduce((a, b) => a + b.qty, 0);
         countEl.textContent = totalQty;
         saveCart();
       }
 
+      // Agregar producto al carrito
       function addToCart(productName, price, imageUrl) {
         const existing = cart.find(p => p.name === productName);
         if (existing) {
@@ -217,28 +260,12 @@
         }, 600);
       }
 
-      document.addEventListener('click', function(e){
-        if (e.target && e.target.matches('.cart-remove[data-index]')) {
-          const idx = parseInt(e.target.getAttribute('data-index'), 10);
-          cart.splice(idx, 1);
-          updateCartUI();
-        }
-        if (e.target && e.target.closest('.qty-controls')) {
-          const group = e.target.closest('.qty-controls');
-          const idx = parseInt(group.getAttribute('data-index'), 10);
-          const action = e.target.getAttribute('data-action');
-          if (action === 'inc') { cart[idx].qty += 1; }
-          if (action === 'dec') { cart[idx].qty = Math.max(1, cart[idx].qty - 1); }
-          updateCartUI();
-        }
-      });
-
+      // Event listeners del carrito
       cartFab.addEventListener('click', function(){
         cartPanel.classList.toggle('open');
         
         // Si se está abriendo, agregar animación de entrada
         if (cartPanel.classList.contains('open')) {
-          // Pequeño delay para que la animación CSS funcione correctamente
           setTimeout(() => {
             cartPanel.style.display = 'block';
           }, 10);
@@ -258,9 +285,24 @@
         }
       });
 
-      // Eliminado carrusel
-      // Nuevo carrusel (basado en saf3, adaptado)
-      function renderNewCarousel() {
+      // Event delegation para controles de cantidad
+      document.addEventListener('click', function(e){
+        if (e.target && e.target.closest('.qty-controls')) {
+          const group = e.target.closest('.qty-controls');
+          const idx = parseInt(group.getAttribute('data-index'), 10);
+          const action = e.target.getAttribute('data-action');
+          if (action === 'inc') { cart[idx].qty += 1; }
+          if (action === 'dec') { cart[idx].qty = Math.max(1, cart[idx].qty - 1); }
+          updateCartUI();
+        }
+      });
+
+      /* ========================================
+         CARRUSEL DE DESTACADOS
+      ======================================== */
+      
+      // Renderizar carrusel de destacados
+      function renderCarousel() {
         const main = document.querySelector('main');
         const section = document.createElement('section');
         section.className = 'nc-section';
@@ -291,38 +333,28 @@
         main.appendChild(section);
       }
 
-      // Función para manejar los filtros de categoría
-      function initCategoryFilters() {
-        const categoryButtons = document.querySelectorAll('.category-menu .chip');
-        
-        categoryButtons.forEach(button => {
-          button.addEventListener('click', function() {
-            // Remover clase active de todos los botones
-            categoryButtons.forEach(btn => btn.classList.remove('active'));
-            // Agregar clase active al botón clickeado
-            this.classList.add('active');
-            
-            // Filtrar productos
-            const category = this.getAttribute('data-category');
-            filterProducts(category);
-          });
-        });
-      }
-
-      // Función para actualizar el año en el footer
+      /* ========================================
+         FOOTER
+      ======================================== */
+      
+      // Actualizar año en el footer
       function updateFooterYear() {
         const currentYear = new Date().getFullYear();
         document.getElementById('currentYear').textContent = currentYear;
       }
 
-      // Inicialización cuando el DOM esté listo
+      /* ========================================
+         INICIALIZACIÓN
+      ======================================== */
+      
+      // Inicializar aplicación cuando el DOM esté listo
       document.addEventListener('DOMContentLoaded', function() {
         loadCart();
         generateProductCards();
         updateCartUI();
         initCategoryFilters();
         updateFooterYear();
-        renderNewCarousel();
+        renderCarousel();
       });
     </script>
   </body>
