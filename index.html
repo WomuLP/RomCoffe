@@ -148,8 +148,8 @@
       cartPanel.className = 'cart-panel';
       cartPanel.innerHTML = `
         <div class="cart-header">
-          <h4 class="cart-title">Tu pedido</h4>
-          <button class="cart-remove" id="cartClear">Vaciar</button>
+          <h4 class="cart-title">TU PEDIDO</h4>
+          <button class="cart-remove" id="cartClear">Quitar</button>
         </div>
         <ul class="cart-items" id="cartItems"></ul>
         <div class="cart-footer">
@@ -192,7 +192,6 @@
               <span class="qty-value">${item.qty}</span>
               <button class="qty-btn" data-action="inc">+</button>
             </span>
-            <button class="cart-remove" data-index="${index}">Quitar</button>
           `;
           itemsEl.appendChild(li);
         });
