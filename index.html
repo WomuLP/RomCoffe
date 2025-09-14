@@ -73,7 +73,7 @@
         {
           image: 'https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?w=1200&q=80&auto=format&fit=crop',
           name: 'Café Latte',
-          price: 3.9,
+          price: 3900,
           description: 'Espresso suave con leche vaporizada y una capa de espuma.',
           ingredients: ['Espresso', 'Leche', 'Espuma de leche'],
           category: 'cafe'
@@ -81,7 +81,7 @@
         {
           image: 'https://images.unsplash.com/photo-1498804103079-a6351b050096?w=1200&q=80&auto=format&fit=crop',
           name: 'Cold Brew',
-          price: 4.5,
+          price: 4500,
           description: 'Café infusionado en frío durante 16 horas. Refrescante y suave.',
           ingredients: ['Café molido', 'Agua filtrada', 'Hielo'],
           category: 'bebidas-frias'
@@ -89,7 +89,7 @@
         {
           image: 'https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=1200&q=80&auto=format&fit=crop',
           name: 'Sandwich Club',
-          price: 6.9,
+          price: 6900,
           description: 'Pan tostado con pollo, tocino, vegetales y salsa especial.',
           ingredients: ['Pan', 'Pollo', 'Tocino', 'Lechuga', 'Tomate', 'Salsa'],
           category: 'almuerzo'
@@ -97,7 +97,7 @@
         {
           image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200&q=80&auto=format&fit=crop',
           name: 'Ensalada César',
-          price: 5.5,
+          price: 5500,
           description: 'Clásica ensalada con aderezo césar y crutones.',
           ingredients: ['Lechuga', 'Pollo', 'Parmesano', 'Crutones', 'Aderezo césar'],
           category: 'almuerzo'
@@ -119,13 +119,13 @@
             <div class="card-body">
               <div class="card-head">
                 <h3 class="card-title">${product.name}</h3>
-                <span class="price">$${product.price.toFixed(2)}</span>
+                <span class="price">$${product.price.toLocaleString('es-AR')}</span>
               </div>
               <p class="card-desc">${product.description}</p>
               <ul class="ingredients">
                 ${product.ingredients.map(ingredient => `<li>${ingredient}</li>`).join('')}
               </ul>
-              <button class="btn primary" onclick="addToCart('${product.name}', ${product.price}, '${product.image}')">Agregar</button>
+              <button class="btn primary" onclick="addToCart('${product.name}', ${product.price}, '${product.image}')">Agregar al carrito</button>
             </div>
           `;
           productGrid.appendChild(productCard);
@@ -192,7 +192,7 @@
           li.className = 'cart-item';
           li.innerHTML = `
             <span class="name">${item.name} × ${item.qty}</span>
-            <span class="price">$${(item.price * item.qty).toFixed(2)}</span>
+            <span class="price">$${(item.price * item.qty).toLocaleString('es-AR')}</span>
             <span class="qty-controls" data-index="${index}">
               <button class="qty-btn" data-action="dec">−</button>
               <span class="qty-value">${item.qty}</span>
@@ -202,17 +202,17 @@
           `;
           itemsEl.appendChild(li);
         });
-        totalEl.textContent = `$${total.toFixed(2)}`;
+        totalEl.textContent = `$${total.toLocaleString('es-AR')}`;
         const totalQty = cart.reduce((a, b) => a + b.qty, 0);
         countEl.textContent = totalQty;
         if (cart.length > 0) {
           const last = cart[cart.length - 1];
           fabName.textContent = last.name;
-          fabMeta.textContent = `${totalQty} items • $${total.toFixed(2)}`;
+          fabMeta.textContent = `${totalQty} items • $${total.toLocaleString('es-AR')}`;
           if (last.image) { fabThumbImg.src = last.image; fabThumbImg.style.display = 'block'; } else { fabThumbImg.style.display = 'none'; }
         } else {
           fabName.textContent = 'Carrito';
-          fabMeta.textContent = '0 items • $0.00';
+          fabMeta.textContent = '0 items • $0';
           fabThumbImg.style.display = 'none';
         }
         saveCart();
