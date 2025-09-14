@@ -163,11 +163,7 @@
       cartFab.className = 'cart-fab';
       cartFab.setAttribute('aria-label', 'Abrir carrito');
       cartFab.innerHTML = `
-        <span class="fab-thumb" id="fabThumb"><img src="" alt="Último producto" style="display:none"></span>
-        <span class="fab-info">
-          <span class="fab-name" id="fabName">Carrito</span>
-          <span class="fab-meta" id="fabMeta">0 items • $0.00</span>
-        </span>
+        <span class="fab-icon">🛒</span>
         <span class="badge" id="cartCount">0</span>`;
       document.body.appendChild(cartFab);
 
@@ -181,9 +177,6 @@
         const itemsEl = document.getElementById('cartItems');
         const totalEl = document.getElementById('cartTotal');
         const countEl = document.getElementById('cartCount');
-        const fabName = document.getElementById('fabName');
-        const fabMeta = document.getElementById('fabMeta');
-        const fabThumbImg = document.querySelector('#fabThumb img');
         itemsEl.innerHTML = '';
         let total = 0;
         cart.forEach((item, index) => {
@@ -191,7 +184,8 @@
           const li = document.createElement('li');
           li.className = 'cart-item';
           li.innerHTML = `
-            <span class="name">${item.name} × ${item.qty}</span>
+            <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+            <span class="name">${item.name}</span>
             <span class="price">$${(item.price * item.qty).toLocaleString('es-AR')}</span>
             <span class="qty-controls" data-index="${index}">
               <button class="qty-btn" data-action="dec">−</button>
@@ -205,16 +199,6 @@
         totalEl.textContent = `$${total.toLocaleString('es-AR')}`;
         const totalQty = cart.reduce((a, b) => a + b.qty, 0);
         countEl.textContent = totalQty;
-        if (cart.length > 0) {
-          const last = cart[cart.length - 1];
-          fabName.textContent = last.name;
-          fabMeta.textContent = `${totalQty} items • $${total.toLocaleString('es-AR')}`;
-          if (last.image) { fabThumbImg.src = last.image; fabThumbImg.style.display = 'block'; } else { fabThumbImg.style.display = 'none'; }
-        } else {
-          fabName.textContent = 'Carrito';
-          fabMeta.textContent = '0 items • $0';
-          fabThumbImg.style.display = 'none';
-        }
         saveCart();
       }
 
