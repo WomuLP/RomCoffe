@@ -226,6 +226,12 @@
           cart.push({ name: productName, price: price, qty: 1, image: imageUrl });
         }
         updateCartUI();
+        
+        // Animación del botón del carrito
+        cartFab.classList.add('bounce');
+        setTimeout(() => {
+          cartFab.classList.remove('bounce');
+        }, 600);
       }
 
       document.addEventListener('click', function(e){
@@ -246,6 +252,14 @@
 
       cartFab.addEventListener('click', function(){
         cartPanel.classList.toggle('open');
+        
+        // Si se está abriendo, agregar animación de entrada
+        if (cartPanel.classList.contains('open')) {
+          // Pequeño delay para que la animación CSS funcione correctamente
+          setTimeout(() => {
+            cartPanel.style.display = 'block';
+          }, 10);
+        }
       });
 
       cartPanel.addEventListener('click', function(e){
