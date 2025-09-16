@@ -28,22 +28,12 @@ html, body {
 body {
   font-family: 'Poppins', 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   color: var(--text-dark);
-  background-color: var(--bg-cream);
   min-height: 100vh;
 }
 
 /* Detalles decorativos coquette */
 .main-container::before {
-  content: '';
-  position: absolute;
-  top: -10px;
-  left: -10px;
-  right: -10px;
-  bottom: -10px;
-  background: var(--bg-light-pink);
-  border-radius: 35px;
-  z-index: -1;
-  opacity: 0.3;
+  display: none;
 }
 
 /* Decoración de esquinas */
@@ -59,17 +49,17 @@ body {
 
 /* Contenedor principal centrado */
 .main-container {
-  max-width: 1400px;
-  margin: 0 auto;
-  background: rgba(242, 242, 242, 0.95);
-  backdrop-filter: blur(10px);
-  border-radius: 30px;
-  box-shadow: var(--shadow);
-  overflow: hidden;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  min-height: calc(100vh - 40px);
-  position: relative;
+  max-width: none;
+  margin: 0;
+  background: transparent;
+  backdrop-filter: none;
+  border-radius: 0;
+  box-shadow: none;
+  overflow: visible;
+  margin-top: 0;
+  margin-bottom: 0;
+  min-height: auto;
+  position: static;
 }
 
 @keyframes sparkle {
@@ -87,8 +77,8 @@ body {
   min-height: 400px;
   max-height: 600px;
   overflow: hidden;
-  border-radius: 30px 30px 0 0;
-  box-shadow: var(--shadow-soft);
+  border-radius: 0;
+  box-shadow: none;
 }
 
 .site-header .banner {
@@ -712,7 +702,7 @@ main {
   background: var(--bg-dark); 
   color: var(--text-light); 
   margin-top: 48px; 
-  border-radius: 0 0 30px 30px;
+  border-radius: 0;
 }
 
 .footer-inner { 
