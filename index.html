@@ -12,11 +12,7 @@
   <body>
     <div class="main-container">
     <header class="site-header">
-      <img class="banner" src="https://images.unsplash.com/photo-1461988625982-7e46a099bf4f?w=1600&q=80&auto=format&fit=crop" alt="Banner cafetería" />
-      <div class="header-overlay">
-        <h1 class="brand">Tu Café Favorito</h1>
-        <p class="tag">Buenos momentos, mejor café</p>
-      </div>
+      <img class="banner" src="banner.png" alt="Banner cafetería" />
     </header>
 
     <nav class="category-menu">
@@ -304,7 +300,7 @@
       
       // Renderizar carrusel de destacados
       function renderCarousel() {
-        const main = document.querySelector('main');
+        const header = document.querySelector('.site-header');
         const section = document.createElement('section');
         section.className = 'nc-section';
         section.innerHTML = `
@@ -314,13 +310,13 @@
             <input type="radio" name="nc-slider" id="item-3">
             <div class="nc-cards">
               <label class="nc-card" for="item-1" id="nc-card-1">
-                <img src="https://images.unsplash.com/photo-1530651788726-1dbf58eeef1f?w=1200&q=80&auto=format&fit=crop" alt="Slide 1">
+                <img src="destacado 2.png" alt="Slide 1">
               </label>
               <label class="nc-card" for="item-2" id="nc-card-2">
-                <img src="https://images.unsplash.com/photo-1559386484-97dfc0e15539?w=1200&q=80&auto=format&fit=crop" alt="Slide 2">
+                <img src="destacado 1.png" alt="Slide 2">
               </label>
               <label class="nc-card" for="item-3" id="nc-card-3">
-                <img src="https://images.unsplash.com/photo-1533461502717-83546f485d24?w=1200&q=80&auto=format&fit=crop" alt="Slide 3">
+                <img src="destacado 3.png" alt="Slide 3">
               </label>
             </div>
             <div class="nc-player">
@@ -331,7 +327,7 @@
               </div>
             </div>
           </div>`;
-        main.appendChild(section);
+        header.insertAdjacentElement('afterend', section);
       }
 
       /* ========================================

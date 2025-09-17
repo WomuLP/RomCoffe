@@ -36,16 +36,6 @@ body {
   display: none;
 }
 
-/* Decoración de esquinas */
-.site-header::after {
-  content: '✨';
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  font-size: 1.5rem;
-  opacity: 0.7;
-  animation: sparkle 2s ease-in-out infinite;
-}
 
 /* Contenedor principal centrado */
 .main-container {
