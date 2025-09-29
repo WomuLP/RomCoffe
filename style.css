@@ -384,7 +384,6 @@ n */
   position: sticky;
   top: 0;
   z-index: 10;
-  border-bottom: 1px solid var(--bg-light-pink);
   backdrop-filter: blur(10px);
 }
 
@@ -901,7 +900,6 @@ main {
 }
 
 .footer-bottom { 
-  border-top: 1px solid #1f2937; 
   padding: 14px 20px; 
   text-align: center; 
   color: #94a3b8; 
