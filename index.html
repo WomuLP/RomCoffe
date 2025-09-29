@@ -1,17 +1,23 @@
 <!doctype html>
 <html lang="es">
-  
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Cafetería • Menú</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@400;600;700&family=Dancing+Script:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <div class="main-container">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cafetería • Menú</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@400;600;700&family=Dancing+Script:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="main-container">
+    
+    <!-- Banner Section -->
+    <section class="banner-section">
+      <img class="banner" src="banner.png" alt="Banner cafetería" />
+    </section>
+
+    <!-- Header with Navigation -->
     <header class="main-header">
       <div class="header-content">
         <a href="https://instagram.com/tu_perfil" target="_blank" class="instagram-btn">
@@ -62,10 +68,34 @@
       </div>
     </header>
 
-    <section class="banner-section">
-      <img class="banner" src="banner.png" alt="Banner cafetería" />
+    <!-- Featured Carousel -->
+    <section class="nc-section">
+      <div class="nc-container">
+        <input type="radio" name="nc-slider" id="item-1" checked>
+        <input type="radio" name="nc-slider" id="item-2">
+        <input type="radio" name="nc-slider" id="item-3">
+        <div class="nc-cards">
+          <label class="nc-card" for="item-1" id="nc-card-1">
+            <img src="destacado 2.png" alt="Slide 1">
+          </label>
+          <label class="nc-card" for="item-2" id="nc-card-2">
+            <img src="destacado 1.png" alt="Slide 2">
+          </label>
+          <label class="nc-card" for="item-3" id="nc-card-3">
+            <img src="destacado 3.png" alt="Slide 3">
+          </label>
+        </div>
+        <div class="nc-player">
+          <div class="nc-info-area">
+            <strong class="nc-title">Destacados</strong>
+            <span class="nc-subtitle">Disfruta nuestras especialidades</span>
+            <span class="nc-time">Hoy</span>
+          </div>
+        </div>
+      </div>
     </section>
 
+    <!-- Category Filter Menu -->
     <nav class="category-menu">
       <button class="chip active" data-category="all">todos</button>
       <button class="chip" data-category="cafe">café</button>
@@ -76,19 +106,21 @@
       <button class="chip" data-category="postres">postres</button>
     </nav>
 
+    <!-- Main Content -->
     <main>
       <section class="products" id="productos">
         <h2 class="section-title">Productos</h2>
         <div class="product-grid" id="productGrid">
-          <!-- Los productos se generarán dinámicamente con JavaScript -->
+          <!-- Products will be generated dynamically -->
         </div>
       </section>
     </main>
 
+    <!-- Footer -->
     <footer class="site-footer">
       <div class="footer-inner">
         <div class="footer-col">
-          <h3 class="footer-brand">Colorlib</h3>
+          <h3 class="footer-brand">RomCoffe</h3>
           <p>Hecho con amor para servir excelente café y buena vibra.</p>
         </div>
         <nav class="footer-col">
@@ -111,352 +143,288 @@
           <a class="btn contact" href="#">Contactar</a>
         </div>
       </div>
-      <div class="footer-bottom">© <span id="currentYear"></span> Cafetería. Todos los derechos reservados.</div>
-    </div>
+      <div class="footer-bottom">© <span id="currentYear"></span> RomCoffe. Todos los derechos reservados.</div>
+    </footer>
 
-    <script>
-      /* ========================================
-         DATOS Y CONFIGURACIÓN
-      ======================================== */
-      
-      // Base de datos de productos
-      const products = [
-        {
-          image: 'https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?w=1200&q=80&auto=format&fit=crop',
-          name: 'Café Latte',
-          price: 3900,
-          description: 'Espresso suave con leche vaporizada y una capa de espuma.',
-          ingredients: ['Espresso', 'Leche', 'Espuma de leche'],
-          category: 'cafe'
-        },
-        {
-          image: 'https://images.unsplash.com/photo-1498804103079-a6351b050096?w=1200&q=80&auto=format&fit=crop',
-          name: 'Cold Brew',
-          price: 4500,
-          description: 'Café infusionado en frío durante 16 horas. Refrescante y suave.',
-          ingredients: ['Café molido', 'Agua filtrada', 'Hielo'],
-          category: 'bebidas-frias'
-        },
-        {
-          image: 'https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=1200&q=80&auto=format&fit=crop',
-          name: 'Sandwich Club',
-          price: 6900,
-          description: 'Pan tostado con pollo, tocino, vegetales y salsa especial.',
-          ingredients: ['Pan', 'Pollo', 'Tocino', 'Lechuga', 'Tomate', 'Salsa'],
-          category: 'almuerzo'
-        },
-        {
-          image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200&q=80&auto=format&fit=crop',
-          name: 'Ensalada César',
-          price: 5500,
-          description: 'Clásica ensalada con aderezo césar y crutones.',
-          ingredients: ['Lechuga', 'Pollo', 'Parmesano', 'Crutones', 'Aderezo césar'],
-          category: 'almuerzo'
-        }
-      ];
+  </div>
 
-      /* ========================================
-         GESTIÓN DE PRODUCTOS
-      ======================================== */
-      
-      // Generar tarjetas de productos
-      function generateProductCards(productsToShow = products) {
-        const productGrid = document.getElementById('productGrid');
-        productGrid.innerHTML = '';
+  <script>
+    // ========================================
+    // PRODUCTS DATA
+    // ========================================
+    const products = [
+      {
+        image: 'https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?w=1200&q=80&auto=format&fit=crop',
+        name: 'Café Latte',
+        price: 3900,
+        description: 'Espresso suave con leche vaporizada y una capa de espuma.',
+        ingredients: ['Espresso', 'Leche', 'Espuma de leche'],
+        category: 'cafe'
+      },
+      {
+        image: 'https://images.unsplash.com/photo-1498804103079-a6351b050096?w=1200&q=80&auto=format&fit=crop',
+        name: 'Cold Brew',
+        price: 4500,
+        description: 'Café infusionado en frío durante 16 horas. Refrescante y suave.',
+        ingredients: ['Café molido', 'Agua filtrada', 'Hielo'],
+        category: 'bebidas-frias'
+      },
+      {
+        image: 'https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=1200&q=80&auto=format&fit=crop',
+        name: 'Sandwich Club',
+        price: 6900,
+        description: 'Pan tostado con pollo, tocino, vegetales y salsa especial.',
+        ingredients: ['Pan', 'Pollo', 'Tocino', 'Lechuga', 'Tomate', 'Salsa'],
+        category: 'almuerzo'
+      },
+      {
+        image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200&q=80&auto=format&fit=crop',
+        name: 'Ensalada César',
+        price: 5500,
+        description: 'Clásica ensalada con aderezo césar y crutones.',
+        ingredients: ['Lechuga', 'Pollo', 'Parmesano', 'Crutones', 'Aderezo césar'],
+        category: 'almuerzo'
+      }
+    ];
 
-        productsToShow.forEach(product => {
-          const productCard = document.createElement('article');
-          productCard.className = 'card';
-          productCard.innerHTML = `
-            <div class="card-media">
-              <img src="${product.image}" alt="${product.name}" />
+    // ========================================
+    // PRODUCTS MANAGEMENT
+    // ========================================
+    function generateProductCards(productsToShow = products) {
+      const productGrid = document.getElementById('productGrid');
+      productGrid.innerHTML = '';
+
+      productsToShow.forEach(product => {
+        const productCard = document.createElement('article');
+        productCard.className = 'card';
+        productCard.innerHTML = `
+          <div class="card-media">
+            <img src="${product.image}" alt="${product.name}" />
+          </div>
+          <div class="card-body">
+            <div class="card-head">
+              <h3 class="card-title">${product.name}</h3>
+              <span class="price">$${product.price.toLocaleString('es-AR')}</span>
             </div>
-            <div class="card-body">
-              <div class="card-head">
-                <h3 class="card-title">${product.name}</h3>
-                <span class="price">$${product.price.toLocaleString('es-AR')}</span>
-              </div>
-              <p class="card-desc">${product.description}</p>
-              <ul class="ingredients">
-                ${product.ingredients.map(ingredient => `<li>${ingredient}</li>`).join('')}
-              </ul>
-              <button class="btn primary" onclick="addToCart('${product.name}', ${product.price}, '${product.image}')">Agregar al carrito</button>
-            </div>
-          `;
-          productGrid.appendChild(productCard);
-        });
-      }
-
-      // Filtrar productos por categoría
-      function filterProducts(category) {
-        if (category === 'all') {
-          generateProductCards();
-        } else {
-          const filteredProducts = products.filter(product => product.category === category);
-          generateProductCards(filteredProducts);
-        }
-      }
-
-      // Inicializar filtros de categoría
-      function initCategoryFilters() {
-        const categoryButtons = document.querySelectorAll('.category-menu .chip');
-        
-        categoryButtons.forEach(button => {
-          button.addEventListener('click', function() {
-            // Remover clase active de todos los botones
-            categoryButtons.forEach(btn => btn.classList.remove('active'));
-            // Agregar clase active al botón clickeado
-            this.classList.add('active');
-            
-            // Filtrar productos
-            const category = this.getAttribute('data-category');
-            filterProducts(category);
-          });
-        });
-      }
-
-      /* ========================================
-         CARRITO DE COMPRAS
-      ======================================== */
-      
-      // Estado del carrito
-      let cart = [];
-
-      // Crear elementos del carrito
-      const cartPanel = document.createElement('div');
-      cartPanel.className = 'cart-panel';
-      cartPanel.innerHTML = `
-        <div class="cart-header">
-          <h4 class="cart-title">TU PEDIDO</h4>
-          <button class="cart-remove" id="cartClear">Quitar</button>
-        </div>
-        <ul class="cart-items" id="cartItems"></ul>
-        <div class="cart-footer">
-          <span class="cart-total" id="cartTotal">$0.00</span>
-          <button class="btn primary" id="cartCheckout">Finalizar</button>
-        </div>
-      `;
-      document.body.appendChild(cartPanel);
-
-      const cartFab = document.createElement('button');
-      cartFab.className = 'cart-fab';
-      cartFab.setAttribute('aria-label', 'Abrir carrito');
-      cartFab.innerHTML = `
-        <span class="fab-icon">🛒</span>
-        <span class="badge" id="cartCount">0</span>`;
-      document.body.appendChild(cartFab);
-
-      // Persistencia del carrito
-      function saveCart() { 
-        localStorage.setItem('cart', JSON.stringify(cart)); 
-      }
-      
-      function loadCart() {
-        try { 
-          cart = JSON.parse(localStorage.getItem('cart')) || []; 
-        }
-        catch(e) { 
-          cart = []; 
-        }
-      }
-
-      // Actualizar interfaz del carrito
-      function updateCartUI() {
-        const itemsEl = document.getElementById('cartItems');
-        const totalEl = document.getElementById('cartTotal');
-        const countEl = document.getElementById('cartCount');
-        itemsEl.innerHTML = '';
-        let total = 0;
-        
-        cart.forEach((item, index) => {
-          total += item.price * item.qty;
-          const li = document.createElement('li');
-          li.className = 'cart-item';
-          li.innerHTML = `
-            <img src="${item.image}" alt="${item.name}" class="cart-item-image">
-            <span class="name">${item.name}</span>
-            <span class="price">$${(item.price * item.qty).toLocaleString('es-AR')}</span>
-            <span class="qty-controls" data-index="${index}">
-              <button class="qty-btn" data-action="dec">−</button>
-              <span class="qty-value">${item.qty}</span>
-              <button class="qty-btn" data-action="inc">+</button>
-            </span>
-          `;
-          itemsEl.appendChild(li);
-        });
-        
-        totalEl.textContent = `$${total.toLocaleString('es-AR')}`;
-        const totalQty = cart.reduce((a, b) => a + b.qty, 0);
-        countEl.textContent = totalQty;
-        saveCart();
-      }
-
-      // Agregar producto al carrito
-      function addToCart(productName, price, imageUrl) {
-        const existing = cart.find(p => p.name === productName);
-        if (existing) {
-          existing.qty += 1;
-        } else {
-          cart.push({ name: productName, price: price, qty: 1, image: imageUrl });
-        }
-        updateCartUI();
-        
-        // Animación del botón del carrito
-        cartFab.classList.add('bounce');
-        setTimeout(() => {
-          cartFab.classList.remove('bounce');
-        }, 600);
-      }
-
-      // Event listeners del carrito
-      cartFab.addEventListener('click', function(){
-        cartPanel.classList.toggle('open');
-        
-        // Si se está abriendo, agregar animación de entrada
-        if (cartPanel.classList.contains('open')) {
-          setTimeout(() => {
-            cartPanel.style.display = 'block';
-          }, 10);
-        }
+            <p class="card-desc">${product.description}</p>
+            <ul class="ingredients">
+              ${product.ingredients.map(ingredient => `<li>${ingredient}</li>`).join('')}
+            </ul>
+            <button class="btn primary" onclick="addToCart('${product.name}', ${product.price}, '${product.image}')">Agregar al carrito</button>
+          </div>
+        `;
+        productGrid.appendChild(productCard);
       });
+    }
 
-      cartPanel.addEventListener('click', function(e){
-        if (e.target && e.target.id === 'cartClear') {
-          cart.length = 0;
-          updateCartUI();
-        }
-        if (e.target && e.target.id === 'cartCheckout') {
-          alert('Gracias por tu pedido!');
-          cart.length = 0;
-          updateCartUI();
-          cartPanel.classList.remove('open');
-        }
-      });
-
-      // Event delegation para controles de cantidad
-      document.addEventListener('click', function(e){
-        if (e.target && e.target.closest('.qty-controls')) {
-          const group = e.target.closest('.qty-controls');
-          const idx = parseInt(group.getAttribute('data-index'), 10);
-          const action = e.target.getAttribute('data-action');
-          if (action === 'inc') { cart[idx].qty += 1; }
-          if (action === 'dec') { cart[idx].qty = Math.max(1, cart[idx].qty - 1); }
-          updateCartUI();
-        }
-      });
-
-      /* ========================================
-         CARRUSEL DE DESTACADOS
-      ======================================== */
-      
-      // Renderizar carrusel de destacados
-      function renderCarousel() {
-        const header = document.querySelector('.site-header');
-        const section = document.createElement('section');
-        section.className = 'nc-section';
-        section.innerHTML = `
-          <div class="nc-container">
-            <input type="radio" name="nc-slider" id="item-1" checked>
-            <input type="radio" name="nc-slider" id="item-2">
-            <input type="radio" name="nc-slider" id="item-3">
-            <div class="nc-cards">
-              <label class="nc-card" for="item-1" id="nc-card-1">
-                <img src="destacado 2.png" alt="Slide 1">
-              </label>
-              <label class="nc-card" for="item-2" id="nc-card-2">
-                <img src="destacado 1.png" alt="Slide 2">
-              </label>
-              <label class="nc-card" for="item-3" id="nc-card-3">
-                <img src="destacado 3.png" alt="Slide 3">
-              </label>
-            </div>
-            <div class="nc-player">
-              <div class="nc-info-area">
-                <strong class="nc-title">Destacados</strong>
-                <span class="nc-subtitle">Disfruta nuestras especialidades</span>
-                <span class="nc-time">Hoy</span>
-              </div>
-            </div>
-          </div>`;
-        header.insertAdjacentElement('afterend', section);
-      }
-
-      /* ========================================
-         FOOTER
-      ======================================== */
-      
-      // Actualizar año en el footer
-      function updateFooterYear() {
-        const currentYear = new Date().getFullYear();
-        document.getElementById('currentYear').textContent = currentYear;
-      }
-
-      /* ========================================
-         HEADER Y MENÚ DESPLEGABLE
-      ======================================== */
-      
-      // Funcionalidad del menú desplegable
-      function initHeaderMenu() {
-        const menuToggle = document.getElementById('menuToggle');
-        const dropdownMenu = document.getElementById('dropdownMenu');
-        
-        // Toggle del menú principal
-        menuToggle.addEventListener('click', function(e) {
-          e.stopPropagation();
-          dropdownMenu.classList.toggle('active');
-          menuToggle.classList.toggle('active');
-        });
-        
-        // Cerrar menú al hacer clic fuera
-        document.addEventListener('click', function(e) {
-          if (!dropdownMenu.contains(e.target) && !menuToggle.contains(e.target)) {
-            dropdownMenu.classList.remove('active');
-            menuToggle.classList.remove('active');
-          }
-        });
-        
-        // Manejar submenús
-        const submenuItems = document.querySelectorAll('.has-submenu');
-        submenuItems.forEach(item => {
-          const link = item.querySelector('.menu-link, .submenu-link');
-          const submenu = item.querySelector('.submenu, .sub-submenu');
-          
-          link.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            
-            // Cerrar otros submenús abiertos
-            submenuItems.forEach(otherItem => {
-              if (otherItem !== item) {
-                otherItem.classList.remove('active');
-              }
-            });
-            
-            // Toggle del submenú actual
-            item.classList.toggle('active');
-          });
-        });
-        
-        // Prevenir cierre del menú al hacer clic en los enlaces
-        dropdownMenu.addEventListener('click', function(e) {
-          e.stopPropagation();
-        });
-      }
-
-      /* ========================================
-         INICIALIZACIÓN
-      ======================================== */
-      
-      // Inicializar aplicación cuando el DOM esté listo
-      document.addEventListener('DOMContentLoaded', function() {
-        loadCart();
+    function filterProducts(category) {
+      if (category === 'all') {
         generateProductCards();
-        updateCartUI();
-        initCategoryFilters();
-        updateFooterYear();
-        renderCarousel();
-        initHeaderMenu();
+      } else {
+        const filteredProducts = products.filter(product => product.category === category);
+        generateProductCards(filteredProducts);
+      }
+    }
+
+    function initCategoryFilters() {
+      const categoryButtons = document.querySelectorAll('.category-menu .chip');
+      
+      categoryButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          categoryButtons.forEach(btn => btn.classList.remove('active'));
+          this.classList.add('active');
+          
+          const category = this.getAttribute('data-category');
+          filterProducts(category);
+        });
       });
-    </script>
-  </body>
+    }
+
+    // ========================================
+    // SHOPPING CART
+    // ========================================
+    let cart = [];
+
+    // Create cart elements
+    const cartPanel = document.createElement('div');
+    cartPanel.className = 'cart-panel';
+    cartPanel.innerHTML = `
+      <div class="cart-header">
+        <h4 class="cart-title">TU PEDIDO</h4>
+        <button class="cart-remove" id="cartClear">Quitar</button>
+      </div>
+      <ul class="cart-items" id="cartItems"></ul>
+      <div class="cart-footer">
+        <span class="cart-total" id="cartTotal">$0.00</span>
+        <button class="btn primary" id="cartCheckout">Finalizar</button>
+      </div>
+    `;
+    document.body.appendChild(cartPanel);
+
+    const cartFab = document.createElement('button');
+    cartFab.className = 'cart-fab';
+    cartFab.setAttribute('aria-label', 'Abrir carrito');
+    cartFab.innerHTML = `
+      <span class="fab-icon">🛒</span>
+      <span class="badge" id="cartCount">0</span>`;
+    document.body.appendChild(cartFab);
+
+    function saveCart() { 
+      localStorage.setItem('cart', JSON.stringify(cart)); 
+    }
+    
+    function loadCart() {
+      try { 
+        cart = JSON.parse(localStorage.getItem('cart')) || []; 
+      }
+      catch(e) { 
+        cart = []; 
+      }
+    }
+
+    function updateCartUI() {
+      const itemsEl = document.getElementById('cartItems');
+      const totalEl = document.getElementById('cartTotal');
+      const countEl = document.getElementById('cartCount');
+      itemsEl.innerHTML = '';
+      let total = 0;
+      
+      cart.forEach((item, index) => {
+        total += item.price * item.qty;
+        const li = document.createElement('li');
+        li.className = 'cart-item';
+        li.innerHTML = `
+          <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+          <span class="name">${item.name}</span>
+          <span class="price">$${(item.price * item.qty).toLocaleString('es-AR')}</span>
+          <span class="qty-controls" data-index="${index}">
+            <button class="qty-btn" data-action="dec">−</button>
+            <span class="qty-value">${item.qty}</span>
+            <button class="qty-btn" data-action="inc">+</button>
+          </span>
+        `;
+        itemsEl.appendChild(li);
+      });
+      
+      totalEl.textContent = `$${total.toLocaleString('es-AR')}`;
+      const totalQty = cart.reduce((a, b) => a + b.qty, 0);
+      countEl.textContent = totalQty;
+      saveCart();
+    }
+
+    function addToCart(productName, price, imageUrl) {
+      const existing = cart.find(p => p.name === productName);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({ name: productName, price: price, qty: 1, image: imageUrl });
+      }
+      updateCartUI();
+      
+      cartFab.classList.add('bounce');
+      setTimeout(() => {
+        cartFab.classList.remove('bounce');
+      }, 600);
+    }
+
+    // Cart event listeners
+    cartFab.addEventListener('click', function(){
+      cartPanel.classList.toggle('open');
+      
+      if (cartPanel.classList.contains('open')) {
+        setTimeout(() => {
+          cartPanel.style.display = 'block';
+        }, 10);
+      }
+    });
+
+    cartPanel.addEventListener('click', function(e){
+      if (e.target && e.target.id === 'cartClear') {
+        cart.length = 0;
+        updateCartUI();
+      }
+      if (e.target && e.target.id === 'cartCheckout') {
+        alert('Gracias por tu pedido!');
+        cart.length = 0;
+        updateCartUI();
+        cartPanel.classList.remove('open');
+      }
+    });
+
+    // Quantity controls
+    document.addEventListener('click', function(e){
+      if (e.target && e.target.closest('.qty-controls')) {
+        const group = e.target.closest('.qty-controls');
+        const idx = parseInt(group.getAttribute('data-index'), 10);
+        const action = e.target.getAttribute('data-action');
+        if (action === 'inc') { cart[idx].qty += 1; }
+        if (action === 'dec') { cart[idx].qty = Math.max(1, cart[idx].qty - 1); }
+        updateCartUI();
+      }
+    });
+
+    // ========================================
+    // HEADER MENU
+    // ========================================
+    function initHeaderMenu() {
+      const menuToggle = document.getElementById('menuToggle');
+      const dropdownMenu = document.getElementById('dropdownMenu');
+      
+      menuToggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        dropdownMenu.classList.toggle('active');
+        menuToggle.classList.toggle('active');
+      });
+      
+      document.addEventListener('click', function(e) {
+        if (!dropdownMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+          dropdownMenu.classList.remove('active');
+          menuToggle.classList.remove('active');
+        }
+      });
+      
+      const submenuItems = document.querySelectorAll('.has-submenu');
+      submenuItems.forEach(item => {
+        const link = item.querySelector('.menu-link, .submenu-link');
+        
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          
+          submenuItems.forEach(otherItem => {
+            if (otherItem !== item) {
+              otherItem.classList.remove('active');
+            }
+          });
+          
+          item.classList.toggle('active');
+        });
+      });
+      
+      dropdownMenu.addEventListener('click', function(e) {
+        e.stopPropagation();
+      });
+    }
+
+    // ========================================
+    // UTILITIES
+    // ========================================
+    function updateFooterYear() {
+      const currentYear = new Date().getFullYear();
+      document.getElementById('currentYear').textContent = currentYear;
+    }
+
+    // ========================================
+    // INITIALIZATION
+    // ========================================
+    document.addEventListener('DOMContentLoaded', function() {
+      loadCart();
+      generateProductCards();
+      updateCartUI();
+      initCategoryFilters();
+      updateFooterYear();
+      initHeaderMenu();
+    });
+  </script>
+</body>
 </html>
