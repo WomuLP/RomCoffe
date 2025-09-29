@@ -7,14 +7,64 @@
     <title>Cafetería • Menú</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@400;600;700&family=Dancing+Script:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <div class="main-container">
-    <header class="site-header">
-      <img class="banner" src="banner.png" alt="Banner cafetería" />
+    <header class="main-header">
+      <div class="header-content">
+        <a href="https://instagram.com/tu_perfil" target="_blank" class="instagram-btn">
+          <span class="instagram-text">Instagram</span>
+        </a>
+        <div class="menu-container">
+          <button class="menu-toggle" id="menuToggle">
+            <span class="menu-text">Menú</span>
+            <span class="menu-icon">☰</span>
+          </button>
+          <nav class="dropdown-menu" id="dropdownMenu">
+            <ul class="menu-list">
+              <li class="menu-item has-submenu">
+                <a href="#" class="menu-link">Productos</a>
+                <ul class="submenu">
+                  <li class="submenu-item has-submenu">
+                    <a href="#" class="submenu-link">Bebidas</a>
+                    <ul class="sub-submenu">
+                      <li><a href="#" class="sub-submenu-link">Café</a></li>
+                      <li><a href="#" class="sub-submenu-link">Té</a></li>
+                      <li><a href="#" class="sub-submenu-link">Batidos</a></li>
+                      <li><a href="#" class="sub-submenu-link">Jugos</a></li>
+                      <li><a href="#" class="sub-submenu-link">Otros</a></li>
+                    </ul>
+                  </li>
+                  <li class="submenu-item has-submenu">
+                    <a href="#" class="submenu-link">Comidas</a>
+                    <ul class="sub-submenu">
+                      <li><a href="#" class="sub-submenu-link">Almuerzos</a></li>
+                      <li><a href="#" class="sub-submenu-link">Meriendas</a></li>
+                      <li><a href="#" class="sub-submenu-link">Postres</a></li>
+                    </ul>
+                  </li>
+                  <li class="submenu-item">
+                    <a href="#" class="submenu-link">Promos</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="menu-item">
+                <a href="#" class="menu-link">Sobre nosotros</a>
+              </li>
+              <li class="menu-item">
+                <a href="#" class="menu-link">Contacto</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
     </header>
+
+    <section class="banner-section">
+      <img class="banner" src="banner.png" alt="Banner cafetería" />
+    </section>
 
     <nav class="category-menu">
       <button class="chip active" data-category="all">todos</button>
@@ -342,6 +392,58 @@
       }
 
       /* ========================================
+         HEADER Y MENÚ DESPLEGABLE
+      ======================================== */
+      
+      // Funcionalidad del menú desplegable
+      function initHeaderMenu() {
+        const menuToggle = document.getElementById('menuToggle');
+        const dropdownMenu = document.getElementById('dropdownMenu');
+        
+        // Toggle del menú principal
+        menuToggle.addEventListener('click', function(e) {
+          e.stopPropagation();
+          dropdownMenu.classList.toggle('active');
+          menuToggle.classList.toggle('active');
+        });
+        
+        // Cerrar menú al hacer clic fuera
+        document.addEventListener('click', function(e) {
+          if (!dropdownMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+            dropdownMenu.classList.remove('active');
+            menuToggle.classList.remove('active');
+          }
+        });
+        
+        // Manejar submenús
+        const submenuItems = document.querySelectorAll('.has-submenu');
+        submenuItems.forEach(item => {
+          const link = item.querySelector('.menu-link, .submenu-link');
+          const submenu = item.querySelector('.submenu, .sub-submenu');
+          
+          link.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            // Cerrar otros submenús abiertos
+            submenuItems.forEach(otherItem => {
+              if (otherItem !== item) {
+                otherItem.classList.remove('active');
+              }
+            });
+            
+            // Toggle del submenú actual
+            item.classList.toggle('active');
+          });
+        });
+        
+        // Prevenir cierre del menú al hacer clic en los enlaces
+        dropdownMenu.addEventListener('click', function(e) {
+          e.stopPropagation();
+        });
+      }
+
+      /* ========================================
          INICIALIZACIÓN
       ======================================== */
       
@@ -353,6 +455,7 @@
         initCategoryFilters();
         updateFooterYear();
         renderCarousel();
+        initHeaderMenu();
       });
     </script>
   </body>

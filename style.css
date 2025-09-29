@@ -62,20 +62,258 @@ body {
    HEADER Y BANNER
 ======================================== */
 
-.site-header {
-  position: relative;
-  height: 50vh;
-  min-height: 400px;
-  max-height: 600px;
-  overflow: hidden;
-  border-radius: 0;
-  box-shadow: none;
+/* Header principal */
+.main-header {
+  background: #8C031C;
+  padding: 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.site-header .banner {
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Sección del banner */
+.banner-section {
+  height: 50vh;
+  min-height: 400px;
+  max-height: 500px;
+  overflow: hidden;
+  position: relative;
+  margin-top: 0;
+}
+
+.banner {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+/* Botón Instagram */
+.instagram-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 0;
+  background: none;
+  color: white;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.instagram-btn:hover {
+  transform: scale(1.05);
+  opacity: 0.8;
+}
+
+.instagram-text {
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.6rem;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Contenedor del menú */
+.menu-container {
+  position: relative;
+}
+
+/* Botón del menú */
+.menu-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  background: none;
+  color: white;
+  border: none;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.menu-toggle:hover {
+  transform: scale(1.05);
+  opacity: 0.8;
+}
+
+.menu-toggle.active {
+  opacity: 0.8;
+}
+
+.menu-text {
+  font-family: 'Dancing Script', cursive;
+  font-weight: 700;
+  font-size: 1.6rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.menu-icon {
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+}
+
+.menu-toggle.active .menu-icon {
+  transform: rotate(90deg);
+}
+
+/* Menú desplegable */
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: var(--bg-cream);
+  border: 2px solid var(--bg-light-pink);
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(140, 3, 28, 0.2);
+  min-width: 280px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1001;
+  margin-top: 8px;
+}
+
+.dropdown-menu.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  display: block;
+}
+
+.menu-list {
+  list-style: none;
+  margin: 0;
+  padding: 15px 0;
+}
+
+.menu-item {
+  position: relative;
+}
+
+.menu-link {
+  display: block;
+  padding: 12px 20px;
+  color: var(--text-dark);
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border-left: 3px solid transparent;
+}
+
+.menu-link:hover {
+  background: var(--bg-light-pink);
+  color: var(--bg-dark);
+  border-left-color: var(--bg-pink);
+}
+
+/* Submenús */
+.submenu {
+  position: absolute;
+  right: 100%;
+  top: 0;
+  background: var(--bg-cream);
+  border: 2px solid var(--bg-light-pink);
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(140, 3, 28, 0.2);
+  min-width: 200px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(10px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1001;
+  margin-right: 8px;
+}
+
+.menu-item.has-submenu.active .submenu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+}
+
+.submenu-item {
+  position: relative;
+}
+
+.submenu-link {
+  display: block;
+  padding: 10px 18px;
+  color: var(--text-dark);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  border-left: 3px solid transparent;
+}
+
+.submenu-link:hover {
+  background: var(--bg-light-pink);
+  color: var(--bg-dark);
+  border-left-color: var(--bg-pink);
+}
+
+/* Sub-submenús */
+.sub-submenu {
+  position: absolute;
+  right: 100%;
+  top: 0;
+  background: var(--bg-cream);
+  border: 2px solid var(--bg-light-pink);
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(140, 3, 28, 0.2);
+  min-width: 160px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(10px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1002;
+  margin-right: 8px;
+}
+
+.submenu-item.has-submenu.active .sub-submenu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+}
+
+.sub-submenu-link {
+  display: block;
+  padding: 8px 16px;
+  color: var(--text-dark);
+  text-decoration: none;
+  font-weight: 400;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+  border-left: 3px solid transparent;
+}
+
+.sub-submenu-link:hover {
+  background: var(--bg-light-pink);
+  color: var(--bg-dark);
+  border-left-color: var(--bg-pink);
+}
+
+/* Indicadores de submenú */
+.menu-item.has-submenu > .menu-link::after,
+.submenu-item.has-submenu > .submenu-link::after {
+  content: '▶';
+  float: right;
+  font-size: 0.8rem;
+  transition: transform 0.3s ease;
+}
+
+.menu-item.has-submenu.active > .menu-link::after,
+.submenu-item.has-submenu.active > .submenu-link::after {
+  transform: rotate(90deg);
 }
 
 .header-overlay {
@@ -847,6 +1085,32 @@ main {
   .nc-card { 
     width: 80%; 
   }
+  
+  /* Header responsive para móvil */
+  .header-content {
+    padding: 12px 20px;
+  }
+  
+  .instagram-text {
+    font-size: 1.4rem;
+  }
+  
+  .menu-text {
+    font-size: 1.4rem;
+  }
+  
+  .dropdown-menu {
+    min-width: 250px;
+    right: -10px;
+  }
+  
+  .submenu {
+    min-width: 180px;
+  }
+  
+  .sub-submenu {
+    min-width: 140px;
+  }
 }
 
 /* Móvil pequeño (480px y menos) */
@@ -886,6 +1150,32 @@ main {
   .cart-fab {
     right: 12px;
     bottom: 12px;
+  }
+  
+  /* Header responsive para móvil pequeño */
+  .header-content {
+    padding: 10px 15px;
+  }
+  
+  .instagram-text {
+    font-size: 1.2rem;
+  }
+  
+  .menu-text {
+    font-size: 1.2rem;
+  }
+  
+  .dropdown-menu {
+    min-width: 220px;
+    right: -15px;
+  }
+  
+  .submenu {
+    min-width: 160px;
+  }
+  
+  .sub-submenu {
+    min-width: 120px;
   }
 }
 
