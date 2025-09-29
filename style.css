@@ -300,6 +300,128 @@ n */
   transform: rotate(90deg);
 }
 
+/* Mobile sliding panel and overlay */
+.menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+  z-index: 9998;
+}
+
+.menu-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* mobile panel base - applied dynamically via class */
+.dropdown-menu.mobile-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 85%;
+  max-width: 360px;
+  padding: 20px 18px;
+  transform: translateX(100%);
+  transition: transform 0.35s cubic-bezier(.2,.9,.2,1);
+  display: block !important;
+  overflow-y: auto;
+  z-index: 9999;
+}
+
+.dropdown-menu.mobile-panel.active {
+  transform: translateX(0);
+}
+
+/* Ensure submenu items in mobile are static blocks */
+.dropdown-menu.mobile-panel .submenu,
+.dropdown-menu.mobile-panel .sub-submenu {
+  position: static;
+  transform: none;
+  opacity: 1;
+  visibility: visible;
+  margin: 6px 0 12px 0;
+  border-radius: 10px;
+  box-shadow: none;
+}
+
+/* Desktop: show menu inline in header and dropdowns open downward */
+@media (min-width: 900px) {
+  .menu-toggle { display: none; }
+
+  .dropdown-menu {
+    position: static;
+    top: auto;
+    right: auto;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    min-width: auto;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    display: block !important;
+    margin-left: 24px;
+  }
+
+  .menu-list {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    padding: 0;
+  }
+
+  .menu-link {
+    padding: 10px 8px;
+    color: var(--text-light);
+  }
+
+  /* submenus open downward under their parent */
+  .submenu {
+    position: absolute;
+    right: auto;
+    left: 0;
+    top: calc(100% + 8px);
+    transform: translateY(-6px);
+    opacity: 0;
+    visibility: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    min-width: 220px;
+    margin-right: 0;
+  }
+
+  .menu-item.has-submenu.active .submenu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  /* sub-submenu should open to the right of the submenu */
+  .sub-submenu {
+    right: -10px;
+    left: auto;
+    top: 0;
+    transform: translateX(6px);
+  }
+
+  .submenu-item.has-submenu.active .sub-submenu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+  }
+
+  /* indicator arrow points down on desktop */
+  .menu-item.has-submenu > .menu-link::after,
+  .submenu-item.has-submenu > .submenu-link::after {
+    content: '\25BC';
+    transform: none;
+    margin-left: 8px;
+  }
+}
+
 /* ========================================
    FEATURED CAROUSEL
 ======================================== */
