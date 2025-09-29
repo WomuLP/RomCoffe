@@ -365,10 +365,15 @@
       const menuToggle = document.getElementById('menuToggle');
       const dropdownMenu = document.getElementById('dropdownMenu');
       
+      console.log('Menu toggle found:', menuToggle);
+      console.log('Dropdown menu found:', dropdownMenu);
+      
       menuToggle.addEventListener('click', function(e) {
+        console.log('Menu toggle clicked');
         e.stopPropagation();
         dropdownMenu.classList.toggle('active');
         menuToggle.classList.toggle('active');
+        console.log('Menu classes after toggle:', dropdownMenu.classList.toString());
       });
       
       document.addEventListener('click', function(e) {
@@ -378,11 +383,40 @@
         }
       });
       
-      const submenuItems = document.querySelectorAll('.has-submenu');
-      submenuItems.forEach(item => {
-        const link = item.querySelector('.menu-link, .submenu-link');
+      // Handle main menu items with submenus
+      const mainSubmenuItems = document.querySelectorAll('.menu-item.has-submenu');
+      console.log('Main submenu items found:', mainSubmenuItems.length);
+      
+      mainSubmenuItems.forEach((item, index) => {
+        const link = item.querySelector('.menu-link');
+        console.log(`Setting up main submenu ${index}:`, link?.textContent);
         
         link.addEventListener('click', function(e) {
+          console.log('Main submenu clicked:', link.textContent);
+          e.preventDefault();
+          e.stopPropagation();
+          
+          mainSubmenuItems.forEach(otherItem => {
+            if (otherItem !== item) {
+              otherItem.classList.remove('active');
+            }
+          });
+          
+          item.classList.toggle('active');
+          console.log('Main item classes after toggle:', item.classList.toString());
+        });
+      });
+      
+      // Handle submenu items with sub-submenus
+      const submenuItems = document.querySelectorAll('.submenu-item.has-submenu');
+      console.log('Submenu items found:', submenuItems.length);
+      
+      submenuItems.forEach((item, index) => {
+        const link = item.querySelector('.submenu-link');
+        console.log(`Setting up submenu ${index}:`, link?.textContent);
+        
+        link.addEventListener('click', function(e) {
+          console.log('Submenu clicked:', link.textContent);
           e.preventDefault();
           e.stopPropagation();
           
@@ -393,6 +427,7 @@
           });
           
           item.classList.toggle('active');
+          console.log('Submenu item classes after toggle:', item.classList.toString());
         });
       });
       

@@ -156,6 +156,7 @@ n */
   background: var(--bg-cream);
   border: 2px solid var(--bg-light-pink);
   border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(140, 3, 28, 0.2);
   min-width: 280px;
   opacity: 0;
   visibility: hidden;
@@ -207,6 +208,7 @@ n */
   background: var(--bg-cream);
   border: 2px solid var(--bg-light-pink);
   border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(140, 3, 28, 0.2);
   min-width: 200px;
   opacity: 0;
   visibility: hidden;
@@ -251,7 +253,7 @@ n */
   background: var(--bg-cream);
   border: 2px solid var(--bg-light-pink);
   border-radius: 15px;
-
+  box-shadow: 0 10px 30px rgba(140, 3, 28, 0.2);
   min-width: 160px;
   opacity: 0;
   visibility: hidden;
