@@ -222,9 +222,10 @@ function initHeaderMenu() {
   const menuOverlay = document.getElementById('menuOverlay');
 
   if (!menuToggle || !dropdownMenu) return;
+  console.log('[menu] initHeaderMenu() running', { menuToggle: !!menuToggle, dropdownMenu: !!dropdownMenu });
 
   // Helper to detect mobile layout
-  const isMobile = () => window.matchMedia('(max-width: 899px)').matches;
+  const isMobile = () => window.matchMedia('(max-width: 767px)').matches;
 
   // prepare mobile panel class when needed
   function applyLayout() {
@@ -232,6 +233,7 @@ function initHeaderMenu() {
       dropdownMenu.classList.add('mobile-panel');
       menuToggle.setAttribute('aria-expanded', 'false');
       menuOverlay.setAttribute('aria-hidden', 'true');
+      console.log('[menu] applyLayout -> mobile layout applied');
     } else {
       dropdownMenu.classList.remove('mobile-panel', 'active');
       menuToggle.classList.remove('active');
@@ -240,6 +242,7 @@ function initHeaderMenu() {
       menuOverlay.setAttribute('aria-hidden', 'true');
       // close all submenu states
       document.querySelectorAll('.menu-item.has-submenu, .submenu-item.has-submenu').forEach(el => el.classList.remove('active'));
+      console.log('[menu] applyLayout -> desktop layout applied');
     }
   }
 
@@ -252,14 +255,24 @@ function initHeaderMenu() {
       // open sliding panel
       const opening = !dropdownMenu.classList.contains('active');
       dropdownMenu.classList.toggle('active');
-      menuOverlay.classList.toggle('active', opening);
+  // do not insert a back button; keep overlay for click but do not darken
+  // (do not toggle overlay active to avoid darkening)
       menuToggle.classList.toggle('active', opening);
+      // change icon (hamburger -> X)
+      const iconEl = menuToggle.querySelector('.menu-icon');
+      if (iconEl) iconEl.textContent = opening ? '\u2715' : '\u2630';
+      console.log('[menu] menuToggle clicked (mobile). opening=', opening);
       menuToggle.setAttribute('aria-expanded', opening ? 'true' : 'false');
       menuOverlay.setAttribute('aria-hidden', opening ? 'false' : 'true');
     } else {
       // on desktop just toggle visual state for accessibility
+      const opening = !dropdownMenu.classList.contains('active');
       dropdownMenu.classList.toggle('active');
-      menuToggle.classList.toggle('active');
+      menuToggle.classList.toggle('active', opening);
+      // change icon on desktop toggle as well
+      const iconEl = menuToggle.querySelector('.menu-icon');
+      if (iconEl) iconEl.textContent = opening ? '\u2715' : '\u2630';
+      console.log('[menu] menuToggle clicked (desktop). opening=', opening);
     }
   });
 
@@ -269,6 +282,10 @@ function initHeaderMenu() {
       dropdownMenu.classList.remove('active');
       menuOverlay.classList.remove('active');
       menuToggle.classList.remove('active');
+      // reset icon to hamburger
+      const iconEl = menuToggle.querySelector('.menu-icon');
+      if (iconEl) iconEl.textContent = '\u2630';
+      console.log('[menu] overlay clicked — menu closed');
       menuToggle.setAttribute('aria-expanded', 'false');
       menuOverlay.setAttribute('aria-hidden', 'true');
     });
@@ -279,6 +296,8 @@ function initHeaderMenu() {
     if (!dropdownMenu.contains(e.target) && !menuToggle.contains(e.target) && isMobile() === false) {
       dropdownMenu.classList.remove('active');
       menuToggle.classList.remove('active');
+      const iconEl = menuToggle.querySelector('.menu-icon');
+      if (iconEl) iconEl.textContent = '\u2630';
     }
   });
 
@@ -293,6 +312,25 @@ function initHeaderMenu() {
       const other = Array.from(mainSubmenuItems).filter(i => i !== item);
       other.forEach(o => o.classList.remove('active'));
       item.classList.toggle('active');
+      // if the clicked main menu is 'Productos', show product section
+      try {
+        const txt = (link.textContent || '').trim().toLowerCase();
+        if (txt === 'productos') {
+          // show all products and scroll to productos section
+          filterProducts('all');
+          const sec = document.getElementById('productos');
+          if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          // on mobile, close the panel after selection
+          if (isMobile()) {
+            dropdownMenu.classList.remove('active');
+            menuToggle.classList.remove('active');
+            const iconEl = menuToggle.querySelector('.menu-icon');
+            if (iconEl) iconEl.textContent = '\u2630';
+          }
+        }
+      } catch (err) {
+        console.warn('[menu] error handling Productos click', err);
+      }
     });
   });
 
@@ -302,11 +340,26 @@ function initHeaderMenu() {
     link.addEventListener('click', function(e) {
       e.preventDefault();
       e.stopPropagation();
-      const other = Array.from(submenuItems).filter(i => i !== item);
-      other.forEach(o => o.classList.remove('active'));
-      item.classList.toggle('active');
+      // On desktop behave as before. On mobile we'll toggle an accordion inside the right panel
+      if (!isMobile()) {
+        const other = Array.from(submenuItems).filter(i => i !== item);
+        other.forEach(o => o.classList.remove('active'));
+        item.classList.toggle('active');
+        return;
+      }
+
+      // Mobile accordion behaviour for sub-submenu
+      const sub = item.querySelector('.sub-submenu');
+      if (!sub) return;
+
+      const isOpen = sub.classList.contains('open');
+      // close other open sub-submenus
+      document.querySelectorAll('.dropdown-menu.mobile-panel .sub-submenu.open').forEach(s => s.classList.remove('open'));
+      if (!isOpen) sub.classList.add('open');
     });
   });
+
+  // back button functionality removed by request
 
   // Prevent clicks inside the menu from closing it on mobile
   dropdownMenu.addEventListener('click', function(e) { e.stopPropagation(); });
@@ -317,6 +370,8 @@ function initHeaderMenu() {
       dropdownMenu.classList.remove('active');
       menuOverlay.classList.remove('active');
       menuToggle.classList.remove('active');
+      const iconEl = menuToggle.querySelector('.menu-icon');
+      if (iconEl) iconEl.textContent = '\u2630';
       menuToggle.setAttribute('aria-expanded', 'false');
       menuOverlay.setAttribute('aria-hidden', 'true');
     }
