@@ -16,6 +16,9 @@ document.addEventListener('DOMContentLoaded', function(){
   var backLogin = document.getElementById('btnBackLogin');
   var loginCard = document.getElementById('loginCard');
   var registerCard = document.getElementById('registerCard');
+  var overlay = document.getElementById('authOverlay');
+  var openBtn = document.getElementById('openLoginBtn');
+  var closeBtn = document.getElementById('closeOverlay');
 
   if (showReg) {
     showReg.addEventListener('click', function(){
@@ -30,6 +33,26 @@ document.addEventListener('DOMContentLoaded', function(){
       loginCard.classList.remove('hidden');
     });
   }
+
+  if (openBtn && overlay) {
+    openBtn.addEventListener('click', function(e){
+      e.preventDefault();
+      overlay.classList.add('open');
+    });
+  }
+
+  if (closeBtn && overlay) {
+    closeBtn.addEventListener('click', function(){
+      overlay.classList.remove('open');
+    });
+  }
+
+  // Close overlay on Escape
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && overlay) {
+      overlay.classList.remove('open');
+    }
+  });
 
   function validateNotEmpty(form){
     var inputs = form.querySelectorAll('input[required]');

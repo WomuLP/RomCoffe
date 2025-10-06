@@ -45,7 +45,10 @@ body {
   inset: 0;
   background: url('RomCoffe.png') center/cover no-repeat fixed;
   z-index: 2000;
+  display: none;
 }
+
+.auth-overlay.open { display: block; }
 
 .auth-layout {
   min-height: 100vh;
@@ -144,19 +147,31 @@ body {
 
 .header-content {
   display: flex;
-  justify-content: flex-start; /* keep items to the left when only Instagram remains */
-  align-items: center;
+  justify-content: space-between; /* left & right edges */
   padding: 0 30px;
-  max-width: 1200px;
-  margin: 0 auto;
+  max-width: none;
+  margin: 0;
   height: 100%;
+  width: 100%;
 }
 
-/* place Instagram on the left and menu on the right */
-.header-content .instagram-btn { margin-right: 0; }
+.login-btn { margin-left: auto; }
 
-/* Instagram Butto
-n */
+/* Close button for auth overlay */
+.auth-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 2px solid #f2b9c6;
+  background: rgba(255,255,255,0.9);
+  color: #8C031C;
+  font-weight: 700;
+  cursor: pointer;
+}
+
 .instagram-btn {
   display: inline-flex;
   align-items: left;

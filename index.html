@@ -12,6 +12,7 @@
 <body>
   <!-- AUTH OVERLAY (no reemplaza el contenido existente) -->
   <div class="auth-overlay" id="authOverlay">
+    <button type="button" class="auth-close" id="closeOverlay" aria-label="Cerrar">✕</button>
     <main class="auth-layout">
       <section class="auth-card" id="loginCard">
         <h1 class="auth-title">Inicio de Sesión</h1>
@@ -35,7 +36,7 @@
       </section>
       <section class="auth-card hidden" id="registerCard">
         <h2 class="auth-title">Registro</h2>
-        <form class="auth-form" action="usuarios.php" method="post" novalidate>
+        <form class="auth-form" action="usuario.php" method="post" novalidate>
           <div class="field">
             <label for="reg_username" class="auth-label"><span class="ico">👤</span> Nombre de usuario</label>
             <input type="text" id="reg_username" name="username" class="auth-input" required autocomplete="username">
@@ -68,6 +69,9 @@
       <div class="header-content">
         <a href="https://instagram.com/tu_perfil" target="_blank" class="instagram-btn">
           <span class="instagram-text">Instagram</span>
+        </a>
+        <a href="#" id="openLoginBtn" class="instagram-btn login-btn">
+          <span class="instagram-text">Inicio de sesión</span>
         </a>
         <!-- menu removed: only Instagram left in header -->
       </div>
