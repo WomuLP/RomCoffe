@@ -10,6 +10,52 @@
   <link rel="stylesheet" href="style.css?v=2" />
 </head>
 <body>
+  <!-- AUTH OVERLAY (no reemplaza el contenido existente) -->
+  <div class="auth-overlay" id="authOverlay">
+    <main class="auth-layout">
+      <section class="auth-card" id="loginCard">
+        <h1 class="auth-title">Inicio de Sesión</h1>
+        <form class="auth-form" action="usuarios.php" method="post" novalidate>
+          <div class="field">
+            <label for="username" class="auth-label"><span class="ico">👤</span> Nombre de usuario</label>
+            <input type="text" id="username" name="username" class="auth-input" required autocomplete="username">
+          </div>
+          <div class="field">
+            <label for="password" class="auth-label"><span class="ico">🔒</span> Contraseña</label>
+            <div class="password-group">
+              <input type="password" id="password" name="password" class="auth-input" required autocomplete="current-password">
+              <button type="button" class="toggle-pass" aria-label="Mostrar u ocultar contraseña" data-target="password">👁️</button>
+            </div>
+          </div>
+          <div class="actions">
+            <button type="submit" class="btn primary" id="btnLogin">Iniciar Sesión</button>
+            <button type="button" class="btn ghost" id="btnShowRegister">Registrarse</button>
+          </div>
+        </form>
+      </section>
+      <section class="auth-card hidden" id="registerCard">
+        <h2 class="auth-title">Registro</h2>
+        <form class="auth-form" action="usuarios.php" method="post" novalidate>
+          <div class="field">
+            <label for="reg_username" class="auth-label"><span class="ico">👤</span> Nombre de usuario</label>
+            <input type="text" id="reg_username" name="username" class="auth-input" required autocomplete="username">
+          </div>
+          <div class="field">
+            <label for="reg_password" class="auth-label"><span class="ico">🔒</span> Contraseña</label>
+            <div class="password-group">
+              <input type="password" id="reg_password" name="password" class="auth-input" required autocomplete="new-password">
+              <button type="button" class="toggle-pass" aria-label="Mostrar u ocultar contraseña" data-target="reg_password">👁️</button>
+            </div>
+          </div>
+          <div class="actions">
+            <button type="submit" class="btn primary">Registrarse</button>
+            <button type="button" class="btn ghost" id="btnBackLogin">Volver</button>
+          </div>
+        </form>
+      </section>
+    </main>
+  </div>
+
   <div class="main-container">
     
     <!-- Banner Section -->
@@ -104,6 +150,7 @@
   </div>
 
   <script src="script.js?v=2"></script>
+  <script src="scripts.js?v=2"></script>
 </body>
 
 </html>

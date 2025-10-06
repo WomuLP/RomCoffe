@@ -30,6 +30,75 @@ body {
   padding-top: 70px; /* leave space for fixed header */
 }
 
+/* ========================================
+   AUTH PAGES (Login / Register)
+======================================== */
+.auth-page {
+  padding-top: 0;
+  min-height: 100vh;
+  background: url('RomCoffe.png') center/cover no-repeat fixed;
+}
+
+/* Fullscreen overlay wrapper so no reemplaza contenido existente */
+.auth-overlay {
+  position: fixed;
+  inset: 0;
+  background: url('RomCoffe.png') center/cover no-repeat fixed;
+  z-index: 2000;
+}
+
+.auth-layout {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 560px;
+  background: rgba(255,255,255,0.9);
+  border-radius: 28px;
+  border: 4px solid #ead8c8;
+  padding: 28px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.12);
+}
+
+.auth-card.hidden { display: none; }
+
+.auth-title {
+  margin: 0 0 16px;
+  text-align: center;
+  color: #8C031C;
+  font-family: 'Dancing Script', cursive;
+  font-weight: 700;
+  font-size: 48px;
+}
+
+.auth-form { display: grid; gap: 14px; }
+.field { display: grid; gap: 6px; }
+.auth-label { font-weight: 700; color: #8C031C; display: inline-flex; align-items: center; gap: 8px; }
+.auth-input { width: 100%; padding: 14px 16px; border-radius: 16px; border: 2px solid var(--bg-light-pink); background: #fdeaea; outline: none; font-size: 16px; }
+.auth-input:focus { border-color: var(--bg-pink); box-shadow: 0 0 0 3px rgba(242,136,164,.18); }
+
+.password-group { position: relative; }
+.toggle-pass {
+  position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+  border: 0; background: transparent; cursor: pointer; font-size: 20px; color: #8C031C;
+}
+
+.actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 6px; }
+.btn { border: 0; border-radius: 16px; padding: 12px 16px; font-weight: 700; cursor: pointer; transition: transform .15s ease, background .2s ease; }
+.btn.primary { background: #8C031C; color: #fff; }
+.btn.primary:hover { transform: translateY(-1px); background: #a10a24; }
+.btn.ghost { background: #f7eaea; color: #8C031C; border: 2px solid #f2b9c6; }
+.btn.ghost:hover { transform: translateY(-1px); background: #f2d8de; }
+
+@media (max-width: 560px) {
+  .auth-title { font-size: 40px; }
+  .actions { grid-template-columns: 1fr; }
+}
+
 .main-container {
   max-width: none;
   margin: 0;
