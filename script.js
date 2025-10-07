@@ -96,6 +96,7 @@ function initCategoryFilters() {
 let cart = [];
 
 // Create cart elements
+// Limpieza: eliminamos estilos/comportamientos no usados. Mantenemos carrito funcional.
 const cartPanel = document.createElement('div');
 cartPanel.className = 'cart-panel';
 cartPanel.innerHTML = `
@@ -213,7 +214,7 @@ document.addEventListener('click', function(e){
   }
 });
 
-// HEADER MENU — removed unused code
+// HEADER MENU — removed unused code (sin menú desplegable en esta versión)
 
 // ========================================
 // UTILITIES
@@ -233,6 +234,7 @@ document.addEventListener('DOMContentLoaded', function() {
   initCategoryFilters();
   updateFooterYear();
 });
+
 // Toggle password visibility
 document.addEventListener('click', function(e){
   if (e.target && e.target.classList.contains('toggle-pass')) {
@@ -243,7 +245,7 @@ document.addEventListener('click', function(e){
   }
 });
 
-// Simple client-side validations and card switching
+// Abrir/cerrar overlay de autenticación y validaciones simples
 document.addEventListener('DOMContentLoaded', function(){
   var loginForm = document.querySelector('#loginCard form');
   var registerForm = document.querySelector('#registerCard form');
@@ -282,7 +284,7 @@ document.addEventListener('DOMContentLoaded', function(){
     });
   }
 
-  // Close overlay on Escape
+  // Cerrar con Escape
   document.addEventListener('keydown', function(e){
     if (e.key === 'Escape' && overlay) {
       overlay.classList.remove('open');

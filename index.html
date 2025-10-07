@@ -10,13 +10,13 @@
   <link rel="stylesheet" href="style.css?v=2" />
 </head>
 <body>
-  <!-- AUTH OVERLAY (no reemplaza el contenido existente) -->
+  <!-- AUTH OVERLAY -->
   <div class="auth-overlay" id="authOverlay">
     <button type="button" class="auth-close" id="closeOverlay" aria-label="Cerrar">✕</button>
     <main class="auth-layout">
       <section class="auth-card" id="loginCard">
         <h1 class="auth-title">Inicio de Sesión</h1>
-        <form class="auth-form" action="usuarios.php" method="post" novalidate>
+        <form class="auth-form" action="usuario.php" method="post" novalidate>
           <div class="field">
             <label for="username" class="auth-label"><span class="ico">👤</span> Nombre de usuario</label>
             <input type="text" id="username" name="username" class="auth-input" required autocomplete="username">
@@ -153,8 +153,7 @@
 
   </div>
 
-  <script src="script.js?v=2"></script>
-  <script src="scripts.js?v=2"></script>
+  <script src="script.js?v=3"></script>
 </body>
 
 </html>

@@ -12,4 +12,5 @@ if ($conn->connect_error) {
 }
 
 $conn->set_charset("utf8mb4");
-?>
+// Nota: Se elimina el cierre `?>` para evitar espacios o saltos de línea
+// que puedan romper `header()` en otros scripts.
