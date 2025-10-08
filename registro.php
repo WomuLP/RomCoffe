@@ -1,25 +1,35 @@
 <?php
-include "conexion.php";
+include("conexion.php");
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $username = trim($_POST['username'] ?? '');
-    $email = trim($_POST['email'] ?? '');
     $password = $_POST['password'] ?? '';
 
-    if ($username === '' || $password === '' || $email === '') {
-        echo "Completa todos los campos.";
+    if (empty($username) || empty($password)) {
+        echo "<script>alert('Por favor, completá todos los campos.'); window.history.back();</script>";
         exit;
     }
 
-    $hash = password_hash($password, PASSWORD_BCRYPT);
-    $stmt = $conn->prepare("INSERT INTO usuarios (username, password, email, role, active) VALUES (?, ?, ?, 'user', 1)");
-    $stmt->bind_param("sss", $username, $hash, $email);
+    // Verificar si el usuario ya existe
+    $check = $conn->prepare("SELECT id FROM usuarios WHERE username=? LIMIT 1");
+    $check->bind_param("s", $username);
+    $check->execute();
+    $check->store_result();
+
+    if ($check->num_rows > 0) {
+        echo "<script>alert('El nombre de usuario ya existe.'); window.history.back();</script>";
+        exit;
+    }
+
+    // Guardar nuevo usuario
+    $hash = password_hash($password, PASSWORD_DEFAULT);
+    $stmt = $conn->prepare("INSERT INTO usuarios (username, password, role, active) VALUES (?, ?, 'user', 1)");
+    $stmt->bind_param("ss", $username, $hash);
 
     if ($stmt->execute()) {
-        header("Location: form_login.html?registro=ok");
-        exit;
+        echo "<script>alert('Usuario registrado correctamente. Ahora podés iniciar sesión.'); window.location.href='index.html';</script>";
     } else {
-        echo "Error: ". $stmt->error;
+        echo "<script>alert('Error al registrar usuario.'); window.history.back();</script>";
     }
 }
 ?>

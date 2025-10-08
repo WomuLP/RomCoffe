@@ -1,5 +1,4 @@
 <?php
-ob_start();
 session_start();
 include("conexion.php");
 
@@ -8,12 +7,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $password = $_POST['password'] ?? '';
 
     if (empty($username) || empty($password)) {
-        header("Location: form_login.html?error=empty");
+        echo "<script>alert('Por favor, completá todos los campos.'); window.history.back();</script>";
         exit;
     }
 
     $sql = "SELECT id, username, password, role FROM usuarios WHERE username=? AND active=1 LIMIT 1";
     $stmt = $conn->prepare($sql);
+    if (!$stmt) {
+        die("Error en la consulta: " . $conn->error);
+    }
+
     $stmt->bind_param("s", $username);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -24,23 +27,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $_SESSION['username'] = $row['username'];
             $_SESSION['role'] = $row['role'];
 
-            // Redirigir según rol
-            if ($row['role'] === 'admin') {
-                header("Location: usuarios.php");
-            } else {
-                header("Location: usuario.php");
-            }
+            echo "<script>
+                alert('Bienvenido, {$row['username']}');
+                window.location.href = 'menu.php';
+            </script>";
             exit;
         } else {
-            header("Location: form_login.html?error=wrongpass");
-            exit;
+            echo "<script>alert('Contraseña incorrecta.'); window.history.back();</script>";
         }
     } else {
-        header("Location: form_login.html?error=notfound");
-        exit;
+        echo "<script>alert('Usuario no encontrado o inactivo.'); window.history.back();</script>";
     }
 } else {
-    header("Location: form_login.html");
+    header("Location: index.html");
     exit;
 }
 ?>
