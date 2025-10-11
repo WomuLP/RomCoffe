@@ -253,7 +253,7 @@ document.addEventListener('DOMContentLoaded', function(){
   var backLogin = document.getElementById('btnBackLogin');
   var loginCard = document.getElementById('loginCard');
   var registerCard = document.getElementById('registerCard');
-  var overlay = document.getElementById('authOverlay');
+  var overlay = document.getElementById('loginOverlay');
   var openBtn = document.getElementById('openLoginBtn');
   var closeBtn = document.getElementById('closeOverlay');
 

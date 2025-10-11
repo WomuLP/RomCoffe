@@ -1,12 +1,15 @@
 <?php
 include("conexion.php");
 
+header('Content-Type: application/json');
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $username = trim($_POST['username'] ?? '');
-    $password = $_POST['password'] ?? '';
+    $input = json_decode(file_get_contents('php://input'), true);
+    $username = trim($input['username'] ?? '');
+    $password = $input['password'] ?? '';
 
     if (empty($username) || empty($password)) {
-        echo "<script>alert('Por favor, completá todos los campos.'); window.history.back();</script>";
+        echo json_encode(['success' => false, 'message' => 'Por favor, completá todos los campos.']);
         exit;
     }
 
@@ -17,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $check->store_result();
 
     if ($check->num_rows > 0) {
-        echo "<script>alert('El nombre de usuario ya existe.'); window.history.back();</script>";
+        echo json_encode(['success' => false, 'message' => 'El nombre de usuario ya existe.']);
         exit;
     }
 
@@ -27,9 +30,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bind_param("ss", $username, $hash);
 
     if ($stmt->execute()) {
-        echo "<script>alert('Usuario registrado correctamente. Ahora podés iniciar sesión.'); window.location.href='index.html';</script>";
+        echo json_encode(['success' => true, 'message' => 'Usuario registrado correctamente. Ahora podés iniciar sesión.']);
     } else {
-        echo "<script>alert('Error al registrar usuario.'); window.history.back();</script>";
+        echo json_encode(['success' => false, 'message' => 'Error al registrar usuario.']);
     }
+} else {
+    echo json_encode(['success' => false, 'message' => 'Método no permitido.']);
 }
 ?>

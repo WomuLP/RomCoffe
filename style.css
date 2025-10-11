@@ -31,16 +31,16 @@ body {
 }
 
 /* ========================================
-   AUTH PAGES (Login / Register)
+   login PAGES (Login / Register)
 ======================================== */
-.auth-page {
+.login-page {
   padding-top: 0;
   min-height: 100vh;
   background: url('RomCoffe.png') center/cover no-repeat fixed;
 }
 
 /* Fullscreen overlay wrapper so no reemplaza contenido existente */
-.auth-overlay {
+.login-overlay {
   position: fixed;
   inset: 0;
   background: url('RomCoffe.png') center/cover no-repeat fixed;
@@ -48,16 +48,16 @@ body {
   display: none;
 }
 
-.auth-overlay.open { display: block; }
+.login-overlay.open { display: block; }
 
-.auth-layout {
+.login-layout {
   min-height: 100vh;
   display: grid;
   place-items: center;
   padding: 24px;
 }
 
-.auth-card {
+.login-card {
   width: 100%;
   max-width: 560px;
   background: rgba(255,255,255,0.9);
@@ -67,9 +67,9 @@ body {
   box-shadow: 0 10px 30px rgba(0,0,0,.12);
 }
 
-.auth-card.hidden { display: none; }
+.login-card.hidden { display: none; }
 
-.auth-title {
+.login-title {
   margin: 0 0 16px;
   text-align: center;
   color: #8C031C;
@@ -78,11 +78,11 @@ body {
   font-size: 48px;
 }
 
-.auth-form { display: grid; gap: 14px; }
+.login-form { display: grid; gap: 14px; }
 .field { display: grid; gap: 6px; }
-.auth-label { font-weight: 700; color: #8C031C; display: inline-flex; align-items: center; gap: 8px; }
-.auth-input { width: 100%; padding: 14px 16px; border-radius: 16px; border: 2px solid var(--bg-light-pink); background: #fdeaea; outline: none; font-size: 16px; }
-.auth-input:focus { border-color: var(--bg-pink); box-shadow: 0 0 0 3px rgba(242,136,164,.18); }
+.login-label { font-weight: 700; color: #8C031C; display: inline-flex; align-items: center; gap: 8px; }
+.login-input { width: 100%; padding: 14px 16px; border-radius: 16px; border: 2px solid var(--bg-light-pink); background: #fdeaea; outline: none; font-size: 16px; }
+.login-input:focus { border-color: var(--bg-pink); box-shadow: 0 0 0 3px rgba(242,136,164,.18); }
 
 .password-group { position: relative; }
 .toggle-pass {
@@ -98,7 +98,7 @@ body {
 .btn.ghost:hover { transform: translateY(-1px); background: #f2d8de; }
 
 @media (max-width: 560px) {
-  .auth-title { font-size: 40px; }
+  .login-title { font-size: 40px; }
   .actions { grid-template-columns: 1fr; }
 }
 
@@ -157,8 +157,8 @@ body {
 
 .login-btn { margin-left: auto; }
 
-/* Close button for auth overlay */
-.auth-close {
+/* Close button for login overlay */
+.login-close {
   position: absolute;
   top: 16px;
   right: 16px;
@@ -174,7 +174,8 @@ body {
 
 .instagram-btn {
   display: inline-flex;
-  align-items: left;
+  align-items: center;
+  gap: 8px;
   padding: 8px 0;
   background: none;
   color: white;
@@ -185,6 +186,17 @@ body {
 .instagram-btn:hover {
   transform: scale(1.05);
   opacity: 0.8;
+}
+
+.instagram-icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.instagram-btn:hover .instagram-icon {
+  transform: scale(1.1);
 }
 
 .instagram-text {
@@ -900,6 +912,11 @@ main {
   .instagram-text {
     font-size: 1.4rem;
   }
+  
+  .instagram-icon {
+    width: 20px;
+    height: 20px;
+  }
 }
 
 /* Small mobile (480px and less) */
@@ -941,6 +958,11 @@ main {
   
   .instagram-text {
     font-size: 1.2rem;
+  }
+  
+  .instagram-icon {
+    width: 18px;
+    height: 18px;
   }
 }
 

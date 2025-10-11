@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Iniciar Sesión - RomCoffe</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@400;600;700&family=Dancing+Script:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=2" />
+</head>
+<body class="login-page">
+  <div class="login-layout">
+    <div class="login-card">
+      <h1 class="login-title" id="pageTitle">Iniciar Sesión</h1>
+      
+      <div id="messageContainer"></div>
+      
+      <!-- Formulario de Login -->
+      <form class="login-form" id="loginForm">
+        <div class="field">
+          <label for="login_username" class="login-label">
+            <span class="ico">👤</span> Nombre de usuario
+          </label>
+          <input type="text" id="login_username" name="username" class="login-input" required autocomplete="username">
+        </div>
+        
+        <div class="field">
+          <label for="login_password" class="login-label">
+            <span class="ico">🔒</span> Contraseña
+          </label>
+          <div class="password-group">
+            <input type="password" id="login_password" name="password" class="login-input" required autocomplete="current-password">
+            <button type="button" class="toggle-pass" onclick="togglePassword('login_password')">👁️</button>
+          </div>
+        </div>
+        
+        <div class="actions">
+          <button type="submit" class="btn primary">Iniciar Sesión</button>
+          <button type="button" class="btn ghost" onclick="switchMode('register')">Registrarse</button>
+        </div>
+      </form>
+      
+      <!-- Formulario de Registro -->
+      <form class="login-form" id="registerForm" style="display: none;">
+        <div class="field">
+          <label for="reg_username" class="login-label">
+            <span class="ico">👤</span> Nombre de usuario
+          </label>
+          <input type="text" id="reg_username" name="username" class="login-input" required autocomplete="username">
+        </div>
+        
+        <div class="field">
+          <label for="reg_password" class="login-label">
+            <span class="ico">🔒</span> Contraseña
+          </label>
+          <div class="password-group">
+            <input type="password" id="reg_password" name="password" class="login-input" required autocomplete="new-password">
+            <button type="button" class="toggle-pass" onclick="togglePassword('reg_password')">👁️</button>
+          </div>
+        </div>
+        
+        <div class="actions">
+          <button type="submit" class="btn primary">Registrarse</button>
+          <button type="button" class="btn ghost" onclick="switchMode('login')">Ya tengo cuenta</button>
+        </div>
+      </form>
+      
+      <div style="text-align: center; margin-top: 20px;">
+        <a href="index.html" style="color: #8C031C; text-decoration: none; font-weight: 600;">← Volver al inicio</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentMode = 'login';
+
+    function togglePassword(inputId) {
+      const input = document.getElementById(inputId);
+      const button = input.nextElementSibling;
+      
+      if (input.type === 'password') {
+        input.type = 'text';
+        button.textContent = '🙈';
+      } else {
+        input.type = 'password';
+        button.textContent = '👁️';
+      }
+    }
+    
+    function switchMode(newMode) {
+      const loginForm = document.getElementById('loginForm');
+      const registerForm = document.getElementById('registerForm');
+      const title = document.getElementById('pageTitle');
+      
+      currentMode = newMode;
+      
+      if (newMode === 'login') {
+        loginForm.style.display = '';
+        registerForm.style.display = 'none';
+        title.textContent = 'Iniciar Sesión';
+        // Limpiar formularios
+        document.getElementById('reg_username').value = '';
+        document.getElementById('reg_password').value = '';
+      } else {
+        loginForm.style.display = 'none';
+        registerForm.style.display = '';
+        title.textContent = 'Registrarse';
+        // Limpiar formularios
+        document.getElementById('login_username').value = '';
+        document.getElementById('login_password').value = '';
+      }
+      
+      // Limpiar mensajes
+      clearMessages();
+    }
+
+    function showMessage(message, type) {
+      const container = document.getElementById('messageContainer');
+      const messageDiv = document.createElement('div');
+      
+      if (type === 'error') {
+        messageDiv.style.cssText = 'background: #ffebee; color: #c62828; padding: 10px; border-radius: 5px; margin-bottom: 20px; border-left: 4px solid #c62828;';
+      } else {
+        messageDiv.style.cssText = 'background: #e8f5e8; color: #2e7d32; padding: 10px; border-radius: 5px; margin-bottom: 20px; border-left: 4px solid #2e7d32;';
+      }
+      
+      messageDiv.textContent = message;
+      container.innerHTML = '';
+      container.appendChild(messageDiv);
+    }
+
+    function clearMessages() {
+      document.getElementById('messageContainer').innerHTML = '';
+    }
+
+    async function handleLogin(username, password) {
+      try {
+        const response = await fetch('login.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ username, password })
+        });
+
+        const data = await response.json();
+        
+        if (data.success) {
+          showMessage(data.message, 'success');
+          setTimeout(() => {
+            window.location.href = data.redirect || 'index.html';
+          }, 1500);
+        } else {
+          showMessage(data.message, 'error');
+        }
+      } catch (error) {
+        showMessage('Error de conexión. Por favor, intentá nuevamente.', 'error');
+      }
+    }
+
+    async function handleRegister(username, password) {
+      try {
+        const response = await fetch('registro.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ username, password })
+        });
+
+        const data = await response.json();
+        
+        if (data.success) {
+          showMessage(data.message, 'success');
+          setTimeout(() => {
+            switchMode('login');
+          }, 2000);
+        } else {
+          showMessage(data.message, 'error');
+        }
+      } catch (error) {
+        showMessage('Error de conexión. Por favor, intentá nuevamente.', 'error');
+      }
+    }
+
+    // Event listeners para los formularios
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const username = document.getElementById('login_username').value.trim();
+      const password = document.getElementById('login_password').value;
+      
+      if (!username || !password) {
+        showMessage('Por favor, completá todos los campos.', 'error');
+        return;
+      }
+      
+      handleLogin(username, password);
+    });
+
+    document.getElementById('registerForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const username = document.getElementById('reg_username').value.trim();
+      const password = document.getElementById('reg_password').value;
+      
+      if (!username || !password) {
+        showMessage('Por favor, completá todos los campos.', 'error');
+        return;
+      }
+      
+      handleRegister(username, password);
+    });
+
+    // Verificar si hay parámetro de modo en la URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const mode = urlParams.get('mode');
+    if (mode === 'register') {
+      switchMode('register');
+    }
+  </script>
+</body>
+</html>
