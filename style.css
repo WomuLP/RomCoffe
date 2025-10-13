@@ -257,7 +257,17 @@ body {
 }
 
 /* Carousel positions */
+#item-4:checked ~ .nc-cards #nc-card-4,
+#item-3:checked ~ .nc-cards #nc-card-3,
+#item-2:checked ~ .nc-cards #nc-card-2,
+#item-1:checked ~ .nc-cards #nc-card-1 { 
+  transform: translateX(40%) scale(.85); 
+  opacity: .6; 
+  z-index: 0; 
+}
+
 #item-1:checked ~ .nc-cards #nc-card-3,
+#item-4:checked ~ .nc-cards #nc-card-4,
 #item-2:checked ~ .nc-cards #nc-card-1,
 #item-3:checked ~ .nc-cards #nc-card-2 { 
   transform: translateX(-40%) scale(.85); 
@@ -267,6 +277,7 @@ body {
 
 #item-1:checked ~ .nc-cards #nc-card-2,
 #item-2:checked ~ .nc-cards #nc-card-3,
+#item-4:checked ~ .nc-cards #nc-card-4,
 #item-3:checked ~ .nc-cards #nc-card-1 { 
   transform: translateX(40%) scale(.85); 
   opacity: .6; 
@@ -275,7 +286,8 @@ body {
 
 #item-1:checked ~ .nc-cards #nc-card-1,
 #item-2:checked ~ .nc-cards #nc-card-2,
-#item-3:checked ~ .nc-cards #nc-card-3 { 
+#item-3:checked ~ .nc-cards #nc-card-3,
+#item-4:checked ~ .nc-cards #nc-card-4 { 
   transform: translateX(0) scale(1); 
   opacity: 1; 
   z-index: 1; 
