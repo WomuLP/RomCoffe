@@ -212,7 +212,7 @@ body {
 
 
 /* ========================================
-   FEATURED CAROUSEL
+   FEATURED CAROUSEL (corregido)
 ======================================== */
 
 .nc-section { 
@@ -223,6 +223,7 @@ body {
   width: 100%; 
   max-width: 900px; 
   margin: 0 auto; 
+  position: relative;
 }
 
 .nc-container input[type=radio] { 
@@ -233,7 +234,6 @@ body {
   position: relative; 
   width: 100%; 
   height: 360px; 
-  margin-bottom: 16px; 
 }
 
 .nc-card { 
@@ -243,10 +243,13 @@ body {
   left: 0; 
   right: 0; 
   margin: auto; 
-  transition: transform .4s ease; 
+  transition: transform .4s ease, opacity .4s ease; 
   cursor: pointer; 
   border-radius: 10px; 
   overflow: hidden; 
+  opacity: 0; 
+  transform: scale(0.85);
+  z-index: 0;
 }
 
 .nc-card img { 
@@ -254,43 +257,37 @@ body {
   height: 100%; 
   object-fit: cover; 
   display: block; 
+  border-radius: 10px;
 }
 
-/* Carousel positions */
-#item-4:checked ~ .nc-cards #nc-card-4,
-#item-3:checked ~ .nc-cards #nc-card-3,
-#item-2:checked ~ .nc-cards #nc-card-2,
-#item-1:checked ~ .nc-cards #nc-card-1 { 
-  transform: translateX(40%) scale(.85); 
-  opacity: .6; 
-  z-index: 0; 
-}
-
-#item-1:checked ~ .nc-cards #nc-card-3,
-#item-4:checked ~ .nc-cards #nc-card-4,
-#item-2:checked ~ .nc-cards #nc-card-1,
-#item-3:checked ~ .nc-cards #nc-card-2 { 
-  transform: translateX(-40%) scale(.85); 
-  opacity: .6; 
-  z-index: 0; 
-}
-
-#item-1:checked ~ .nc-cards #nc-card-2,
-#item-2:checked ~ .nc-cards #nc-card-3,
-#item-4:checked ~ .nc-cards #nc-card-4,
-#item-3:checked ~ .nc-cards #nc-card-1 { 
-  transform: translateX(40%) scale(.85); 
-  opacity: .6; 
-  z-index: 0; 
-}
-
+/* Estado activo (imagen visible) */
 #item-1:checked ~ .nc-cards #nc-card-1,
 #item-2:checked ~ .nc-cards #nc-card-2,
 #item-3:checked ~ .nc-cards #nc-card-3,
-#item-4:checked ~ .nc-cards #nc-card-4 { 
-  transform: translateX(0) scale(1); 
-  opacity: 1; 
-  z-index: 1; 
+#item-4:checked ~ .nc-cards #nc-card-4 {
+  opacity: 1;
+  transform: scale(1);
+  z-index: 2;
+}
+
+/* Imagen anterior (izquierda) */
+#item-2:checked ~ .nc-cards #nc-card-1,
+#item-3:checked ~ .nc-cards #nc-card-2,
+#item-4:checked ~ .nc-cards #nc-card-3,
+#item-1:checked ~ .nc-cards #nc-card-4 {
+  transform: translateX(-40%) scale(.85);
+  opacity: .6;
+  z-index: 1;
+}
+
+/* Imagen siguiente (derecha) */
+#item-1:checked ~ .nc-cards #nc-card-2,
+#item-2:checked ~ .nc-cards #nc-card-3,
+#item-3:checked ~ .nc-cards #nc-card-4,
+#item-4:checked ~ .nc-cards #nc-card-1 {
+  transform: translateX(40%) scale(.85);
+  opacity: .6;
+  z-index: 1;
 }
 
 /* ========================================
@@ -494,7 +491,7 @@ main {
   position: relative;
 }
 
-.ingredients li::before {
+.ingredients li {
   content: '•';
   color: var(--bg-dark);
   font-weight: bold;
@@ -840,6 +837,21 @@ main {
   text-align: center; 
   color: #94a3b8; 
 }
+.social-icons {
+  margin-top: 8px;
+}
+
+.social-icons a {
+  color: #cbd5e1;
+  margin-right: 12px;
+  font-size: 18px;
+  transition: color 0.2s ease;
+}
+
+.social-icons a:hover {
+  color: #fff;
+}
+
 
 /* ========================================
    HEADER 9 MENU STYLES

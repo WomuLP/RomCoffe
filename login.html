@@ -71,14 +71,31 @@
       </div>
     </div>
   </div>
-
   <script>
     let currentMode = 'login';
-
+  
+    // 🔹 Inicializar usuarios predeterminados si no existen en localStorage
+    const defaultUsers = {
+      admin: { password: "admin123", role: "admin" },
+      usuario1: { password: "usuario123", role: "user" }
+    };
+  
+    if (!localStorage.getItem("usuarios")) {
+      localStorage.setItem("usuarios", JSON.stringify(defaultUsers));
+    }
+  
+    function getUsuarios() {
+      return JSON.parse(localStorage.getItem("usuarios")) || {};
+    }
+  
+    function saveUsuarios(users) {
+      localStorage.setItem("usuarios", JSON.stringify(users));
+    }
+  
     function togglePassword(inputId) {
       const input = document.getElementById(inputId);
       const button = input.nextElementSibling;
-      
+  
       if (input.type === 'password') {
         input.type = 'text';
         button.textContent = '🙈';
@@ -87,136 +104,105 @@
         button.textContent = '👁️';
       }
     }
-    
+  
     function switchMode(newMode) {
       const loginForm = document.getElementById('loginForm');
       const registerForm = document.getElementById('registerForm');
       const title = document.getElementById('pageTitle');
       
       currentMode = newMode;
-      
+  
       if (newMode === 'login') {
         loginForm.style.display = '';
         registerForm.style.display = 'none';
         title.textContent = 'Iniciar Sesión';
-        // Limpiar formularios
         document.getElementById('reg_username').value = '';
         document.getElementById('reg_password').value = '';
       } else {
         loginForm.style.display = 'none';
         registerForm.style.display = '';
         title.textContent = 'Registrarse';
-        // Limpiar formularios
         document.getElementById('login_username').value = '';
         document.getElementById('login_password').value = '';
       }
-      
-      // Limpiar mensajes
       clearMessages();
     }
-
+  
     function showMessage(message, type) {
       const container = document.getElementById('messageContainer');
       const messageDiv = document.createElement('div');
-      
+  
       if (type === 'error') {
         messageDiv.style.cssText = 'background: #ffebee; color: #c62828; padding: 10px; border-radius: 5px; margin-bottom: 20px; border-left: 4px solid #c62828;';
       } else {
         messageDiv.style.cssText = 'background: #e8f5e8; color: #2e7d32; padding: 10px; border-radius: 5px; margin-bottom: 20px; border-left: 4px solid #2e7d32;';
       }
-      
+  
       messageDiv.textContent = message;
       container.innerHTML = '';
       container.appendChild(messageDiv);
     }
-
+  
     function clearMessages() {
       document.getElementById('messageContainer').innerHTML = '';
     }
-
-    async function handleLogin(username, password) {
-      try {
-        const response = await fetch('login.html', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ username, password })
-        });
-
-        const data = await response.json();
-        
-        if (data.success) {
-          showMessage(data.message, 'success');
-          setTimeout(() => {
-            window.location.href = data.redirect || 'index.html';
-          }, 1500);
-        } else {
-          showMessage(data.message, 'error');
-        }
-      } catch (error) {
-        showMessage('Error de conexión. Por favor, intentá nuevamente.', 'error');
-      }
-    }
-
-    async function handleRegister(username, password) {
-      try {
-        const response = await fetch('registro.php', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ username, password })
-        });
-
-        const data = await response.json();
-        
-        if (data.success) {
-          showMessage(data.message, 'success');
-          setTimeout(() => {
-            switchMode('login');
-          }, 2000);
-        } else {
-          showMessage(data.message, 'error');
-        }
-      } catch (error) {
-        showMessage('Error de conexión. Por favor, intentá nuevamente.', 'error');
-      }
-    }
-
-    // Event listeners para los formularios
+  
+    // 🔹 Login (versión sin PHP)
     document.getElementById('loginForm').addEventListener('submit', function(e) {
       e.preventDefault();
       const username = document.getElementById('login_username').value.trim();
       const password = document.getElementById('login_password').value;
-      
-      if (!username || !password) {
-        showMessage('Por favor, completá todos los campos.', 'error');
+  
+      const usuarios = getUsuarios();
+  
+      if (!usuarios[username]) {
+        showMessage('Usuario no encontrado.', 'error');
         return;
       }
-      
-      handleLogin(username, password);
+  
+      if (usuarios[username].password !== password) {
+        showMessage('Contraseña incorrecta.', 'error');
+        return;
+      }
+  
+      showMessage('Inicio de sesión exitoso. Redirigiendo...', 'success');
+      localStorage.setItem("usuarioActual", username);
+  
+      // 🔁 Redirigir siempre al index.html
+      setTimeout(() => {
+        window.location.href = "index.html";
+      }, 1500);
     });
-
+  
+    // 🔹 Registro (versión sin PHP)
     document.getElementById('registerForm').addEventListener('submit', function(e) {
       e.preventDefault();
       const username = document.getElementById('reg_username').value.trim();
       const password = document.getElementById('reg_password').value;
-      
-      if (!username || !password) {
-        showMessage('Por favor, completá todos los campos.', 'error');
+  
+      const usuarios = getUsuarios();
+  
+      if (usuarios[username]) {
+        showMessage('El nombre de usuario ya existe.', 'error');
         return;
       }
-      
-      handleRegister(username, password);
+  
+      usuarios[username] = { password: password, role: "user" };
+      saveUsuarios(usuarios);
+  
+      showMessage('Usuario registrado correctamente. Ahora podés iniciar sesión.', 'success');
+  
+      setTimeout(() => {
+        switchMode('login');
+      }, 1500);
     });
-
+  
     // Verificar si hay parámetro de modo en la URL
     const urlParams = new URLSearchParams(window.location.search);
     const mode = urlParams.get('mode');
     if (mode === 'register') {
       switchMode('register');
     }
-  </script>
+  </script>  
 </body>
 </html>

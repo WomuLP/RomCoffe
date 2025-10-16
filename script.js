@@ -1,9 +1,9 @@
-// ========================================
-// PRODUCTS DATA
-// ========================================
 const products = [
+  /* ======================
+     CAFÉ
+  ====================== */
   {
-    image: 'https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?w=1200&q=80&auto=format&fit=crop',
+    image: 'https://i.pinimg.com/736x/25/b6/29/25b629514436286acc0fd53bcf52f1e2.jpg',
     name: 'Café Latte',
     price: 3900,
     description: 'Espresso suave con leche vaporizada y una capa de espuma.',
@@ -11,7 +11,70 @@ const products = [
     category: 'cafe'
   },
   {
-    image: 'https://images.unsplash.com/photo-1498804103079-a6351b050096?w=1200&q=80&auto=format&fit=crop',
+    image: 'https://i.pinimg.com/736x/22/8b/72/228b72a03cb98c19063193cf0188a6a3.jpg',
+    name: 'Mocha',
+    price: 4800,
+    description: 'Delicioso espresso con chocolate y leche vaporizada, coronado con crema batida.',
+    ingredients: ['Espresso', 'Chocolate', 'Leche', 'Crema batida'],
+    category: 'cafe'
+  },
+  {
+    image: 'https://i.pinimg.com/1200x/d6/f2/e9/d6f2e9113aa8f9aef8b59a8e28bd7255.jpg',
+    name: 'Americano',
+    price: 3500,
+    description: 'Café espresso diluido con agua caliente, sabor intenso y aromático.',
+    ingredients: ['Espresso', 'Agua caliente'],
+    category: 'cafe'
+  },
+  {
+    image: 'https://i.pinimg.com/736x/4d/e0/68/4de068124212961d6481e6c631774053.jpg',
+    name: 'Ice Mocha',
+    price: 3800,
+    description: 'Refrescante y con el balance perfecto entre café y chocolate. Ideal para los que aman lo dulce.',
+    ingredients: ['Café', 'Chocolate', 'Leche', 'Hielo'],
+    category: 'cafe'
+  },
+  {
+    image: 'https://i.pinimg.com/1200x/57/14/b1/5714b11a87991728b48bee9f34855c3a.jpg',
+    name: 'Matcha Latte',
+    price: 4200,
+    description: 'Energía suave y sostenida sin el bajón del café. Sabor herbal y cremoso, ideal con leche de avena o almendra.',
+    ingredients: ['Té matcha', 'Leche vegetal', 'Hielo'],
+    category: 'cafe'
+  },
+  /* ======================
+     TÉS
+  ====================== */
+  {
+    image: 'https://i.pinimg.com/736x/2e/2b/b0/2e2bb00a641fef8acafa7bec1ac6e2e2.jpg',
+    name: 'Té Verde',
+    price: 3200,
+    description: 'Té verde natural, rico en antioxidantes y de sabor suave.',
+    ingredients: ['Hojas de té verde', 'Agua caliente'],
+    category: 'tes'
+  },
+  {
+    image: 'https://i.pinimg.com/1200x/c5/f6/23/c5f623cba688460a7311e57d8090fc07.jpg',
+    name: 'Chai Latte',
+    price: 4100,
+    description: 'Té negro especiado con leche y un toque de canela.',
+    ingredients: ['Té negro', 'Leche', 'Canela', 'Clavo', 'Jengibre'],
+    category: 'tes'
+  },
+  {
+    image: 'https://i.pinimg.com/1200x/f9/ec/e7/f9ece729d7dc016bd9ba391c320a58fb.jpg',
+    name: 'Té de Frutos Rojos',
+    price: 3700,
+    description: 'Infusión de frutas rojas con aroma dulce y refrescante.',
+    ingredients: ['Frutilla', 'Arándanos', 'Hibisco'],
+    category: 'tes'
+  },
+
+  /* ======================
+     BEBIDAS FRÍAS
+  ====================== */
+  {
+    image: 'https://i.pinimg.com/1200x/dd/e0/ef/dde0ef2bfc5fdcadca9f1a4d8a5a5101.jpg',
     name: 'Cold Brew',
     price: 4500,
     description: 'Café infusionado en frío durante 16 horas. Refrescante y suave.',
@@ -19,7 +82,94 @@ const products = [
     category: 'bebidas-frias'
   },
   {
-    image: 'https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=1200&q=80&auto=format&fit=crop',
+    image: 'https://i.pinimg.com/1200x/74/5c/e4/745ce426e7e44564117511bbc2dfb16d.jpg',
+    name: 'Limonada con Menta',
+    price: 3900,
+    description: 'Refrescante limonada natural con hojas de menta fresca.',
+    ingredients: ['Limón', 'Agua', 'Menta', 'Azúcar'],
+    category: 'bebidas-frias'
+  },
+  {
+    image: 'https://i.pinimg.com/1200x/61/17/99/6117996402ac81f5f53bd656fd188eb8.jpg',
+    name: 'Smoothie de Frutilla',
+    price: 4800,
+    description: 'Batido natural de frutilla y yogurt, cremoso y dulce.',
+    ingredients: ['Frutilla', 'Yogurt', 'Miel', 'Leche'],
+    category: 'bebidas-frias'
+  },
+  {
+    image: 'https://i.pinimg.com/736x/37/22/4e/37224ec272e2c252500a7f5b4351f379.jpg',
+    name: 'Ice Latte',
+    price: 3500,
+    description: 'Suave y fresca. Genial para todos los días.',
+    ingredients: ['Café espresso', 'Leche', 'Hielo'],
+    category: 'bebidas-frias'
+  },
+  {
+    image: 'https://i.pinimg.com/736x/63/0d/17/630d17a69a9065467344402f21637377.jpg',
+    name: 'Zumo de Zanahoria',
+    price: 3200,
+    description: 'Natural, con sabor dulce y delicado. Rico en betacarotenos y antioxidantes.',
+    ingredients: ['Zanahoria', 'Agua', 'Jugo de limón (opcional)'],
+    category: 'bebidas-frias'
+  },
+  {
+    image: 'https://i.pinimg.com/736x/14/0d/b5/140db56a88c541aeb133c8035fb369f8.jpg',
+    name: 'Jugo de Naranja',
+    price: 3000,
+    description: 'Suave y fresca. Genial para todos los días, exprimido al momento.',
+    ingredients: ['Naranja'],
+    category: 'bebidas-frias'
+  },
+  {
+    image: 'https://i.pinimg.com/736x/ff/8a/28/ff8a28a475bc55d91a0e3f27f7e4c3b9.jpg',
+    name: 'Jugo de Tomate',
+    price: 3200,
+    description: 'Fresco y nutritivo, con un toque salado. Excelente fuente de vitaminas y minerales.',
+    ingredients: ['Tomate', 'Sal', 'Limón (opcional)'],
+    category: 'bebidas-frias'
+  },
+  {
+    image: 'https://i.pinimg.com/736x/dd/49/eb/dd49ebfabde39f0c3494b2e621cbe78d.jpg',
+    name: 'Jugo de Frutilla',
+    price: 3800,
+    description: 'Dulce, suave y con un toque ácido irresistible. Ideal para quienes buscan algo frutal y liviano.',
+    ingredients: ['Frutilla', 'Agua', 'Azúcar o miel (opcional)'],
+    category: 'bebidas-frias'
+  },
+  /* ======================
+     DESAYUNO
+  ====================== */
+  {
+    image: 'https://i.pinimg.com/1200x/0f/49/ef/0f49ef3dd4008220b7ad04cf7c17c901.jpg',
+    name: 'Tostadas con Palta',
+    price: 5200,
+    description: 'Pan integral con palta, semillas, huevo cocido y un toque de limón.',
+    ingredients: ['Pan integral', 'Palta', 'Semillas', 'Limón', 'Huevo cocido'],
+    category: 'desayuno'
+  },
+  {
+    image: 'https://i.pinimg.com/1200x/5d/47/7a/5d477a3301aeffe3be9ce404388a708a.jpg',
+    name: 'Panqueques con Fruta',
+    price: 5900,
+    description: 'Panqueques suaves con frutos rojos y miel.',
+    ingredients: ['Harina', 'Huevo', 'Leche', 'Frutos rojos', 'Miel'],
+    category: 'desayuno'
+  },
+  {
+    image: 'https://i.pinimg.com/736x/6c/04/0d/6c040d14db0513109d14e914b7329ab0.jpg',
+    name: 'Croissant de Manteca',
+    price: 3300,
+    description: 'Croissant artesanal recién horneado, tierno y crujiente.',
+    ingredients: ['Harina', 'Manteca', 'Levadura'],
+    category: 'desayuno'
+  },
+
+  /* ======================
+     ALMUERZO
+  ====================== */
+  {
+    image: 'https://i.pinimg.com/1200x/9e/7f/1b/9e7f1b353f6a1e28240c29ec73fde0a7.jpg',
     name: 'Sandwich Club',
     price: 6900,
     description: 'Pan tostado con pollo, tocino, vegetales y salsa especial.',
@@ -27,14 +177,95 @@ const products = [
     category: 'almuerzo'
   },
   {
-    image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200&q=80&auto=format&fit=crop',
+    image: 'https://i.pinimg.com/1200x/04/44/31/044431c8343b5801ff75f4b493fd6a24.jpg',
     name: 'Ensalada César',
     price: 5500,
     description: 'Clásica ensalada con aderezo césar y crutones.',
     ingredients: ['Lechuga', 'Pollo', 'Parmesano', 'Crutones', 'Aderezo césar'],
     category: 'almuerzo'
+  },
+  {
+    image: 'https://i.pinimg.com/1200x/32/10/10/321010569fb22a8abbef01324617ccab.jpg',
+    name: 'Wrap de Vegetales',
+    price: 5800,
+    description: 'Tortilla rellena de vegetales grillados y hummus.',
+    ingredients: ['Tortilla', 'Zanahoria', 'Zucchini', 'Hummus'],
+    category: 'almuerzo'
+  },
+
+  /* ======================
+     POSTRES
+  ====================== */
+  {
+    image: 'https://i.pinimg.com/1200x/de/a0/1a/dea01a87b4e0389b06ea43a19e6af30c.jpg',
+    name: 'Cheesecake de Frutilla',
+    price: 6100,
+    description: 'Tarta cremosa con base de galleta y cobertura de frutilla.',
+    ingredients: ['Queso crema', 'Galletas', 'Frutilla', 'Azúcar'],
+    category: 'postres'
+  },
+  {
+    image: 'https://i.pinimg.com/1200x/04/6f/11/046f1140c8d118c0539c5faadd41a782.jpg',
+    name: 'Brownie de Chocolate',
+    price: 5700,
+    description: 'Brownie húmedo de chocolate con nueces.',
+    ingredients: ['Chocolate', 'Harina', 'Nueces', 'Azúcar'],
+    category: 'postres'
+  },
+  {
+    image: 'https://i.pinimg.com/1200x/f1/fd/96/f1fd96ca94e19fdd308cf4a7b1553634.jpg',
+    name: 'Tiramisú',
+    price: 6300,
+    description: 'Postre italiano con café, mascarpone y cacao.',
+    ingredients: ['Café', 'Mascarpone', 'Cacao', 'Bizcocho'],
+    category: 'postres'
+  },
+  {
+    image: 'https://i.pinimg.com/736x/80/12/bf/8012bf1f341fc6518e5acf3312119c4d.jpg',
+    name: 'Chocolate Tart',
+    price: 4200,
+    description: 'Postre intenso y elegante, ideal para cerrar con broche de oro cualquier comida.',
+    ingredients: ['Chocolate', 'Crema', 'Masa sablée'],
+    category: 'postres'
+  },
+  {
+    image: 'https://i.pinimg.com/736x/ed/f2/37/edf2376cce978ed07547b2cdec9fe2eb.jpg',
+    name: 'Mini Chocolate Tarts',
+    price: 1200,
+    description: 'Pequeños bocados de puro placer chocolatoso, esponjosos y perfectos para acompañar un café o té.',
+    ingredients: ['Cacao', 'Harina', 'Manteca', 'Azúcar'],
+    category: 'postres'
+  },
+  {
+    image: 'https://i.pinimg.com/736x/0d/ac/e9/0dace93401209e64a66132f0663df13d.jpg',
+    name: 'Mini Red Fruits Tarts',
+    price: 1400,
+    description: 'Frescos y dulces, con un toque ácido natural. Ideal para los que prefieren sabores frutales.',
+    ingredients: ['Harina', 'Frutos rojos', 'Crema', 'Azúcar'],
+    category: 'postres'
+  },
+  /* ======================
+     PROMOS
+  ====================== */
+  {
+    image: 'https://i.pinimg.com/736x/4b/1f/45/4b1f45aee1344e0dbe7b43006baa55c9.jpg',
+    name: 'Promo Nº 1',
+    price: 11000,
+    description: 'Sándwich artesanal con jamón, queso, palta y huevo revuelto, acompañado de jugo natural a elección (naranja, frutilla, zanahoria o tomate).',
+    ingredients: ['Pan', 'Jamón', 'Queso', 'Palta', 'Huevo', 'Jugo natural'],
+    category: 'promos'
+  },
+  {
+    image: 'https://i.pinimg.com/736x/45/02/f4/4502f4caf62e629fd2897f0cda9b2932.jpg',
+    name: 'Promo Nº 2',
+    price: 9000,
+    description: 'Elegí tu bebida de café favorita (latte, moka, frappuccino o matcha latte) y acompañala con una porción de torta o cheesecake.',
+    ingredients: ['Café', 'Torta o Cheesecake'],
+    category: 'promos'
   }
+
 ];
+
 
 // ========================================
 // PRODUCTS MANAGEMENT
