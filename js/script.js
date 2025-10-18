@@ -1,0 +1,454 @@
+
+// ========================================
+// SHOPPING CART
+// ========================================
+let cart = [];
+
+// Create cart elements
+// Limpieza: eliminamos estilos/comportamientos no usados. Mantenemos carrito funcional.
+const cartPanel = document.createElement('div');
+cartPanel.className = 'cart-panel';
+cartPanel.innerHTML = `
+  <div class="cart-header">
+    <h4 class="cart-title">TU PEDIDO</h4>
+    <button class="cart-remove" id="cartClear">Quitar</button>
+  </div>
+  <ul class="cart-items" id="cartItems"></ul>
+  <div class="cart-footer">
+    <span class="cart-total" id="cartTotal">$0.00</span>
+    <button class="btn primary" id="cartCheckout">Finalizar</button>
+  </div>
+`;
+document.body.appendChild(cartPanel);
+
+const cartFab = document.createElement('button');
+cartFab.className = 'cart-fab';
+cartFab.setAttribute('aria-label', 'Abrir carrito');
+cartFab.innerHTML = `
+  <span class="fab-icon">🛒</span>
+  <span class="badge" id="cartCount">0</span>`;
+document.body.appendChild(cartFab);
+
+function saveCart() { 
+  localStorage.setItem('cart', JSON.stringify(cart)); 
+}
+
+function loadCart() {
+  try { 
+    cart = JSON.parse(localStorage.getItem('cart')) || []; 
+  }
+  catch(e) { 
+    cart = [];
+  }
+}
+
+function updateCartUI() {
+  const itemsEl = document.getElementById('cartItems');
+  const totalEl = document.getElementById('cartTotal');
+  const countEl = document.getElementById('cartCount');
+  itemsEl.innerHTML = '';
+  let total = 0;
+
+  cart.forEach((item, index) => {
+    total += item.price * item.qty;
+    const li = document.createElement('li');
+    li.className = 'cart-item';
+    li.innerHTML = `
+      <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+      <span class="name">${item.name}</span>
+      <span class="price">$${(item.price * item.qty).toLocaleString('es-AR')}</span>
+      <span class="qty-controls" data-index="${index}">
+        <button class="qty-btn" data-action="dec">−</button>
+        <span class="qty-value">${item.qty}</span>
+        <button class="qty-btn" data-action="inc">+</button>
+      </span>
+    `;
+    itemsEl.appendChild(li);
+  });
+
+  totalEl.textContent = `$${total.toLocaleString('es-AR')}`;
+  const totalQty = cart.reduce((a, b) => a + b.qty, 0);
+  countEl.textContent = totalQty;
+  saveCart();
+}
+
+function addToCart(productName, price, imageUrl) {
+  const existing = cart.find(p => p.name === productName);
+  if (existing) {
+    existing.qty += 1;
+  } else {
+    cart.push({ name: productName, price: price, qty: 1, image: imageUrl });
+  }
+  updateCartUI();
+
+  cartFab.classList.add('bounce');
+  setTimeout(() => {
+    cartFab.classList.remove('bounce');
+  }, 600);
+}
+
+// Cart event listeners
+cartFab.addEventListener('click', function(){
+  cartPanel.classList.toggle('open');
+
+  if (cartPanel.classList.contains('open')) {
+    setTimeout(() => {
+      cartPanel.style.display = 'block';
+    }, 10);
+  }
+});
+
+cartPanel.addEventListener('click', function(e){
+  if (e.target && e.target.id === 'cartClear') {
+    cart.length = 0;
+    updateCartUI();
+  }
+  if (e.target && e.target.id === 'cartCheckout') {
+    alert('Gracias por tu pedido!');
+    cart.length = 0;
+    updateCartUI();
+    cartPanel.classList.remove('open');
+  }
+});
+
+// Quantity controls
+document.addEventListener('click', function(e){
+  if (e.target && e.target.closest('.qty-controls')) {
+    const group = e.target.closest('.qty-controls');
+    const idx = parseInt(group.getAttribute('data-index'), 10);
+    const action = e.target.getAttribute('data-action');
+    if (action === 'inc') { cart[idx].qty += 1; }
+    if (action === 'dec') { cart[idx].qty = Math.max(1, cart[idx].qty - 1); }
+    updateCartUI();
+  }
+});
+
+// HEADER MENU — removed unused code (sin menú desplegable en esta versión)
+
+// ========================================
+// UTILITIES
+// ========================================
+function updateFooterYear() {
+  const currentYear = new Date().getFullYear();
+  document.getElementById('currentYear').textContent = currentYear;
+}
+
+// ========================================
+// INITIALIZATION
+// ========================================
+document.addEventListener('DOMContentLoaded', function() {
+  loadCart();
+  generateProductCards();
+  updateCartUI();
+  initCategoryFilters();
+  updateFooterYear();
+  
+  // Inicializar navegación dinámica
+  initDynamicNavigation();
+});
+
+// Toggle password visibility
+document.addEventListener('click', function(e){
+  if (e.target && e.target.classList.contains('toggle-pass')) {
+    var id = e.target.getAttribute('data-target');
+    var input = document.getElementById(id);
+    if (!input) return;
+    input.type = input.type === 'password' ? 'text' : 'password';
+  }
+});
+
+// Abrir/cerrar overlay de autenticación y validaciones simples
+document.addEventListener('DOMContentLoaded', function(){
+  var loginForm = document.querySelector('#loginCard form');
+  var registerForm = document.querySelector('#registerCard form');
+  var showReg = document.getElementById('btnShowRegister');
+  var backLogin = document.getElementById('btnBackLogin');
+  var loginCard = document.getElementById('loginCard');
+  var registerCard = document.getElementById('registerCard');
+  var overlay = document.getElementById('loginOverlay');
+  var openBtn = document.getElementById('openLoginBtn');
+  var closeBtn = document.getElementById('closeOverlay');
+
+  if (showReg) {
+    showReg.addEventListener('click', function(){
+      loginCard.classList.add('hidden');
+      registerCard.classList.remove('hidden');
+    });
+  }
+
+  if (backLogin) {
+    backLogin.addEventListener('click', function(){
+      registerCard.classList.add('hidden');
+      loginCard.classList.remove('hidden');
+    });
+  }
+
+  if (openBtn && overlay) {
+    openBtn.addEventListener('click', function(e){
+      e.preventDefault();
+      overlay.classList.add('open');
+    });
+  }
+
+  if (closeBtn && overlay) {
+    closeBtn.addEventListener('click', function(){
+      overlay.classList.remove('open');
+    });
+  }
+
+  // Cerrar con Escape
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && overlay) {
+      overlay.classList.remove('open');
+    }
+  });
+
+  function validateNotEmpty(form){
+    var inputs = form.querySelectorAll('input[required]');
+    var ok = true;
+    inputs.forEach(function(el){
+      if (!el.value.trim()) {
+        el.classList.add('error');
+        ok = false;
+      } else {
+        el.classList.remove('error');
+      }
+    });
+    if (!ok) alert('Por favor completa todos los campos.');
+    return ok;
+  }
+
+  if (loginForm) {
+    loginForm.addEventListener('submit', function(e){
+      if (!validateNotEmpty(loginForm)) e.preventDefault();
+    });
+  }
+
+  if (registerForm) {
+    registerForm.addEventListener('submit', function(e){
+      if (!validateNotEmpty(registerForm)) e.preventDefault();
+    });
+  }
+});
+
+// ========================================
+// DYNAMIC CONTENT LOADING
+// ========================================
+
+// Estado de la aplicación
+let currentUser = null;
+let currentSection = 'home';
+
+// Elementos del DOM
+let contenido, loginBtn, adminBtn, userInfo, userName, logoutBtn;
+
+// Inicializar elementos del DOM cuando estén disponibles
+function initDynamicElements() {
+  contenido = document.getElementById('contenido');
+  loginBtn = document.getElementById('loginBtn');
+  adminBtn = document.getElementById('adminBtn');
+  userInfo = document.getElementById('userInfo');
+  userName = document.getElementById('userName');
+  logoutBtn = document.getElementById('logoutBtn');
+}
+
+// Verificar sesión activa
+async function checkSession() {
+  try {
+    const response = await fetch('check_session.php');
+    const data = await response.json();
+    
+    if (data.success && data.user) {
+      currentUser = data.user;
+      updateUI();
+    }
+  } catch (error) {
+    console.log('No hay sesión activa');
+  }
+}
+
+// Actualizar interfaz según el estado del usuario
+function updateUI() {
+  if (!loginBtn || !adminBtn || !userInfo || !userName) return;
+  
+  if (currentUser) {
+    // Usuario logueado
+    loginBtn.style.display = 'none';
+    userInfo.style.display = 'block';
+    userName.textContent = currentUser.username;
+    
+    // Mostrar botón admin si es admin
+    if (currentUser.role === 'admin') {
+      adminBtn.style.display = 'inline-block';
+    }
+  } else {
+    // Usuario no logueado
+    loginBtn.style.display = 'inline-block';
+    userInfo.style.display = 'none';
+    adminBtn.style.display = 'none';
+  }
+}
+
+// Cargar sección dinámicamente
+async function loadSection(section) {
+  if (!contenido) return;
+  
+  currentSection = section;
+  
+  // Actualizar botones activos
+  document.querySelectorAll('.nav-btn').forEach(btn => {
+    btn.classList.remove('active');
+    if (btn.getAttribute('data-section') === section) {
+      btn.classList.add('active');
+    }
+  });
+
+  try {
+    // Mostrar loading
+    contenido.innerHTML = '<div class="loading">Cargando...</div>';
+    
+    let url = '';
+    switch(section) {
+      case 'menu':
+        url = 'menu.php';
+        break;
+      case 'contacto':
+        url = 'contacto.php';
+        break;
+      case 'login':
+        url = 'login.php';
+        break;
+      case 'admin':
+        if (currentUser && currentUser.role === 'admin') {
+          url = 'admin.php';
+        } else {
+          throw new Error('Acceso denegado');
+        }
+        break;
+      default:
+        // Cargar contenido por defecto (productos)
+        loadDefaultContent();
+        return;
+    }
+
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Error ${response.status}: ${response.statusText}`);
+    }
+    
+    const html = await response.text();
+    contenido.innerHTML = html;
+    
+    // ✅ Cargar script externo según la sección
+    if (section === 'menu') {
+      loadExternalScript('js/menu.js');
+    } else if (section === 'contacto') {
+      loadExternalScript('js/contacto.js');
+    } else if (section === 'login') {
+      loadExternalScript('js/login.js');
+    } else if (section === 'admin' && currentUser?.role === 'admin') {
+      loadExternalScript('js/admin.js');
+    }
+    
+    
+  } catch (error) {
+    console.error('Error cargando sección:', error);
+    contenido.innerHTML = `
+      <div class="error-message">
+        <h3>Error al cargar el contenido</h3>
+        <p>${error.message}</p>
+        <button onclick="loadSection('home')" class="btn">Volver al inicio</button>
+      </div>
+    `;
+  }
+}
+
+// Cargar contenido por defecto (productos)
+function loadDefaultContent() {
+  if (!contenido) return;
+  
+  contenido.innerHTML = `
+    <section class="products" id="productos">
+      <h2 class="section-title">Productos</h2>
+      <div class="product-grid" id="productGrid">
+        <!-- Products will be generated dynamically -->
+      </div>
+    </section>
+  `;
+  
+  // Reinicializar la funcionalidad de productos
+  generateProductCards();
+  initCategoryFilters();
+}
+
+// Función de logout
+async function logout() {
+  try {
+    const response = await fetch('logout.php', {
+      method: 'POST'
+    });
+    
+    const data = await response.json();
+    
+    if (data.success) {
+      currentUser = null;
+      updateUI();
+      loadSection('home');
+      alert('Sesión cerrada correctamente');
+    } else {
+      alert('Error al cerrar sesión');
+    }
+  } catch (error) {
+    console.error('Error en logout:', error);
+    alert('Error al cerrar sesión');
+  }
+}
+
+// Función para manejar login exitoso (llamada desde login.php)
+function handleLoginSuccess(user) {
+  currentUser = user;
+  updateUI();
+  loadSection('home');
+}
+
+// Función para manejar errores de login (llamada desde login.php)
+function handleLoginError(message) {
+  alert('Error de login: ' + message);
+}
+
+// Función de inicialización para navegación dinámica
+function initDynamicNavigation() {
+  // Inicializar elementos del DOM
+  initDynamicElements();
+  
+  // Verificar si hay una sesión activa
+  checkSession();
+  
+  // Agregar event listeners a los botones de navegación
+  document.querySelectorAll('.nav-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const section = this.getAttribute('data-section');
+      if (section) {
+        loadSection(section);
+      }
+    });
+  });
+
+  // Event listener para cerrar sesión
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', logout);
+  }
+}
+
+// Función para inicializar productos (compatible con el código existente)
+function initProducts() {
+  generateProductCards();
+  initCategoryFilters();
+}
+// Función auxiliar para cargar scripts externos
+function loadExternalScript(src) {
+  const script = document.createElement('script');
+  script.src = src;
+  script.defer = true;
+  document.body.appendChild(script);
+}

@@ -36,14 +36,14 @@ body {
 .login-page {
   padding-top: 0;
   min-height: 100vh;
-  background: url('fondo.png') center/cover no-repeat fixed;
+  background: url('imagen/fondo.png') center/cover no-repeat fixed;
 }
 
 /* Fullscreen overlay wrapper so no reemplaza contenido existente */
 .login-overlay {
   position: fixed;
   inset: 0;
-  background: url('fondo.png') center/cover no-repeat fixed;
+  background: url('imagen/fondo.png') center/cover no-repeat fixed;
   z-index: 2000;
   display: none;
 }
@@ -172,7 +172,7 @@ body {
   cursor: pointer;
 }
 
-.instagram-btn {
+.romcoffe-logo {
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -183,31 +183,34 @@ body {
   transition: all 0.3s ease;
 }
 
-.instagram-btn:hover {
+.romcoffe-logo:hover {
   transform: scale(1.05);
-  opacity: 0.8;
+  opacity: 0.85;
 }
 
-.instagram-icon {
-  width: 24px;
-  height: 24px;
+.heart-icon {
+  width: 26px;
+  height: 26px;
   flex-shrink: 0;
+  fill: white; /* corazón blanco sin bordes */
   transition: transform 0.3s ease;
 }
 
-.instagram-btn:hover .instagram-icon {
+.romcoffe-logo:hover .heart-icon {
   transform: scale(1.1);
 }
 
-.instagram-text {
-  font-family: 'Dancing Script', cursive;
-  font-size: 1.6rem;
+.romcoffe-text {
+  font-family: 'Dancing Script', cursive; /* misma fuente que el sitio */
+  font-size: 1.8rem;
   font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.5px;
 }
 
-/* instagram text style enforced */
-.instagram-btn { background: none; color: #fff; }
-.instagram-text { color: #fff; }
+/* Asegura que no cambie estilo por herencia */
+.romcoffe-logo { background: none; color: #fff; }
+.romcoffe-text { color: #fff; }
 
 
 
@@ -482,7 +485,8 @@ main {
 .ingredients {
   margin: 8px 0 0;
   padding-left: 16px;
-  color: var(--text-dark); /* better contrast on light backgrounds */
+  list-style: none; /* ← elimina los puntos nativos */
+  color: var(--text-dark);
   font-size: 0.85rem;
 }
 
@@ -491,7 +495,7 @@ main {
   position: relative;
 }
 
-.ingredients li {
+.ingredients li::before {
   content: '•';
   color: var(--bg-dark);
   font-weight: bold;
@@ -499,13 +503,13 @@ main {
   left: -12px;
 }
 
-/* If ingredients ever appear over dark surfaces, ensure light text */
+/* Si los ingredientes aparecen sobre fondos oscuros */
 .dark-surface .ingredients { color: var(--text-light); }
 .dark-surface .ingredients li::before { color: var(--text-light); }
 
-/* Optional helper: stronger legibility when placed over images */
+/* Opcional: legibilidad sobre imágenes */
 .ingredients.on-image li {
-  background: rgba(242, 242, 242, 0.85); /* #F2F2F2 with alpha */
+  background: rgba(242, 242, 242, 0.85);
   border-radius: 8px;
   padding: 2px 6px;
   display: inline-block;
