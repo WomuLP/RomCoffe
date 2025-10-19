@@ -1,5 +1,5 @@
 /* ========================================
-   CSS VARIABLES & BASE STYLES
+   🎨 CSS VARIABLES & BASE STYLES
 ======================================== */
 
 :root {
@@ -30,78 +30,6 @@ body {
   padding-top: 70px; /* leave space for fixed header */
 }
 
-/* ========================================
-   login PAGES (Login / Register)
-======================================== */
-.login-page {
-  padding-top: 0;
-  min-height: 100vh;
-  background: url('imagen/fondo.png') center/cover no-repeat fixed;
-}
-
-/* Fullscreen overlay wrapper so no reemplaza contenido existente */
-.login-overlay {
-  position: fixed;
-  inset: 0;
-  background: url('imagen/fondo.png') center/cover no-repeat fixed;
-  z-index: 2000;
-  display: none;
-}
-
-.login-overlay.open { display: block; }
-
-.login-layout {
-  min-height: 100vh;
-  display: grid;
-  place-items: center;
-  padding: 24px;
-}
-
-.login-card {
-  width: 100%;
-  max-width: 560px;
-  background: rgba(255,255,255,0.9);
-  border-radius: 28px;
-  border: 4px solid #ead8c8;
-  padding: 28px;
-  box-shadow: 0 10px 30px rgba(0,0,0,.12);
-}
-
-.login-card.hidden { display: none; }
-
-.login-title {
-  margin: 0 0 16px;
-  text-align: center;
-  color: #8C031C;
-  font-family: 'Dancing Script', cursive;
-  font-weight: 700;
-  font-size: 48px;
-}
-
-.login-form { display: grid; gap: 14px; }
-.field { display: grid; gap: 6px; }
-.login-label { font-weight: 700; color: #8C031C; display: inline-flex; align-items: center; gap: 8px; }
-.login-input { width: 100%; padding: 14px 16px; border-radius: 16px; border: 2px solid var(--bg-light-pink); background: #fdeaea; outline: none; font-size: 16px; }
-.login-input:focus { border-color: var(--bg-pink); box-shadow: 0 0 0 3px rgba(242,136,164,.18); }
-
-.password-group { position: relative; }
-.toggle-pass {
-  position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
-  border: 0; background: transparent; cursor: pointer; font-size: 20px; color: #8C031C;
-}
-
-.actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 6px; }
-.btn { border: 0; border-radius: 16px; padding: 12px 16px; font-weight: 700; cursor: pointer; transition: transform .15s ease, background .2s ease; }
-.btn.primary { background: #8C031C; color: #fff; }
-.btn.primary:hover { transform: translateY(-1px); background: #a10a24; }
-.btn.ghost { background: #f7eaea; color: #8C031C; border: 2px solid #f2b9c6; }
-.btn.ghost:hover { transform: translateY(-1px); background: #f2d8de; }
-
-@media (max-width: 560px) {
-  .login-title { font-size: 40px; }
-  .actions { grid-template-columns: 1fr; }
-}
-
 .main-container {
   max-width: none;
   margin: 0;
@@ -110,9 +38,10 @@ body {
 }
 
 /* ========================================
-   BANNER SECTION
+   🏠 LAYOUT COMPONENTS
 ======================================== */
 
+/* Banner Section */
 .banner-section {
   height: 50vh;
   min-height: 700px;
@@ -127,8 +56,18 @@ body {
   object-fit: cover;
 }
 
+/* Main Content */
+main { 
+  padding: 40px 20px 80px; 
+}
+
+.section-title { 
+  font-size: 1.6rem; 
+  margin: 8px 0 18px; 
+}
+
 /* ========================================
-   HEADER & NAVIGATION
+   🧭 HEADER & NAVIGATION
 ======================================== */
 
 .main-header {
@@ -155,23 +94,7 @@ body {
   width: 100%;
 }
 
-.login-btn { margin-left: auto; }
-
-/* Close button for login overlay */
-.login-close {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  border: 2px solid #f2b9c6;
-  background: rgba(255,255,255,0.9);
-  color: #8C031C;
-  font-weight: 700;
-  cursor: pointer;
-}
-
+/* Logo */
 .romcoffe-logo {
   display: inline-flex;
   align-items: center;
@@ -212,10 +135,273 @@ body {
 .romcoffe-logo { background: none; color: #fff; }
 .romcoffe-text { color: #fff; }
 
+/* Main Navigation */
+.main-nav {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.nav-btn {
+  background: transparent;
+  border: 2px solid var(--text-light);
+  color: var(--text-light);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.nav-btn:hover {
+  background: var(--text-light);
+  color: var(--bg-dark);
+  transform: translateY(-2px);
+}
+
+.nav-btn.active {
+  background: var(--text-light);
+  color: var(--bg-dark);
+  box-shadow: 0 2px 8px #ffffff33;
+}
+
+/* Menu Button */
+.menu-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  background: none;
+  color: white;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.6rem;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  margin-left: 0.5rem;
+}
+
+.menu-btn:hover {
+  transform: scale(1.05);
+  opacity: 0.8;
+}
+
+.menu-btn:focus {
+  outline: none;
+}
+
+/* User Info Section */
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: var(--text-light);
+}
+
+.user-info span {
+  font-weight: 500;
+}
+
+/* ========================================
+   📱 COLLAPSIBLE MENU — Room Coffe
+   Mejorado por compatibilidad con Bootstrap
+======================================== */
+
+.navbar-collapse {
+  position: fixed;
+  top: 0;
+  right: 0;
+  padding: 25px;
+  width: 300px;
+  transition: all 0.4s ease;
+  transform: translateX(100%);
+  opacity: 0;
+  background-color: rgba(140, 3, 28, 0.95); /* rojo translúcido */
+  backdrop-filter: blur(10px);
+  height: 100%;
+  z-index: 1001;
+  overflow-y: auto;
+}
+
+.navbar-collapse.show {
+  transform: translateX(0%);
+  opacity: 1;
+}
+
+/* botón cerrar menú lateral */
+.close-btn {
+  position: absolute;
+  top: 0;
+  left: -40px;
+  font-size: 18px;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  background: #cbcbcb;
+  color: #000;
+  text-align: center;
+  padding-top: 10px;
+  border-radius: 0;
+}
+
+.navbar-nav {
+  margin-top: 20px;
+  list-style: none;
+  padding: 0;
+}
+
+.navbar-nav .nav-item {
+  margin-bottom: 10px;
+}
+
+/* enlaces del menú principal */
+.navbar-nav .nav-link {
+  line-height: 30px;
+  font-family: 'Dancing Script', cursive;
+  font-weight: 700;
+  font-size: 1.6rem;
+  color: #fff; /* visible sobre fondo rojo */
+  letter-spacing: 1px;
+  border-bottom: 1px solid rgba(255, 255, 255, .2);
+  margin-bottom: 10px;
+  text-decoration: none;
+  display: block;
+  padding: 10px 0;
+  position: relative;
+  z-index: 2;
+}
+
+.navbar-nav .nav-item:last-child .nav-link {
+  border-bottom: none;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #f2b9c6; /* rosado */
+}
+
+/* asegura que los enlaces sean visibles en modo normal */
+.main-header .nav-link {
+  color: #fff;
+}
+
+/* ícono de desplegable (+ / -) */
+.dropdown-toggle::after {
+  font-family: bootstrap-icons !important;
+  content: "\f64d"; /* icono + */
+  position: absolute;
+  right: 10px;
+  top: 12px;
+  color: #f2b9c6;
+  font-size: 1.2rem;
+  border: none;
+}
+
+.dropdown-toggle.show::after {
+  content: "\f63b"; /* icono - */
+  color: #fff;
+}
+
+/* Submenús */
+.dropdown-menu {
+  position: relative;
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  border-left: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0;
+  padding: 5px 0 5px 15px;
+  margin: 5px 0 10px;
+  z-index: 1010;
+  display: none;
+}
+
+.dropdown-menu.show {
+  display: block;
+}
+
+.dropdown-menu .dropdown-item {
+  color: #fff !important;
+  padding: 6px 0;
+  text-decoration: none;
+  display: block;
+  font-size: 1.4rem;
+  font-family: 'Dancing Script', cursive;
+  font-weight: 600;
+}
+
+.dropdown-menu .dropdown-item:hover,
+.dropdown-menu .dropdown-item:focus {
+  background-color: rgba(255, 255, 255, 0.15); /* un blanco translúcido sutil */
+  color: #f2b9c6 !important; /* rosado claro */
+  transition: all 0.3s ease;
+}
+/* === Control del menú sin JS === */
+#menu-toggle:checked ~ .navbar-collapse {
+  transform: translateX(0%);
+  opacity: 1;
+}
+
+/* Cuando el menú está cerrado */
+.navbar-collapse {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+/* === Control del menú lateral sin JS === */
+#menu-toggle:checked ~ .navbar-collapse {
+  transform: translateX(0);
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Estado cerrado */
+.navbar-collapse {
+  transform: translateX(100%);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s ease;
+}
+
+/* Botón abrir */
+.menu-btn {
+  font-size: 1.8rem;
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 2002;
+}
+
+/* Botón cerrar */
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: #fff;
+  color: #8c031c;
+  font-size: 1.4rem;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+  background: #f2b9c6;
+  color: #fff;
+}
 
 
 /* ========================================
-   FEATURED CAROUSEL (corregido)
+   🎠 CAROUSEL & FEATURED CONTENT
 ======================================== */
 
 .nc-section { 
@@ -294,7 +480,7 @@ body {
 }
 
 /* ========================================
-   CATEGORY FILTER MENU
+   🏷️ CATEGORY FILTERS
 ======================================== */
 
 .category-menu {
@@ -358,17 +544,8 @@ body {
 }
 
 /* ========================================
-   PRODUCTS SECTION
+   🛍️ PRODUCTS & CARDS
 ======================================== */
-
-main { 
-  padding: 40px 20px 80px; 
-}
-
-.section-title { 
-  font-size: 1.6rem; 
-  margin: 8px 0 18px; 
-}
 
 .product-grid {
   display: grid;
@@ -516,7 +693,10 @@ main {
   margin: 2px 0;
 }
 
-/* Buttons */
+/* ========================================
+   🔘 BUTTONS & INTERACTIONS
+======================================== */
+
 .btn {
   align-self: stretch;
   border: 0;
@@ -571,7 +751,7 @@ main {
 }
 
 /* ========================================
-   SHOPPING CART
+   🛒 SHOPPING CART
 ======================================== */
 
 .cart-fab {
@@ -768,7 +948,92 @@ main {
 }
 
 /* ========================================
-   FOOTER
+   🔐 LOGIN & AUTHENTICATION
+======================================== */
+
+.login-page {
+  padding-top: 0;
+  min-height: 100vh;
+  background: url('imagen/fondo.png') center/cover no-repeat fixed;
+}
+
+/* Fullscreen overlay wrapper so no reemplaza contenido existente */
+.login-overlay {
+  position: fixed;
+  inset: 0;
+  background: url('imagen/fondo.png') center/cover no-repeat fixed;
+  z-index: 2000;
+  display: none;
+}
+
+.login-overlay.open { display: block; }
+
+.login-layout {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 560px;
+  background: rgba(255,255,255,0.9);
+  border-radius: 28px;
+  border: 4px solid #ead8c8;
+  padding: 28px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.12);
+}
+
+.login-card.hidden { display: none; }
+
+.login-title {
+  margin: 0 0 16px;
+  text-align: center;
+  color: #8C031C;
+  font-family: 'Dancing Script', cursive;
+  font-weight: 700;
+  font-size: 48px;
+}
+
+.login-form { display: grid; gap: 14px; }
+.field { display: grid; gap: 6px; }
+.login-label { font-weight: 700; color: #8C031C; display: inline-flex; align-items: center; gap: 8px; }
+.login-input { width: 100%; padding: 14px 16px; border-radius: 16px; border: 2px solid var(--bg-light-pink); background: #fdeaea; outline: none; font-size: 16px; }
+.login-input:focus { border-color: var(--bg-pink); box-shadow: 0 0 0 3px rgba(242,136,164,.18); }
+
+.password-group { position: relative; }
+.toggle-pass {
+  position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+  border: 0; background: transparent; cursor: pointer; font-size: 20px; color: #8C031C;
+}
+
+.actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 6px; }
+.btn { border: 0; border-radius: 16px; padding: 12px 16px; font-weight: 700; cursor: pointer; transition: transform .15s ease, background .2s ease; }
+.btn.primary { background: #8C031C; color: #fff; }
+.btn.primary:hover { transform: translateY(-1px); background: #a10a24; }
+.btn.ghost { background: #f7eaea; color: #8C031C; border: 2px solid #f2b9c6; }
+.btn.ghost:hover { transform: translateY(-1px); background: #f2d8de; }
+
+/* Close button for login overlay */
+.login-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 2px solid #f2b9c6;
+  background: rgba(255,255,255,0.9);
+  color: #8C031C;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.login-btn { margin-left: auto; }
+
+/* ========================================
+   🦶 FOOTER
 ======================================== */
 
 .site-footer { 
@@ -841,6 +1106,7 @@ main {
   text-align: center; 
   color: #94a3b8; 
 }
+
 .social-icons {
   margin-top: 8px;
 }
@@ -856,380 +1122,9 @@ main {
   color: #fff;
 }
 
-
 /* ========================================
-   HEADER 9 MENU STYLES
+   ⚠️ STATES & UTILITIES
 ======================================== */
-
-#header_9{
-    position: sticky;
-    top: 0;
-}
-#header_9 nav{
-    padding: 0;
-    background-color: #000 !important;
-    position: relative;
-    top: 0;
-    left: 0;
-    width: 100%;
-    border-bottom: 1px solid rgba(0,0,0,0.11);
-}
-#header_9 nav .button a{
-    text-decoration: none;
-    color: #fff;
-    text-transform: capitalize;
-    display: inline-block;
-    font-weight: 600;
-}
-#header_9 nav .navbar-brand{
-    color: #fff;
-    font-weight: 600;
-    font-size: 30px;
-}
-.navbar-collapse {
-    position: fixed;
-    top: 0;
-    right: 0;
-    padding-left: 25px;
-    padding-right: 25px;
-    padding-bottom: 25px;
-    width: 300px;
-    transition: all 0.4s ease;
-    display: block !important;
-    transform: translateX(100%);
-    opacity: 0;
-    background-color: transparent;
-    height: 100%;
-    z-index: 1;
-}
-.navbar-collapse.collapsing {
-    height: 100% !important;
-    right: 0;
-    transition: all 0.2s ease;
-}
-.navbar-collapse.show {
-    transform: translateX(0%);
-    opacity: 1;
-}
-#header_9 .close-btn {
-    position: absolute;
-    top: 0px;
-    left: -40px;
-    font-size: 18px;
-    cursor: pointer;
-    width: 40px;
-    height: 40px;
-    background: #cbcbcb;
-    color: #000;
-    text-align: center;
-    padding-top: 10px;
-}
-#header_9 nav button{
-    color: #000;
-    border-radius: 0;
-    padding: 25px;
-    background: #cbcbcb;
-    box-shadow: none;
-}
-#header_9 nav button i{
-    font-size: 30px;
-}
-#header_9 .collapse > ul{
-    margin-top: 20px;
-    overflow: auto;
-    height: 100%;
-}
-#header_9 .collapse > ul > li > a{
-    line-height: 30px;
-    font-family: 'Dancing Script', cursive;
-    font-weight: 700;
-    font-size: 1.6rem;
-    color: #fff;
-    letter-spacing: 1px;
-    border-bottom: 1px solid rgba(255, 255, 255, .2);
-    margin-bottom: 10px;
-    position: relative;
-}
-#header_9 .collapse > ul > li:last-child > a{
-    border-bottom: 0;
-}
-#header_9 .collapse ul li .dropdown-toggle::after{
-    font-family: bootstrap-icons !important;
-    content: "\f64d";
-    position: absolute;
-    right: 0;
-    border: 0;
-    color: #a9a9a9;
-}
-#header_9 .collapse ul li .dropdown-toggle.show::after{
-    content: "\f63b";
-}
-#header_9 .collapse{
-    padding-top: 15px;
-}
-#header_9 .collapse > ul > li .dropdown-menu {
-    border-radius: 0;
-    background-color: transparent;
-}
-#header_9 .collapse > ul > li .dropdown-menu a{
-    color: #fff;
-}
-#header_9 .collapse > ul > li .dropdown-menu a:hover,
-#header_9 .collapse > ul > li .dropdown-menu a:focus{
-    color: #000;
-    background-color: #f8f9fa;
-}
-@media (max-width: 820px){
-    #header_9 nav .button {display: none;}
-    #header_9 nav{
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-    }
-    #header_9 nav .container{
-        flex: auto;
-        width: fit-content;
-    }
-}
-
-/* ========================================
-   RESPONSIVE DESIGN
-======================================== */
-
-/* Desktop large (1200px+) */
-@media (min-width: 1200px) {
-  .product-grid {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 28px;
-  }
-  .card {
-    width: 100%;
-    max-width: 320px;
-  }
-}
-
-/* Desktop (992px - 1199px) */
-@media (max-width: 1199px) and (min-width: 992px) {
-  .product-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-  }
-  .card {
-    width: 100%;
-    max-width: 300px;
-  }
-}
-
-/* Tablet (768px - 991px) */
-@media (max-width: 991px) and (min-width: 768px) {
-  .product-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-  }
-  .card {
-    width: 100%;
-    max-width: 280px;
-  }
-  .main-header {
-    height: 60px;
-  }
-}
-
-/* Mobile (767px and less) */
-@media (max-width: 767px) {
-  .product-grid {
-    grid-template-columns: 1fr;
-    gap: 18px;
-    padding: 0 15px;
-  }
-  .card {
-    width: 100%;
-    max-width: 100%;
-  }
-  .main-header {
-    height: 60px;
-  }
-  .category-menu {
-    padding: 15px;
-    gap: 8px;
-  }
-  .chip {
-    padding: 10px 16px;
-    font-size: 0.8rem;
-  }
-  main {
-    padding: 20px 15px 40px;
-  }
-  .nc-cards { 
-    height: 240px; 
-  }
-  .nc-card { 
-    width: 80%; 
-  }
-  
-  /* Header responsive for mobile */
-  .header-content {
-    padding: 12px 20px;
-  }
-  
-  .instagram-text {
-    font-size: 1.4rem;
-  }
-  
-  .instagram-icon {
-    width: 20px;
-    height: 20px;
-  }
-}
-
-/* Small mobile (480px and less) */
-@media (max-width: 480px) {
-  .main-header {
-    height: 55px;
-  }
-  .category-menu {
-    padding: 12px;
-    gap: 6px;
-  }
-  .chip {
-    padding: 8px 12px;
-    font-size: 0.75rem;
-  }
-  .section-title {
-    font-size: 1.4rem;
-  }
-  .card {
-    border-radius: 15px;
-  }
-  .card-body {
-    padding: 15px;
-  }
-  .cart-panel {
-    right: 12px;
-    left: 12px;
-    width: auto;
-  }
-  .cart-fab {
-    right: 12px;
-    bottom: 12px;
-  }
-  
-  /* Header responsive for small mobile */
-  .header-content {
-    padding: 10px 15px;
-  }
-  
-  .instagram-text {
-    font-size: 1.2rem;
-  }
-  
-  .instagram-icon {
-    width: 18px;
-    height: 18px;
-  }
-}
-
-/* Footer responsive */
-@media (max-width: 900px) { 
-  .footer-inner { 
-    grid-template-columns: repeat(6, 1fr); 
-  } 
-  .footer-col { 
-    grid-column: span 6; 
-  } 
-  .footer-col.align-end { 
-    justify-content: flex-start; 
-  } 
-}
-
-/* ========================================
-   DYNAMIC NAVIGATION STYLES
-======================================== */
-
-/* Main navigation */
-.main-nav {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-}
-
-.nav-btn {
-  background: transparent;
-  border: 2px solid var(--text-light);
-  color: var(--text-light);
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  font-size: 0.9rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-decoration: none;
-  display: inline-block;
-}
-
-.nav-btn:hover {
-  background: var(--text-light);
-  color: var(--bg-dark);
-  transform: translateY(-2px);
-}
-
-.nav-btn.active {
-  background: var(--text-light);
-  color: var(--bg-dark);
-  box-shadow: 0 2px 8px #ffffff33;
-}
-
-/* User info section */
-.user-info {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  color: var(--text-light);
-}
-
-.user-info span {
-  font-weight: 500;
-}
-
-/* Menu button styling - same as instagram-btn */
-.menu-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 0;
-  background: none;
-  color: white;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  font-family: 'Dancing Script', cursive;
-  font-size: 1.6rem;
-  font-weight: 700;
-  border: none;
-  cursor: pointer;
-  margin-left: 0.5rem;
-}
-
-.menu-btn:hover {
-  transform: scale(1.05);
-  opacity: 0.8;
-}
-
-.menu-btn:focus {
-  outline: none;
-}
-
-/* Admin button specific styling */
-.admin-only {
-  background: #ff6b35 !important;
-  border-color: #ff6b35 !important;
-}
-
-.admin-only:hover {
-  background: #e55a2b !important;
-  border-color: #e55a2b !important;
-  color: white !important;
-}
 
 /* Loading and error states */
 .loading {
@@ -1258,41 +1153,394 @@ main {
   margin-bottom: 1.5rem;
 }
 
-/* Responsive navigation */
-@media (max-width: 768px) {
-  .main-nav {
-    flex-direction: column;
-    gap: 0.5rem;
+/* ========================================
+   📱 RESPONSIVE DESIGN
+======================================== */
+
+/* Desktop large (1200px+) */
+@media (min-width: 1200px) {
+  .product-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 28px;
+  }
+  .card {
     width: 100%;
+    max-width: 320px;
+  }
+}
+
+/* Desktop (992px - 1199px) */
+@media (max-width: 1199px) and (min-width: 992px) {
+  .product-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .card {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
+/* Tablet (768px - 991px) */
+@media (max-width: 991px) and (min-width: 768px) {
+  body {
+    padding-top: 60px;
   }
   
-  .nav-btn {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 0 20px;
+  }
+  .card {
     width: 100%;
+    max-width: 280px;
+  }
+  .main-header {
+    height: 60px;
+  }
+  
+  .banner-section {
+    height: 45vh;
+    min-height: 400px;
+  }
+  
+  .nc-cards {
+    height: 300px;
+  }
+  
+  .category-menu {
+    padding: 18px 20px;
+    gap: 10px;
+  }
+  
+  .chip {
+    padding: 11px 18px;
+    font-size: 0.85rem;
+  }
+  
+  main {
+    padding: 30px 20px 60px;
+  }
+}
+
+/* Mobile (767px and less) */
+@media (max-width: 767px) {
+  body {
+    padding-top: 60px;
+  }
+  
+  .product-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    padding: 0 15px;
+  }
+  .card {
+    width: 100%;
+    max-width: 100%;
+  }
+  .main-header {
+    height: 60px;
+  }
+  .category-menu {
+    padding: 15px;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+  .chip {
+    padding: 10px 16px;
+    font-size: 0.8rem;
+    flex-shrink: 0;
+  }
+  main {
+    padding: 20px 15px 40px;
+  }
+  .nc-cards { 
+    height: 240px; 
+  }
+  .nc-card { 
+    width: 80%; 
+  }
+  
+  /* Header responsive for mobile */
+  .header-content {
+    padding: 12px 20px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .romcoffe-text {
+    font-size: 1.4rem;
+  }
+  
+  .heart-icon {
+    width: 20px;
+    height: 20px;
+  }
+  
+  /* Navigation improvements for mobile */
+  .main-nav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .menu-btn {
+    font-size: 1.2rem;
+    padding: 6px;
+  }
+  
+  /* Banner responsive */
+  .banner-section {
+    height: 40vh;
+    min-height: 300px;
+  }
+  
+  /* Cart improvements for mobile */
+  .cart-panel {
+    right: 15px;
+    left: 15px;
+    width: auto;
+    max-width: none;
+  }
+  
+  .cart-fab {
+    right: 15px;
+    bottom: 15px;
+    width: 55px;
+    height: 55px;
+  }
+}
+
+/* Small mobile (480px and less) */
+@media (max-width: 480px) {
+  body {
+    padding-top: 55px;
+  }
+  
+  .main-header {
+    height: 55px;
+  }
+  
+  .category-menu {
+    padding: 12px;
+    gap: 6px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  
+  .category-menu::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .chip {
+    padding: 8px 12px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  
+  .section-title {
+    font-size: 1.4rem;
     text-align: center;
   }
   
-  .user-info {
-    flex-direction: column;
-    gap: 0.5rem;
+  .card {
+    border-radius: 15px;
+    margin: 0 auto;
+  }
+  
+  .card-body {
+    padding: 15px;
+  }
+  
+  .cart-panel {
+    right: 12px;
+    left: 12px;
+    width: auto;
+    max-height: 70vh;
+  }
+  
+  .cart-fab {
+    right: 12px;
+    bottom: 12px;
+    width: 50px;
+    height: 50px;
+  }
+  
+  /* Header responsive for small mobile */
+  .header-content {
+    padding: 10px 15px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .romcoffe-text {
+    font-size: 1.2rem;
+  }
+  
+  .heart-icon {
+    width: 18px;
+    height: 18px;
+  }
+  
+  /* Banner adjustments for small mobile */
+  .banner-section {
+    height: 35vh;
+    min-height: 250px;
+  }
+  
+  /* Carousel adjustments for small mobile */
+  .nc-cards {
+    height: 200px;
+  }
+  
+  .nc-card {
+    width: 85%;
+  }
+  
+  /* Product grid adjustments */
+  .product-grid {
+    padding: 0 10px;
+    gap: 15px;
+  }
+  
+  /* Footer adjustments */
+  .footer-inner {
+    padding: 24px 15px;
+    gap: 15px;
+  }
+  
+  .footer-col {
+    text-align: center;
+  }
+  
+  /* Collapsible menu mobile adjustments */
+  .navbar-collapse {
     width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  
+  .close-btn {
+    left: -35px;
+    width: 35px;
+    height: 35px;
+  }
+  
+  /* Login responsive */
+  .login-title { font-size: 40px; }
+  .actions { grid-template-columns: 1fr; }
+}
+
+/* Footer responsive */
+@media (max-width: 900px) { 
+  .footer-inner { 
+    grid-template-columns: repeat(6, 1fr); 
+    padding: 30px 20px;
+  } 
+  .footer-col { 
+    grid-column: span 6; 
+    margin-bottom: 20px;
+  } 
+  .footer-col.align-end { 
+    justify-content: flex-start; 
+  } 
+}
+
+@media (max-width: 600px) {
+  .footer-inner {
+    grid-template-columns: 1fr;
+    padding: 24px 15px;
+    text-align: center;
+  }
+  
+  .footer-col {
+    grid-column: span 1;
+    margin-bottom: 16px;
+  }
+  
+  .footer-brand {
+    font-size: 1.5rem;
+  }
+  
+  .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+  }
+  
+  .footer-links li {
+    margin: 0;
+  }
+  
+  .social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+  }
+  
+  .btn.contact {
+    margin: 0 auto;
+    display: block;
+    width: fit-content;
+  }
+}
+
+/* Responsive navigation */
+@media (max-width: 768px) {
+  .main-nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .nav-btn {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
+  
+  .user-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
   
   .user-info .nav-btn {
-    width: 100%;
+    padding: 6px 12px;
+    font-size: 0.8rem;
   }
 }
 
 @media (max-width: 480px) {
   .header-content {
-    flex-direction: column;
-    gap: 1rem;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
   }
   
   .main-nav {
     order: 2;
+    gap: 6px;
   }
   
   .user-info {
     order: 3;
+    gap: 6px;
+  }
+  
+  .nav-btn {
+    padding: 4px 8px;
+    font-size: 0.75rem;
+  }
+  
+  .user-info .nav-btn {
+    padding: 4px 8px;
+    font-size: 0.75rem;
   }
 }

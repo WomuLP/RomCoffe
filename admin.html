@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel de Administración • Room Coffe</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+  <header class="admin-header">
+    <h1>Panel de Administración</h1>
+    <button onclick="window.location.href='index.html'" class="btn">Volver al sitio</button>
+  </header>
+
+  <main class="admin-container">
+
+    <!-- GESTIÓN DE PRODUCTOS -->
+    <section class="admin-section">
+      <h2>Gestión de Productos</h2>
+      <button id="btnAddProduct" class="btn">Agregar producto</button>
+      <ul id="productList" class="product-list"></ul>
+    </section>
+
+    <!-- EDITAR FOOTER -->
+    <section class="admin-section">
+      <h2>Editar texto del footer</h2>
+      <textarea id="footerText" rows="3" placeholder="Texto del footer..."></textarea>
+      <button id="btnSaveFooter" class="btn">Guardar cambios</button>
+    </section>
+
+  </main>
+
+  <script src="js/admin.js"></script>
+</body>
+</html>
