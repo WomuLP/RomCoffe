@@ -174,7 +174,7 @@ const products = [
       category: 'postres'
     },
     {
-      image: 'image: imagen/Mini.jpg',
+      image: 'imagen/Mini.jpg',
       name: 'Mini Chocolate Tarts',
       price: 1200,
       description: 'Pequeños bocados de puro placer chocolatoso, esponjosos y perfectos para acompañar un café o té.',
