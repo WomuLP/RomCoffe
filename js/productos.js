@@ -55,6 +55,14 @@ const products = [
       category: 'tes'
     },
     {
+      image: 'https://i.pinimg.com/1200x/c5/f6/23/c5f623cba688460a7311e57d8090fc07.jpg',
+      name: 'Chai Latte',
+      price: 4100,
+      description: 'Té negro especiado con leche y un toque de canela.',
+      ingredients: ['Té negro', 'Leche', 'Canela', 'Clavo', 'Jengibre'],
+      category: 'tes'
+    },
+    {
       image: 'https://i.pinimg.com/1200x/f9/ec/e7/f9ece729d7dc016bd9ba391c320a58fb.jpg',
       name: 'Té de Frutos Rojos',
       price: 3700,
@@ -72,6 +80,22 @@ const products = [
       price: 4500,
       description: 'Café infusionado en frío durante 16 horas. Refrescante y suave.',
       ingredients: ['Café molido', 'Agua filtrada', 'Hielo'],
+      category: 'bebidas-frias'
+    },
+    {
+      image: 'https://i.pinimg.com/1200x/74/5c/e4/745ce426e7e44564117511bbc2dfb16d.jpg',
+      name: 'Limonada con Menta',
+      price: 3900,
+      description: 'Refrescante limonada natural con hojas de menta fresca.',
+      ingredients: ['Limón', 'Agua', 'Menta', 'Azúcar'],
+      category: 'bebidas-frias'
+    },
+    {
+      image: 'https://i.pinimg.com/1200x/61/17/99/6117996402ac81f5f53bd656fd188eb8.jpg',
+      name: 'Smoothie de Frutilla',
+      price: 4800,
+      description: 'Batido natural de frutilla y yogurt, cremoso y dulce.',
+      ingredients: ['Frutilla', 'Yogurt', 'Miel', 'Leche'],
       category: 'bebidas-frias'
     },
     {
@@ -134,6 +158,14 @@ const products = [
       ingredients: ['Harina', 'Huevo', 'Leche', 'Frutos rojos', 'Miel'],
       category: 'desayuno'
     },
+    {
+      image: 'https://i.pinimg.com/736x/6c/04/0d/6c040d14db0513109d14e914b7329ab0.jpg',
+      name: 'Croissant de Manteca',
+      price: 3300,
+      description: 'Croissant artesanal recién horneado, tierno y crujiente.',
+      ingredients: ['Harina', 'Manteca', 'Levadura'],
+      category: 'desayuno'
+    },
   
     /* ======================
        ALMUERZO
@@ -144,6 +176,14 @@ const products = [
       price: 6900,
       description: 'Pan tostado con pollo, tocino, vegetales y salsa especial.',
       ingredients: ['Pan', 'Pollo', 'Tocino', 'Lechuga', 'Tomate', 'Salsa'],
+      category: 'almuerzo'
+    },
+    {
+      image: 'https://i.pinimg.com/1200x/04/44/31/044431c8343b5801ff75f4b493fd6a24.jpg',
+      name: 'Ensalada César',
+      price: 5500,
+      description: 'Clásica ensalada con aderezo césar y crutones.',
+      ingredients: ['Lechuga', 'Pollo', 'Parmesano', 'Crutones', 'Aderezo césar'],
       category: 'almuerzo'
     },
     {
@@ -164,6 +204,22 @@ const products = [
       price: 6100,
       description: 'Tarta cremosa con base de galleta y cobertura de frutilla.',
       ingredients: ['Queso crema', 'Galletas', 'Frutilla', 'Azúcar'],
+      category: 'postres'
+    },
+    {
+      image: 'https://i.pinimg.com/1200x/04/6f/11/046f1140c8d118c0539c5faadd41a782.jpg',
+      name: 'Brownie de Chocolate',
+      price: 5700,
+      description: 'Brownie húmedo de chocolate con nueces.',
+      ingredients: ['Chocolate', 'Harina', 'Nueces', 'Azúcar'],
+      category: 'postres'
+    },
+    {
+      image: 'https://i.pinimg.com/1200x/f1/fd/96/f1fd96ca94e19fdd308cf4a7b1553634.jpg',
+      name: 'Tiramisú',
+      price: 6300,
+      description: 'Postre italiano con café, mascarpone y cacao.',
+      ingredients: ['Café', 'Mascarpone', 'Cacao', 'Bizcocho'],
       category: 'postres'
     },
     {
