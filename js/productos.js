@@ -27,7 +27,7 @@ const products = [
       category: 'cafe'
     },
     {
-      image: 'imagen/Ice Mocha.jpg',
+      image: 'imagen/Ice mocha.jpg',
       name: 'Ice Mocha',
       price: 3800,
       description: 'Refrescante y con el balance perfecto entre café y chocolate. Ideal para los que aman lo dulce.',
@@ -35,7 +35,7 @@ const products = [
       category: 'cafe'
     },
     {
-      image: 'imagen/Matcha Latte.jpg',
+      image: 'imagen/Matcha latte.jpg',
       name: 'Matcha Latte',
       price: 4200,
       description: 'Energía suave y sostenida sin el bajón del café. Sabor herbal y cremoso, ideal con leche de avena o almendra.',
