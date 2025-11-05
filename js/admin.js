@@ -4,28 +4,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const footerText = document.getElementById('footerText');
     const btnSaveFooter = document.getElementById('btnSaveFooter');
   
-    // Mostrar productos actuales
-    if (localStorage.getItem('products')) {
-      const saved = JSON.parse(localStorage.getItem('products'));
-      renderProducts(saved);
-    }
+    // Productos en memoria (sin almacenamiento local)
+    let products = [];
   
     btnAdd.addEventListener('click', () => {
       const name = prompt('Nombre del producto:');
       const price = parseFloat(prompt('Precio:'));
       const image = prompt('URL de la imagen:');
       if (name && !isNaN(price)) {
-        const products = JSON.parse(localStorage.getItem('products')) || [];
         products.push({ name, price, image, description: '', ingredients: [], category: 'otros' });
-        localStorage.setItem('products', JSON.stringify(products));
         renderProducts(products);
         alert('Producto agregado con éxito.');
       }
     });
   
     btnSaveFooter.addEventListener('click', () => {
-      localStorage.setItem('footerText', footerText.value);
-      alert('Texto del footer guardado.');
+      alert('Texto del footer actualizado (no se guarda en el navegador).');
     });
   
     function renderProducts(list) {
@@ -37,8 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
   
-    // Cargar texto guardado del footer
-    const savedFooter = localStorage.getItem('footerText');
-    if (savedFooter) footerText.value = savedFooter;
+    // Sin carga de footer desde almacenamiento local
   });
   

@@ -1,15 +1,29 @@
 <?php
-$servername =  "193.203.175.157";
-$username = "u157683007_luciana";
-$password = "Romcoffe2025";
-$dbname = "u157683007_romcoffe";
+declare(strict_types=1);
 
-// Crear conexión
-$conn = new mysqli($servername, $username, $password, $dbname);
+// Configuración de base de datos (ajusta según tu entorno)
+const DB_HOST = 'localhost';
+const DB_USER = 'root';
+const DB_PASS = '';
+const DB_NAME = 'romcoffe';
 
-// Verificar conexión
-if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
+/**
+ * Retorna una instancia de mysqli con charset utf8mb4.
+ */
+function get_db_connection(): mysqli {
+    $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+    if ($mysqli->connect_errno) {
+        http_response_code(500);
+        header('Content-Type: application/json');
+        echo json_encode([
+            'ok' => false,
+            'error' => 'Error de conexión a la base de datos',
+            'details' => $mysqli->connect_error,
+        ], JSON_UNESCAPED_UNICODE);
+        exit;
+    }
+
+    $mysqli->set_charset('utf8mb4');
+    return $mysqli;
 }
-echo "Connected successfully";
-?>

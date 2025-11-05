@@ -30,16 +30,12 @@ document.body.appendChild(cartFab);
 
 // Guardar carrito
 function saveCart() {
-  localStorage.setItem('cart', JSON.stringify(cart));
+  // Sin persistencia local: el carrito vive en memoria
 }
 
 // Cargar carrito
 function loadCart() {
-  try {
-    cart = JSON.parse(localStorage.getItem('cart')) || [];
-  } catch (e) {
-    cart = [];
-  }
+  cart = [];
 }
 
 // Actualizar interfaz del carrito
@@ -159,13 +155,7 @@ document.addEventListener('DOMContentLoaded', function() {
   updateFooterYear();
 
   // Mostrar texto del footer personalizado (si el admin lo cambió)
-  const savedFooter = localStorage.getItem('footerText');
-  if (savedFooter) {
-    const footerParagraph = document.querySelector('.footer-brand + p');
-    if (footerParagraph) {
-      footerParagraph.textContent = savedFooter;
-    }
-  }
+  // Sin footer persistido en almacenamiento local
 
   // Inicializar navegación dinámica
   initDynamicNavigation();
@@ -186,11 +176,9 @@ function initDynamicElements() {
 }
 
 function checkSession() {
-  const usuarioActual = localStorage.getItem('usuarioActual');
-  if (usuarioActual) {
-    currentUser = { username: usuarioActual, role: 'user' };
-    updateUI();
-  }
+  // Sin lectura desde localStorage. Integrar con PHP si se requiere.
+  currentUser = null;
+  updateUI();
 }
 
 function updateUI() {
@@ -209,7 +197,6 @@ function updateUI() {
 }
 
 function logout() {
-  localStorage.removeItem('usuarioActual');
   currentUser = null;
   updateUI();
   alert('Sesión cerrada correctamente');

@@ -1,76 +1,65 @@
 <?php
-require_once __DIR__ . '/helpers.php';
+declare(strict_types=1);
 
+header('Content-Type: application/json');
 session_start();
 
-try {
-	$body = read_json_body();
-	$data = array_merge($_POST ?? [], $body);
+require_once __DIR__ . '/conexion.php';
 
-	$identifier = isset($data['identifier']) ? trim((string)$data['identifier']) : '';
-	$username = isset($data['username']) ? trim((string)$data['username']) : '';
-	$email = isset($data['email']) ? trim((string)$data['email']) : '';
-	$password = isset($data['password']) ? (string)$data['password'] : '';
-	$devToken = isset($data['dev_token']) ? (string)$data['dev_token'] : null;
-
-	$pdo = getPDO();
-
-	// Dev bypass: only if enabled and token matches; no password required
-	if (is_dev_mode() && $devToken) {
-		$expected = env('DEV_BYPASS_TOKEN', '');
-		if ($expected !== '' && hash_equals($expected, $devToken)) {
-			$needle = $identifier !== '' ? $identifier : ($email !== '' ? $email : $username);
-			if ($needle === '') {
-				json_response(['status' => 'error', 'error' => 'Provide username or email for dev bypass'], 400);
-			}
-			$find = $pdo->prepare('SELECT id, username, email, role FROM usuarios WHERE username = :n OR email = :n LIMIT 1');
-			$find->execute([':n' => $needle]);
-			$user = $find->fetch();
-			if (!$user) {
-				json_response(['status' => 'error', 'error' => 'User not found for dev bypass'], 404);
-			}
-			$pdo->prepare('UPDATE usuarios SET last_login = NOW(), updated_at = NOW() WHERE id = :id')->execute([':id' => $user['id']]);
-			$_SESSION['user_id'] = $user['id'];
-			$_SESSION['username'] = $user['username'];
-			$_SESSION['role'] = $user['role'];
-			log_error('DEV BYPASS login used', ['username' => $user['username']]);
-			json_response(['status' => 'ok', 'message' => 'Dev bypass login', 'role' => $user['role']]);
-		}
-	}
-
-	// Normal auth path
-	$needle = $identifier !== '' ? $identifier : ($email !== '' ? $email : $username);
-	if ($needle === '' || $password === '') {
-		json_response([
-			'status' => 'error',
-			'error' => 'Missing required fields',
-			'hint' => 'Provide username/email and password'
-		], 400);
-	}
-
-	$stmt = $pdo->prepare('SELECT id, username, email, role, password FROM usuarios WHERE username = :n OR email = :n LIMIT 1');
-	$stmt->execute([':n' => $needle]);
-	$user = $stmt->fetch();
-
-	if (!$user || empty($user['password'])) {
-		json_response(['status' => 'error', 'error' => 'Invalid credentials'], 401);
-	}
-
-	if (!password_verify($password, $user['password'])) {
-		json_response(['status' => 'error', 'error' => 'Invalid credentials'], 401);
-	}
-
-	$pdo->prepare('UPDATE usuarios SET last_login = NOW(), updated_at = NOW() WHERE id = :id')->execute([':id' => $user['id']]);
-	$_SESSION['user_id'] = $user['id'];
-	$_SESSION['username'] = $user['username'];
-	$_SESSION['role'] = $user['role'];
-
-	json_response(['status' => 'ok', 'message' => 'Login successful', 'role' => $user['role']]);
-} catch (PDOException $e) {
-	log_error('PDOException in login.php', ['code' => $e->getCode(), 'msg' => $e->getMessage()]);
-	json_response(['status' => 'error', 'error' => 'Database error'], 500);
-} catch (Throwable $e) {
-	log_error('Throwable in login.php', ['msg' => $e->getMessage()]);
-	json_response(['status' => 'error', 'error' => 'Server error'], 500);
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    http_response_code(405);
+    echo json_encode(['ok' => false, 'error' => 'Método no permitido']);
+    exit;
 }
-?>
+
+$email = isset($_POST['email']) ? trim((string)$_POST['email']) : '';
+$password   = isset($_POST['password']) ? (string)$_POST['password'] : '';
+
+if ($email === '' || $password === '') {
+    http_response_code(400);
+    echo json_encode(['ok' => false, 'error' => 'Faltan credenciales']);
+    exit;
+}
+
+$conn = get_db_connection();
+
+$sql = 'SELECT id, email, password FROM usuarios WHERE email = ? LIMIT 1';
+$stmt = $conn->prepare($sql);
+if (!$stmt) {
+    http_response_code(500);
+    echo json_encode(['ok' => false, 'error' => 'Error preparando la consulta']);
+    exit;
+}
+$stmt->bind_param('s', $email);
+$stmt->execute();
+$result = $stmt->get_result();
+$user = $result->fetch_assoc();
+$stmt->close();
+
+if (!$user) {
+    http_response_code(401);
+    echo json_encode(['ok' => false, 'error' => 'Usuario no encontrado']);
+    $conn->close();
+    exit;
+}
+
+if (!password_verify($password, (string)$user['password'])) {
+    http_response_code(401);
+    echo json_encode(['ok' => false, 'error' => 'Contraseña incorrecta']);
+    $conn->close();
+    exit;
+}
+
+// Inicia sesión
+$_SESSION['user_id'] = (int)$user['id'];
+$_SESSION['email'] = (string)$user['email'];
+
+$conn->close();
+
+echo json_encode([
+    'ok' => true,
+    'user' => [
+        'id' => (int)$user['id'],
+        'email' => (string)$user['email'],
+    ],
+]);

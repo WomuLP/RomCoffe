@@ -17,14 +17,14 @@
       <div id="messageContainer"></div>
       
       <!-- Formulario de Login -->
-      <form class="login-form" id="loginForm">
+      <form class="login-form" id="loginForm" action="php/login.php" method="post">
         <div class="field">
-          <label for="login_username" class="login-label">
-            <span class="ico">👤</span> Nombre de usuario
+          <label for="login_email" class="login-label">
+            <span class="ico">📧</span> Email
           </label>
-          <input type="text" id="login_username" name="username" class="login-input" required autocomplete="username">
+          <input type="email" id="login_email" name="email" class="login-input" required autocomplete="email">
         </div>
-        
+
         <div class="field">
           <label for="login_password" class="login-label">
             <span class="ico">🔒</span> Contraseña
@@ -34,7 +34,7 @@
             <button type="button" class="toggle-pass" onclick="togglePassword('login_password')">👁️</button>
           </div>
         </div>
-        
+
         <div class="actions">
           <button type="submit" class="btn primary">Iniciar Sesión</button>
           <button type="button" class="btn ghost" onclick="switchMode('register')">Registrarse</button>
@@ -42,14 +42,14 @@
       </form>
       
       <!-- Formulario de Registro -->
-      <form class="login-form" id="registerForm" style="display: none;">
+      <form class="login-form" id="registerForm" action="php/registro.php" method="post" style="display: none;">
         <div class="field">
-          <label for="reg_username" class="login-label">
-            <span class="ico">👤</span> Nombre de usuario
+          <label for="reg_email" class="login-label">
+            <span class="ico">📧</span> Email
           </label>
-          <input type="text" id="reg_username" name="username" class="login-input" required autocomplete="username">
+          <input type="email" id="reg_email" name="email" class="login-input" required autocomplete="email">
         </div>
-        
+
         <div class="field">
           <label for="reg_password" class="login-label">
             <span class="ico">🔒</span> Contraseña
@@ -59,7 +59,7 @@
             <button type="button" class="toggle-pass" onclick="togglePassword('reg_password')">👁️</button>
           </div>
         </div>
-        
+
         <div class="actions">
           <button type="submit" class="btn primary">Registrarse</button>
           <button type="button" class="btn ghost" onclick="switchMode('login')">Ya tengo cuenta</button>
@@ -74,23 +74,7 @@
   <script>
     let currentMode = 'login';
   
-    // 🔹 Inicializar usuarios predeterminados si no existen en localStorage
-    const defaultUsers = {
-      admin: { password: "admin123", role: "admin" },
-      usuario1: { password: "usuario123", role: "user" }
-    };
-  
-    if (!localStorage.getItem("usuarios")) {
-      localStorage.setItem("usuarios", JSON.stringify(defaultUsers));
-    }
-  
-    function getUsuarios() {
-      return JSON.parse(localStorage.getItem("usuarios")) || {};
-    }
-  
-    function saveUsuarios(users) {
-      localStorage.setItem("usuarios", JSON.stringify(users));
-    }
+    // Sin almacenamiento local: se usará envío POST a PHP
   
     function togglePassword(inputId) {
       const input = document.getElementById(inputId);
@@ -116,13 +100,13 @@
         loginForm.style.display = '';
         registerForm.style.display = 'none';
         title.textContent = 'Iniciar Sesión';
-        document.getElementById('reg_username').value = '';
+        document.getElementById('reg_email').value = '';
         document.getElementById('reg_password').value = '';
       } else {
         loginForm.style.display = 'none';
         registerForm.style.display = '';
         title.textContent = 'Registrarse';
-        document.getElementById('login_username').value = '';
+        document.getElementById('login_email').value = '';
         document.getElementById('login_password').value = '';
       }
       clearMessages();
@@ -147,55 +131,9 @@
       document.getElementById('messageContainer').innerHTML = '';
     }
   
-    // 🔹 Login (versión sin PHP)
-    document.getElementById('loginForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const username = document.getElementById('login_username').value.trim();
-      const password = document.getElementById('login_password').value;
+    // Los formularios ahora envían por POST a PHP (sin JS extra)
   
-      const usuarios = getUsuarios();
-  
-      if (!usuarios[username]) {
-        showMessage('Usuario no encontrado.', 'error');
-        return;
-      }
-  
-      if (usuarios[username].password !== password) {
-        showMessage('Contraseña incorrecta.', 'error');
-        return;
-      }
-  
-      showMessage('Inicio de sesión exitoso. Redirigiendo...', 'success');
-      localStorage.setItem("usuarioActual", username);
-  
-      // 🔁 Redirigir siempre al index.html
-      setTimeout(() => {
-        window.location.href = "index.html";
-      }, 1500);
-    });
-  
-    // 🔹 Registro (versión sin PHP)
-    document.getElementById('registerForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const username = document.getElementById('reg_username').value.trim();
-      const password = document.getElementById('reg_password').value;
-  
-      const usuarios = getUsuarios();
-  
-      if (usuarios[username]) {
-        showMessage('El nombre de usuario ya existe.', 'error');
-        return;
-      }
-  
-      usuarios[username] = { password: password, role: "user" };
-      saveUsuarios(usuarios);
-  
-      showMessage('Usuario registrado correctamente. Ahora podés iniciar sesión.', 'success');
-  
-      setTimeout(() => {
-        switchMode('login');
-      }, 1500);
-    });
+    // Sin interceptar el submit del registro (envío directo al PHP)
   
     // Verificar si hay parámetro de modo en la URL
     const urlParams = new URLSearchParams(window.location.search);
