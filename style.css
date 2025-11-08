@@ -950,14 +950,14 @@ main {
 .login-page {
   padding-top: 0;
   min-height: 100vh;
-  background: url('imagen/fondo.png') center/cover no-repeat fixed;
+  background: url('imagen/fondo.webp') center/cover no-repeat fixed;
 }
 
 /* Fullscreen overlay wrapper so no reemplaza contenido existente */
 .login-overlay {
   position: fixed;
   inset: 0;
-  background: url('imagen/fondo.png') center/cover no-repeat fixed;
+  background: url('imagen/fondo.webp') center/cover no-repeat fixed;
   z-index: 2000;
   display: none;
 }
