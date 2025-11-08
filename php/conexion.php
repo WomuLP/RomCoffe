@@ -2,10 +2,10 @@
 declare(strict_types=1);
 
 // Configuración de base de datos (ajusta según tu entorno)
-const DB_HOST = 'localhost';
-const DB_USER = 'root';
-const DB_PASS = '';
-const DB_NAME = 'romcoffe';
+const DB_HOST = '193.203.175.157';
+const DB_USER = 'u157683007_luciana';
+const DB_PASS = 'Romcoffe2025';
+const DB_NAME = 'u157683007_romcoffe';
 
 /**
  * Retorna una instancia de mysqli con charset utf8mb4.

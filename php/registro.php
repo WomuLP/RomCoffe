@@ -1,77 +1,46 @@
 <?php
-declare(strict_types=1);
+// Incluye el archivo de conexión (ruta relativa al archivo actual)
+require_once __DIR__ . '/conexion.php'; // ahora usa la función get_db_connection()
 
-header('Content-Type: application/json');
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $email = $_POST["email"];
+    // *** MEJORA DE SEGURIDAD: Validar formato de email ***
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo "Formato de email inválido.";
+        exit;
+    }
+    
+    $password = password_hash($_POST["password"], PASSWORD_DEFAULT); // Hash de la contraseña
 
-require_once __DIR__ . '/conexion.php';
+    // Preparar la consulta SQL. *** CORREGIDO: ahora usa 'usuario' ***
+    // Obtener la conexión usando la función definida en conexion.php
+    $conn = get_db_connection();
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    http_response_code(405);
-    echo json_encode(['ok' => false, 'error' => 'Método no permitido']);
-    exit;
-}
+    $sql = "INSERT INTO usuarios (email, password) VALUES (?, ?)";
 
-$input = [
-    'email'    => isset($_POST['email']) ? trim((string)$_POST['email']) : '',
-    'password' => isset($_POST['password']) ? (string)$_POST['password'] : '',
-];
+    $stmt = $conn->prepare($sql);
+    
+    if ($stmt) {
+    // Vincular los parámetros (2 parámetros => tipos "ss")
+    $stmt->bind_param("ss", $email, $password);
 
-if ($input['email'] === '' || $input['password'] === '') {
-    http_response_code(400);
-    echo json_encode(['ok' => false, 'error' => 'Email y contraseña son obligatorios']);
-    exit;
-}
+        // Ejecutar la consulta
+        if ($stmt->execute()) {
+            // Usamos un pequeño script de JavaScript para mostrar un mensaje y luego redirigir.
+            echo "<script>alert('Se registró correctamente. Serás redirigido al login.'); window.location.href = 'login.html';</script>";
+            exit();
+        } else {
+            // Error, puede ser que el email ya exista si tienes una restricción UNIQUE en la base de datos
+            echo "Error al registrar. Puede que el email ya esté en uso o haya un problema: " . $stmt->error;
+        }
 
-if (!filter_var($input['email'], FILTER_VALIDATE_EMAIL)) {
-    http_response_code(400);
-    echo json_encode(['ok' => false, 'error' => 'Email inválido']);
-    exit;
-}
+        // Cerrar la sentencia
+        $stmt->close();
+    } else {
+        echo "Error en la consulta: " . $conn->error;
+    }
 
-$conn = get_db_connection();
-
-// Verificar duplicado por email
-$sqlCheck = 'SELECT id FROM usuarios WHERE email = ? LIMIT 1';
-$stmt = $conn->prepare($sqlCheck);
-if (!$stmt) {
-    http_response_code(500);
-    echo json_encode(['ok' => false, 'error' => 'Error preparando la consulta']);
-    exit;
-}
-$stmt->bind_param('s', $input['email']);
-$stmt->execute();
-$stmt->store_result();
-if ($stmt->num_rows > 0) {
-    http_response_code(409);
-    echo json_encode(['ok' => false, 'error' => 'El email ya existe']);
-    $stmt->close();
+    // Cerrar la conexión
     $conn->close();
-    exit;
 }
-$stmt->close();
-
-$hashed = password_hash($input['password'], PASSWORD_BCRYPT, ['cost' => 10]);
-
-$sqlInsert = 'INSERT INTO usuarios (email, password) VALUES (?, ?)';
-$stmtI = $conn->prepare($sqlInsert);
-if (!$stmtI) {
-    http_response_code(500);
-    echo json_encode(['ok' => false, 'error' => 'Error preparando el registro']);
-    exit;
-}
-$stmtI->bind_param('ss', $input['email'], $hashed);
-$ok = $stmtI->execute();
-
-if (!$ok) {
-    http_response_code(500);
-    echo json_encode(['ok' => false, 'error' => 'No se pudo registrar el usuario']);
-    $stmtI->close();
-    $conn->close();
-    exit;
-}
-
-$userId = $stmtI->insert_id;
-$stmtI->close();
-$conn->close();
-
-echo json_encode(['ok' => true, 'id' => $userId, 'email' => $input['email']]);
+?>
