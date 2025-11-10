@@ -131,9 +131,49 @@
       document.getElementById('messageContainer').innerHTML = '';
     }
   
-    // Los formularios ahora envían por POST a PHP (sin JS extra)
-  
-    // Sin interceptar el submit del registro (envío directo al PHP)
+    // Manejar el submit del formulario de login (envío directo a PHP)
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      const email = document.getElementById('login_email').value;
+      const password = document.getElementById('login_password').value;
+      
+      if (!email || !password) {
+        e.preventDefault();
+        showMessage('Por favor, completa todos los campos', 'error');
+        return false;
+      }
+      
+      // El formulario se enviará normalmente a php/login.php
+      // PHP se encargará de la redirección según el rol
+    });
+    
+    // Verificar si hay errores en la URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const error = urlParams.get('error');
+    
+    if (error) {
+      let errorMessage = 'Error al iniciar sesión';
+      switch(error) {
+        case 'faltan_credenciales':
+          errorMessage = 'Por favor, completa todos los campos';
+          break;
+        case 'email_invalido':
+          errorMessage = 'El formato del email no es válido';
+          break;
+        case 'usuario_no_encontrado':
+          errorMessage = 'Usuario no encontrado';
+          break;
+        case 'contraseña_incorrecta':
+          errorMessage = 'Contraseña incorrecta';
+          break;
+        case 'error_consulta':
+          errorMessage = 'Error en la base de datos. Intenta nuevamente';
+          break;
+        case 'metodo_no_permitido':
+          errorMessage = 'Método no permitido';
+          break;
+      }
+      showMessage(errorMessage, 'error');
+    }
   
     // Verificar si hay parámetro de modo en la URL
     const urlParams = new URLSearchParams(window.location.search);

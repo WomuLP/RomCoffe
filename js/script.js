@@ -165,53 +165,67 @@ document.addEventListener('DOMContentLoaded', function() {
 // USER SESSION MANAGEMENT
 // ========================================
 let currentUser = null;
-let loginBtn, adminBtn, userInfo, userName, logoutBtn;
 
-function initDynamicElements() {
-  loginBtn = document.getElementById('loginBtn');
-  adminBtn = document.getElementById('adminBtn');
-  userInfo = document.getElementById('userInfo');
-  userName = document.getElementById('userName');
-  logoutBtn = document.getElementById('logoutBtn');
-}
-
-function checkSession() {
-  // Sin lectura desde localStorage. Integrar con PHP si se requiere.
-  currentUser = null;
-  updateUI();
+async function checkSession() {
+  try {
+    // Solicitar formato JSON para el frontend
+    const response = await fetch('php/check_session.php?format=json');
+    const data = await response.json();
+    
+    if (data.logged_in) {
+      currentUser = data.user;
+    } else {
+      currentUser = null;
+    }
+    
+    updateUI();
+  } catch (error) {
+    console.error('Error verificando sesión:', error);
+    currentUser = null;
+    updateUI();
+  }
 }
 
 function updateUI() {
-  if (!loginBtn || !adminBtn || !userInfo || !userName) return;
-
+  const loginNavItem = document.getElementById('loginNavItem');
+  const userNavItem = document.getElementById('userNavItem');
+  const adminNavItem = document.getElementById('adminNavItem');
+  const logoutNavItem = document.getElementById('logoutNavItem');
+  const userEmailNav = document.getElementById('userEmailNav');
+  
   if (currentUser) {
-    loginBtn.style.display = 'none';
-    userInfo.style.display = 'block';
-    userName.textContent = currentUser.username;
-    if (currentUser.username === 'admin') adminBtn.style.display = 'inline-block';
+    // Usuario logueado
+    if (loginNavItem) loginNavItem.style.display = 'none';
+    if (userNavItem) {
+      userNavItem.style.display = 'block';
+      if (userEmailNav) userEmailNav.textContent = currentUser.email;
+    }
+    if (logoutNavItem) logoutNavItem.style.display = 'block';
+    
+    // Mostrar enlace a admin si es administrador
+    if (currentUser.rol === 'admin' && adminNavItem) {
+      adminNavItem.style.display = 'block';
+    } else if (adminNavItem) {
+      adminNavItem.style.display = 'none';
+    }
   } else {
-    loginBtn.style.display = 'inline-block';
-    userInfo.style.display = 'none';
-    adminBtn.style.display = 'none';
+    // Usuario no logueado
+    if (loginNavItem) loginNavItem.style.display = 'block';
+    if (userNavItem) userNavItem.style.display = 'none';
+    if (adminNavItem) adminNavItem.style.display = 'none';
+    if (logoutNavItem) logoutNavItem.style.display = 'none';
   }
 }
 
-function logout() {
-  currentUser = null;
-  updateUI();
-  alert('Sesión cerrada correctamente');
-}
+// Función logout disponible globalmente
+window.logout = function() {
+  if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+    window.location.href = 'php/logout.php';
+  }
+};
 
 function initDynamicNavigation() {
-  initDynamicElements();
   checkSession();
-
-  if (logoutBtn) logoutBtn.addEventListener('click', logout);
-  if (adminBtn) {
-    adminBtn.addEventListener('click', () => {
-      window.location.href = 'admin.html';
-    });
-  }
 }
 
 // ========================================

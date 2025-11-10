@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Obtener la conexión usando la función definida en conexion.php
     $conn = get_db_connection();
 
-    $sql = "INSERT INTO usuarios (email, password) VALUES (?, ?)";
+    $sql = "INSERT INTO usuarios (email, password, rol) VALUES (?, ?, 'user')";
 
     $stmt = $conn->prepare($sql);
     
