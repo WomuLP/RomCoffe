@@ -146,12 +146,35 @@
       // PHP se encargará de la redirección según el rol
     });
     
-    // Verificar si hay errores en la URL
+    // Manejar el submit del formulario de registro
+    document.getElementById('registerForm').addEventListener('submit', function(e) {
+      const email = document.getElementById('reg_email').value;
+      const password = document.getElementById('reg_password').value;
+      
+      if (!email || !password) {
+        e.preventDefault();
+        showMessage('Por favor, completa todos los campos', 'error');
+        return false;
+      }
+      
+      // El formulario se enviará normalmente a php/registro.php
+      // PHP se encargará de guardar los datos
+    });
+    
+    // Verificar si hay errores o mensajes en la URL
     const urlParams = new URLSearchParams(window.location.search);
     const error = urlParams.get('error');
+    const success = urlParams.get('success');
+    const mode = urlParams.get('mode');
     
+    // Cambiar al modo de registro si es necesario
+    if (mode === 'register') {
+      switchMode('register');
+    }
+    
+    // Mostrar mensajes de error
     if (error) {
-      let errorMessage = 'Error al iniciar sesión';
+      let errorMessage = 'Error';
       switch(error) {
         case 'faltan_credenciales':
           errorMessage = 'Por favor, completa todos los campos';
@@ -171,27 +194,19 @@
         case 'metodo_no_permitido':
           errorMessage = 'Método no permitido';
           break;
+        case 'email_duplicado':
+          errorMessage = 'Este email ya está registrado';
+          break;
+        case 'error_registro':
+          errorMessage = 'Error al registrar. Intenta nuevamente';
+          break;
       }
       showMessage(errorMessage, 'error');
     }
-  
-    // Manejar el submit del formulario de registro (envío directo a PHP)
-    document.getElementById('registerForm').addEventListener('submit', function(e) {
-      const email = document.getElementById('reg_email').value;
-      const password = document.getElementById('reg_password').value;
-
-      if (!email || !password) {
-        e.preventDefault();
-        showMessage('Por favor, completa todos los campos', 'error');
-        return false;
-      }
-      // El formulario se enviará normalmente a php/registro.php
-    });
-
-    // Verificar si hay parámetro de modo en la URL
-    const mode = urlParams.get('mode');
-    if (mode === 'register') {
-      switchMode('register');
+    
+    // Mostrar mensajes de éxito
+    if (success === 'registro_exitoso') {
+      showMessage('Registro exitoso. Ya puedes iniciar sesión', 'success');
     }
   </script>  
 </body>
