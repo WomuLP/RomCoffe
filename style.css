@@ -538,7 +538,6 @@ main {
 
 .product-grid {
   display: grid;
-  grid-template-columns: 1fr;
   gap: 24px;
   max-width: 1400px;
   margin: 0 auto;
@@ -548,8 +547,7 @@ main {
 
 /* Product Cards */
 .card {
-  width: 100%;
-  max-width: 100%;
+  width: 300px;
   background: var(--bg-cream);
   border-radius: 25px;
   overflow: hidden;
@@ -558,7 +556,7 @@ main {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border: 2px solid var(--bg-light-pink);
   position: relative;
-  margin: 0;
+  margin: 0 auto;
   height: 100%;
 }
 
@@ -1161,6 +1159,10 @@ main {
     grid-template-columns: repeat(4, 1fr);
     gap: 28px;
   }
+  .card {
+    width: 100%;
+    max-width: 320px;
+  }
 }
 
 /* Desktop (992px - 1199px) */
@@ -1168,6 +1170,10 @@ main {
   .product-grid {
     grid-template-columns: repeat(3, 1fr);
     gap: 24px;
+  }
+  .card {
+    width: 100%;
+    max-width: 300px;
   }
 }
 
@@ -1184,7 +1190,7 @@ main {
   }
   .card {
     width: 100%;
-    max-width: 100%;
+    max-width: 280px;
   }
   .main-header {
     height: 60px;
@@ -1214,15 +1220,15 @@ main {
   }
 }
 
-/* Mobile Medium/Large (481px - 767px) - 2 columnas */
-@media (max-width: 767px) and (min-width: 481px) {
+/* Mobile (767px and less) */
+@media (max-width: 767px) {
   body {
     padding-top: 60px;
   }
   
   .product-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
+    grid-template-columns: 1fr;
+    gap: 18px;
     padding: 0 15px;
   }
   .card {
@@ -1301,33 +1307,9 @@ main {
     width: 55px;
     height: 55px;
   }
-  
-  /* Ajustes para tarjetas en 2 columnas en móviles */
-  .card-body {
-    padding: 16px;
-  }
-  
-  .card-title {
-    font-size: 1rem;
-  }
-  
-  .price {
-    font-size: 1.1rem;
-  }
-  
-  .card-desc {
-    font-size: 0.85rem;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-  }
-  
-  .btn {
-    padding: 9px 14px;
-    font-size: 0.85rem;
-  }
 }
 
-/* Small mobile (480px and less) - 1 columna */
+/* Small mobile (480px and less) */
 @media (max-width: 480px) {
   body {
     padding-top: 55px;
@@ -1335,19 +1317,6 @@ main {
   
   .main-header {
     height: 55px;
-  }
-  
-  .product-grid {
-    grid-template-columns: 1fr;
-    gap: 16px;
-    padding: 0 12px;
-  }
-  
-  .card {
-    width: 100%;
-    max-width: 100%;
-    border-radius: 15px;
-    margin: 0 auto;
   }
   
   .category-menu {
@@ -1372,6 +1341,11 @@ main {
   .section-title {
     font-size: 1.4rem;
     text-align: center;
+  }
+  
+  .card {
+    border-radius: 15px;
+    margin: 0 auto;
   }
   
   .card-body {
@@ -1424,6 +1398,12 @@ main {
     width: 85%;
   }
   
+  /* Product grid adjustments */
+  .product-grid {
+    padding: 0 10px;
+    gap: 15px;
+  }
+  
   /* Footer adjustments */
   .footer-inner {
     padding: 24px 15px;
@@ -1450,10 +1430,6 @@ main {
   /* Login responsive */
   .login-title { font-size: 40px; }
   .actions { grid-template-columns: 1fr; }
-  
-  main {
-    padding: 20px 12px 40px;
-  }
 }
 
 /* Footer responsive */
