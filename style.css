@@ -942,7 +942,34 @@ main {
   text-align: center; 
   font-weight: 600; 
 }
+.cart-item-delete {
+  grid-column: 3;
+  grid-row: 1 / 3;
+  align-self: center;
+  justify-self: end;
+  background: transparent;
+  border: none;
+  color: var(--bg-red);
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  margin-left: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
+.cart-item-delete:hover {
+  background: rgba(242, 65, 65, 0.1);
+  color: var(--bg-dark);
+  transform: scale(1.1);
+}
+
+.cart-item-delete:active {
+  transform: scale(0.95);
+}
 /* ========================================
    🔐 LOGIN & AUTHENTICATION
 ======================================== */

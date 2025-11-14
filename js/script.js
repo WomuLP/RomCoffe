@@ -135,7 +135,17 @@ document.addEventListener('click', function(e) {
     updateCartUI();
   }
 });
-
+// Eliminar producto del carrito
+document.addEventListener('click', function(e) {
+  if (e.target && e.target.closest('.cart-item-delete')) {
+    const deleteBtn = e.target.closest('.cart-item-delete');
+    const idx = parseInt(deleteBtn.getAttribute('data-index'), 10);
+    if (idx >= 0 && idx < cart.length) {
+      cart.splice(idx, 1);
+      updateCartUI();
+    }
+  }
+});
 // ========================================
 // UTILITIES
 // ========================================
