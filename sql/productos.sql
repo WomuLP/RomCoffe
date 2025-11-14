@@ -33,8 +33,8 @@ INSERT INTO productos (nombre, precio, imagen, descripcion, categoria, ingredien
 ('Matcha Latte', 4200.00, 'imagen/Matcha latte.webp', 'Energía suave y sostenida sin el bajón del café. Sabor herbal y cremoso, ideal con leche de avena o almendra.', 'cafe', '["Té matcha", "Leche vegetal", "Hielo"]'),
 
 -- TÉS
-('Té Verde', 3200.00, 'imagen/TV.webp', 'Té verde natural, rico en antioxidantes y de sabor suave.', 'tes', '["Hojas de té verde", "Agua caliente"]'),
-('Té de Frutos Rojos', 3700.00, 'imagen/TFR.webp', 'Infusión de frutas rojas con aroma dulce y refrescante.', 'tes', '["Frutilla", "Arándanos", "Hibisco"]'),
+('Té Verde', 3200.00, 'imagen/Te Verde.webp', 'Té verde natural, rico en antioxidantes y de sabor suave.', 'tes', '["Hojas de té verde", "Agua caliente"]'),
+('Té de Frutos Rojos', 3700.00, 'imagen/Te de Frutos Rojos.webp', 'Infusión de frutas rojas con aroma dulce y refrescante.', 'tes', '["Frutilla", "Arándanos", "Hibisco"]'),
 
 -- BEBIDAS FRÍAS
 ('Cold Brew', 4500.00, 'imagen/Cold brew.webp', 'Café infusionado en frío durante 16 horas. Refrescante y suave.', 'bebidas-frias', '["Café molido", "Agua filtrada", "Hielo"]'),
