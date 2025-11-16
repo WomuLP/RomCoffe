@@ -390,83 +390,62 @@ main {
 
 
 /* ========================================
-   🎠 CAROUSEL & FEATURED CONTENT
+   🎠 NEW SIMPLE CAROUSEL
 ======================================== */
 
-.nc-section { 
-  margin: 60px 0 80px 0; 
+.carousel-section {
+  width: 100%;
+  margin: 50px 0;
 }
 
-.nc-container { 
-  width: 100%; 
-  max-width: 900px; 
-  margin: 0 auto; 
+.carousel-wrapper {
+  max-width: 900px;
+  height: 360px;
+  margin: 0 auto;
   position: relative;
+  overflow: hidden;
 }
 
-.nc-container input[type=radio] { 
-  display: none; 
+.carousel-track {
+  display: flex;
+  transition: transform 0.5s ease;
 }
 
-.nc-cards { 
-  position: relative; 
-  width: 100%; 
-  height: 360px; 
+.carousel-item {
+  min-width: 100%;
+  height: 360px;
+  border-radius: 12px;
+  overflow: hidden;
 }
 
-.nc-card { 
-  position: absolute; 
-  width: 75%; 
-  height: 100%; 
-  left: 0; 
-  right: 0; 
-  margin: auto; 
-  transition: transform .4s ease, opacity .4s ease; 
-  cursor: pointer; 
-  border-radius: 10px; 
-  overflow: hidden; 
-  opacity: 0; 
-  transform: scale(0.85);
-  z-index: 0;
+.carousel-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.nc-card img { 
-  width: 100%; 
-  height: 100%; 
-  object-fit: cover; 
-  display: block; 
-  border-radius: 10px;
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  z-index: 10;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.5);
+  color: white;
+  border: none;
+  width: 45px;
+  height: 45px;
+  font-size: 22px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
-/* Estado activo (imagen visible) */
-#item-1:checked ~ .nc-cards #nc-card-1,
-#item-2:checked ~ .nc-cards #nc-card-2,
-#item-3:checked ~ .nc-cards #nc-card-3,
-#item-4:checked ~ .nc-cards #nc-card-4 {
-  opacity: 1;
-  transform: scale(1);
-  z-index: 2;
+.carousel-btn:hover {
+  background: rgba(0,0,0,0.7);
 }
 
-/* Imagen anterior (izquierda) */
-#item-2:checked ~ .nc-cards #nc-card-1,
-#item-3:checked ~ .nc-cards #nc-card-2,
-#item-4:checked ~ .nc-cards #nc-card-3,
-#item-1:checked ~ .nc-cards #nc-card-4 {
-  transform: translateX(-40%) scale(.85);
-  opacity: .6;
-  z-index: 1;
-}
-
-/* Imagen siguiente (derecha) */
-#item-1:checked ~ .nc-cards #nc-card-2,
-#item-2:checked ~ .nc-cards #nc-card-3,
-#item-3:checked ~ .nc-cards #nc-card-4,
-#item-4:checked ~ .nc-cards #nc-card-1 {
-  transform: translateX(40%) scale(.85);
-  opacity: .6;
-  z-index: 1;
-}
+.prev-btn { left: 10px; }
+.next-btn { right: 10px; }
 
 /* ========================================
    🏷️ CATEGORY FILTERS
