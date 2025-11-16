@@ -390,62 +390,234 @@ main {
 
 
 /* ========================================
-   🎠 NEW SIMPLE CAROUSEL
+   🎠 CARRUSEL SIMPLE
 ======================================== */
 
-.carousel-section {
+.mi-carrusel {
   width: 100%;
   margin: 50px 0;
+  padding: 0 20px;
 }
 
-.carousel-wrapper {
+.carrusel-contenedor {
   max-width: 900px;
-  height: 360px;
+  height: 500px;
   margin: 0 auto;
   position: relative;
-  overflow: hidden;
-}
-
-.carousel-track {
-  display: flex;
-  transition: transform 0.5s ease;
-}
-
-.carousel-item {
-  min-width: 100%;
-  height: 360px;
   border-radius: 12px;
   overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-.carousel-item img {
+.carrusel-imagenes {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.carrusel-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 0.5s ease;
 }
 
-.carousel-btn {
+.carrusel-img.activa {
+  opacity: 1;
+}
+
+.carrusel-btn {
   position: absolute;
   top: 50%;
-  z-index: 10;
   transform: translateY(-50%);
-  background: rgba(0,0,0,0.5);
+  background: rgba(140, 3, 28, 0.8);
   color: white;
   border: none;
-  width: 45px;
-  height: 45px;
-  font-size: 22px;
-  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 32px;
   cursor: pointer;
-  transition: 0.3s;
+  z-index: 10;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
 }
 
-.carousel-btn:hover {
-  background: rgba(0,0,0,0.7);
+.carrusel-btn:hover {
+  background: rgba(140, 3, 28, 1);
+  transform: translateY(-50%) scale(1.1);
 }
 
-.prev-btn { left: 10px; }
-.next-btn { right: 10px; }
+.carrusel-btn.anterior {
+  left: 15px;
+}
+
+.carrusel-btn.siguiente {
+  right: 15px;
+}
+
+.carrusel-puntos {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  z-index: 10;
+}
+
+.punto {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.punto:hover {
+  background: rgba(255, 255, 255, 0.8);
+  transform: scale(1.2);
+}
+
+.punto.activo {
+  background: white;
+  width: 30px;
+  border-radius: 6px;
+}
+
+/* ========================================
+   📱 CARRUSEL RESPONSIVE
+======================================== */
+
+/* Tablet (768px - 991px) */
+@media (max-width: 991px) and (min-width: 768px) {
+  .mi-carrusel {
+    margin: 40px 0;
+    padding: 0 15px;
+  }
+
+  .carrusel-contenedor {
+    height: 400px;
+  }
+
+  .carrusel-btn {
+    width: 45px;
+    height: 45px;
+    font-size: 28px;
+  }
+
+  .carrusel-btn.anterior {
+    left: 10px;
+  }
+
+  .carrusel-btn.siguiente {
+    right: 10px;
+  }
+
+  .carrusel-puntos {
+    bottom: 15px;
+    gap: 8px;
+  }
+
+  .punto {
+    width: 10px;
+    height: 10px;
+  }
+
+  .punto.activo {
+    width: 25px;
+  }
+}
+
+/* Mobile (767px and less) */
+@media (max-width: 767px) {
+  .mi-carrusel {
+    margin: 30px 0;
+    padding: 0 10px;
+  }
+
+  .carrusel-contenedor {
+    height: 250px;
+    border-radius: 8px;
+  }
+
+  .carrusel-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+  }
+
+  .carrusel-btn.anterior {
+    left: 8px;
+  }
+
+  .carrusel-btn.siguiente {
+    right: 8px;
+  }
+
+  .carrusel-puntos {
+    bottom: 10px;
+    gap: 6px;
+  }
+
+  .punto {
+    width: 8px;
+    height: 8px;
+  }
+
+  .punto.activo {
+    width: 20px;
+  }
+}
+
+/* Small mobile (480px and less) */
+@media (max-width: 480px) {
+  .mi-carrusel {
+    margin: 20px 0;
+    padding: 0 5px;
+  }
+
+  .carrusel-contenedor {
+    height: 200px;
+    border-radius: 6px;
+  }
+
+  .carrusel-btn {
+    width: 35px;
+    height: 35px;
+    font-size: 20px;
+  }
+
+  .carrusel-btn.anterior {
+    left: 5px;
+  }
+
+  .carrusel-btn.siguiente {
+    right: 5px;
+  }
+
+  .carrusel-puntos {
+    bottom: 8px;
+    gap: 5px;
+  }
+
+  .punto {
+    width: 7px;
+    height: 7px;
+  }
+
+  .punto.activo {
+    width: 18px;
+  }
+}
 
 /* ========================================
    🏷️ CATEGORY FILTERS
@@ -1207,10 +1379,6 @@ main {
     min-height: 400px;
   }
   
-  .nc-cards {
-    height: 300px;
-  }
-  
   .category-menu {
     padding: 18px 20px;
     gap: 10px;
@@ -1257,12 +1425,6 @@ main {
   }
   main {
     padding: 20px 15px 40px;
-  }
-  .nc-cards { 
-    height: 240px; 
-  }
-  .nc-card { 
-    width: 80%; 
   }
   
   /* Header responsive for mobile */
@@ -1393,15 +1555,6 @@ main {
   .banner-section {
     height: 35vh;
     min-height: 250px;
-  }
-  
-  /* Carousel adjustments for small mobile */
-  .nc-cards {
-    height: 200px;
-  }
-  
-  .nc-card {
-    width: 85%;
   }
   
   /* Product grid adjustments */

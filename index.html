@@ -76,31 +76,27 @@
   </ul>
 </nav>
 
-<section class="carousel-section">
-  <div class="carousel-wrapper">
-    <button class="carousel-btn prev-btn"><i class="bi bi-chevron-left"></i></button>
-
-    <div class="carousel-track">
-      <div class="carousel-item">
-        <img src="imagen/Destacado 2.webp" alt="Destacado 1">
-      </div>
-      <div class="carousel-item">
-        <img src="imagen/Destacado 1.webp" alt="Destacado 2">
-      </div>
-      <div class="carousel-item">
-        <img src="imagen/Destacado 3.webp" alt="Destacado 3">
-      </div>
-      <div class="carousel-item">
-        <img src="imagen/Destacado 4.webp" alt="Destacado 4">
-      </div>
+<!-- Carrusel de imágenes -->
+<section class="mi-carrusel">
+  <div class="carrusel-contenedor">
+    <button class="carrusel-btn anterior" id="btnAnterior">‹</button>
+    <div class="carrusel-imagenes" id="carruselImagenes">
+      <img src="imagen/Destacado1.webp" alt="Destacado 1" class="carrusel-img activa">
+      <img src="imagen/Destacado2.webp" alt="Destacado 2" class="carrusel-img">
+      <img src="imagen/Destacado3.webp" alt="Destacado 3" class="carrusel-img">
+      <img src="imagen/Destacado4.webp" alt="Destacado 4" class="carrusel-img">
     </div>
-
-    <button class="carousel-btn next-btn"><i class="bi bi-chevron-right"></i></button>
+    <button class="carrusel-btn siguiente" id="btnSiguiente">›</button>
+    <div class="carrusel-puntos">
+      <span class="punto activo" data-indice="0"></span>
+      <span class="punto" data-indice="1"></span>
+      <span class="punto" data-indice="2"></span>
+      <span class="punto" data-indice="3"></span>
+    </div>
   </div>
 </section>
 
-    
-    <!-- Category Filter Menu -->
+<!-- Category Filter Menu -->
     <nav class="category-menu">
       <button class="chip active" data-category="all">todos</button>
       <button class="chip" data-category="cafe">café</button>
@@ -161,6 +157,82 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="js/script.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+  
+  <!-- Script del carrusel -->
+  <script>
+    (function() {
+      var imagenes = document.querySelectorAll('.carrusel-img');
+      var puntos = document.querySelectorAll('.punto');
+      var btnAnterior = document.getElementById('btnAnterior');
+      var btnSiguiente = document.getElementById('btnSiguiente');
+      var indiceActual = 0;
+      var intervalo;
+
+      function mostrarImagen(indice) {
+        // Remover clase activa de todas las imágenes y puntos
+        imagenes.forEach(function(img) {
+          img.classList.remove('activa');
+        });
+        puntos.forEach(function(punto) {
+          punto.classList.remove('activo');
+        });
+
+        // Agregar clase activa a la imagen y punto actual
+        imagenes[indice].classList.add('activa');
+        puntos[indice].classList.add('activo');
+        indiceActual = indice;
+      }
+
+      function siguiente() {
+        var nuevoIndice = (indiceActual + 1) % imagenes.length;
+        mostrarImagen(nuevoIndice);
+      }
+
+      function anterior() {
+        var nuevoIndice = (indiceActual - 1 + imagenes.length) % imagenes.length;
+        mostrarImagen(nuevoIndice);
+      }
+
+      function iniciarAutoSlide() {
+        intervalo = setInterval(siguiente, 4000);
+      }
+
+      function detenerAutoSlide() {
+        clearInterval(intervalo);
+      }
+
+      // Event listeners
+      btnSiguiente.addEventListener('click', function() {
+        siguiente();
+        detenerAutoSlide();
+        iniciarAutoSlide();
+      });
+
+      btnAnterior.addEventListener('click', function() {
+        anterior();
+        detenerAutoSlide();
+        iniciarAutoSlide();
+      });
+
+      // Click en puntos
+      puntos.forEach(function(punto, indice) {
+        punto.addEventListener('click', function() {
+          mostrarImagen(indice);
+          detenerAutoSlide();
+          iniciarAutoSlide();
+        });
+      });
+
+      // Pausar auto-slide al pasar el mouse
+      var contenedor = document.querySelector('.carrusel-contenedor');
+      contenedor.addEventListener('mouseenter', detenerAutoSlide);
+      contenedor.addEventListener('mouseleave', iniciarAutoSlide);
+
+      // Inicializar
+      mostrarImagen(0);
+      iniciarAutoSlide();
+    })();
+  </script>
 </body>
 
 </html>
