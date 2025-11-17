@@ -1280,22 +1280,6 @@ main {
   text-align: center; 
   color: #94a3b8; 
 }
-
-.social-icons {
-  margin-top: 8px;
-}
-
-.social-icons a {
-  color: #cbd5e1;
-  margin-right: 12px;
-  font-size: 18px;
-  transition: color 0.2s ease;
-}
-
-.social-icons a:hover {
-  color: #fff;
-}
-
 /* ========================================
    ⚠️ STATES & UTILITIES
 ======================================== */
@@ -1632,13 +1616,7 @@ main {
   .footer-links li {
     margin: 0;
   }
-  
-  .social-icons {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-  }
-  
+
   .btn.contact {
     margin: 0 auto;
     display: block;
@@ -1698,4 +1676,5 @@ main {
     padding: 4px 8px;
     font-size: 0.75rem;
   }
+
 }
