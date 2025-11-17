@@ -310,7 +310,75 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-// ========================================
-// SIMPLE CAROUSEL FIX
-// (Movido a index.html para mejor inicialización)
-// ========================================
+(function() {
+  var imagenes = document.querySelectorAll('.carrusel-img');
+  var puntos = document.querySelectorAll('.punto');
+  var btnAnterior = document.getElementById('btnAnterior');
+  var btnSiguiente = document.getElementById('btnSiguiente');
+  var indiceActual = 0;
+  var intervalo;
+
+  function mostrarImagen(indice) {
+  // Remover clase activa de todas las imágenes y puntos
+    imagenes.forEach(function(img) {
+      img.classList.remove('activa');
+    });
+    puntos.forEach(function(punto) {
+      punto.classList.remove('activo');
+    });
+
+    // Agregar clase activa a la imagen y punto actual
+    imagenes[indice].classList.add('activa');
+    puntos[indice].classList.add('activo');
+    indiceActual = indice;
+  }
+
+  function siguiente() {
+    var nuevoIndice = (indiceActual + 1) % imagenes.length;
+    mostrarImagen(nuevoIndice);
+  }
+
+  function anterior() {
+    var nuevoIndice = (indiceActual - 1 + imagenes.length) % imagenes.length;
+    mostrarImagen(nuevoIndice);
+  }
+
+  function iniciarAutoSlide() {
+    intervalo = setInterval(siguiente, 4000);
+  }
+
+  function detenerAutoSlide() {
+    clearInterval(intervalo);
+  }
+
+  // Event listeners
+  btnSiguiente.addEventListener('click', function() {
+    siguiente();
+    detenerAutoSlide();
+    iniciarAutoSlide();
+  });
+
+  btnAnterior.addEventListener('click', function() {
+    anterior();
+    detenerAutoSlide();
+    iniciarAutoSlide();
+  });
+
+  // Click en puntos
+  puntos.forEach(function(punto, indice) {
+    punto.addEventListener('click', function() {
+      mostrarImagen(indice);
+      detenerAutoSlide();
+      iniciarAutoSlide();
+    });
+  });
+
+  // Pausar auto-slide al pasar el mouse
+  var contenedor = document.querySelector('.carrusel-contenedor');
+  contenedor.addEventListener('mouseenter', detenerAutoSlide);
+  contenedor.addEventListener('mouseleave', iniciarAutoSlide);
+
+  // Inicializar
+  mostrarImagen(0);
+  iniciarAutoSlide();
+})();
