@@ -210,12 +210,8 @@ function updateUI() {
       if (userEmailNav) userEmailNav.textContent = currentUser.email;
     }
     if (logoutNavItem) logoutNavItem.style.display = 'block';
-    
-    // Mostrar enlace a admin si es administrador
-    if (currentUser.rol === 'admin' && adminNavItem) {
-      adminNavItem.style.display = 'block';
-    } else if (adminNavItem) {
-      adminNavItem.style.display = 'none';
+    if (adminNavItem) {
+      adminNavItem.style.display = currentUser.rol === 'admin' ? 'block' : 'none';
     }
   } else {
     if (loginNavItem) loginNavItem.style.display = 'block';
