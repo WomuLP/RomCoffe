@@ -204,7 +204,6 @@ function updateUI() {
   const userEmailNav = document.getElementById('userEmailNav');
   
   if (currentUser) {
-    // Usuario logueado
     if (loginNavItem) loginNavItem.style.display = 'none';
     if (userNavItem) {
       userNavItem.style.display = 'block';
@@ -219,7 +218,6 @@ function updateUI() {
       adminNavItem.style.display = 'none';
     }
   } else {
-    // Usuario no logueado
     if (loginNavItem) loginNavItem.style.display = 'block';
     if (userNavItem) userNavItem.style.display = 'none';
     if (adminNavItem) adminNavItem.style.display = 'none';
